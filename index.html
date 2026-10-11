@@ -816,6 +816,7 @@ const CLASS_INFO = {
 
 /* FANLAR. Kalit so'z (mat, ona ...) jadvalda va o'qituvchilarda ishlatiladi. */
 const SUBJECTS = {
+  bosh: { uz: "Boshlang‘ich ta’lim", ru: "Начальные классы", en: "Primary education" },
   mat: { uz: "Matematika", ru: "Математика", en: "Maths" },
   ona: { uz: "Ona tili va adabiyot", ru: "Родной язык и литература", en: "Uzbek language and literature" },
   ing: { uz: "Ingliz tili", ru: "Английский язык", en: "English" },
@@ -828,6 +829,7 @@ const SUBJECTS = {
 
 /* O'QITUVCHILAR. subject — fan kalit so'zi, room — dars o'tadigan xona, photo — ixtiyoriy (masalan "rasmlar/karimova.jpg"). */
 const TEACHERS = [
+  { subject: "bosh", name: "Dilnoza Xayitova" },
   { subject: "mat", name: "Dilnoza Karimova", exp: { uz: "Oliy toifa, 14 yil", ru: "Высшая категория, 14 лет", en: "Highest category, 14 years" }, room: "201" },
   { subject: "ona", name: "Shahlo Yusupova", exp: { uz: "Birinchi toifa, 11 yil", ru: "Первая категория, 11 лет", en: "First category, 11 years" }, room: "202" },
   { subject: "ing", name: "Jasur Rahimov", exp: { uz: "Birinchi toifa, 8 yil", ru: "Первая категория, 8 лет", en: "First category, 8 years" }, room: "305" },
@@ -942,6 +944,8 @@ const SAFETY = {
 };
 
 const CLUBS = [
+  { name: { uz: "“Turon” teatr to‘garagi", ru: "Театральный кружок «Турон»", en: "Turon theatre group" },
+    info: { uz: "Maktabning teatr jamoasi, tadbirlarda sahna ko‘rinishlari qo‘yadi", ru: "Школьный театральный коллектив, выступает на мероприятиях", en: "The school's theatre group, which performs at school events" } },
   { name: { uz: "Robototexnika", ru: "Робототехника", en: "Robotics" },
     info: { uz: "Seshanba va shanba, 14:30. IT xonasi", ru: "Вторник и суббота, 14:30. Кабинет IT", en: "Tuesday and Saturday, 14:30. IT room" } },
   { name: { uz: "Ingliz tili", ru: "Английский язык", en: "English club" },
@@ -1038,6 +1042,12 @@ const NEWS = [
             ru: "Министр дошкольного и школьного образования Эъзоза Каримова встретилась в нашей школе с молодёжью и ознакомилась с летней оздоровительной программой.",
             en: "E’zoza Karimova, Minister of Preschool and School Education, met young people at our school and saw the summer health programme." },
     src: "https://t.me/yangimaktabimiz/774" },
+  { when: { uz: "Aprel, 2025", ru: "Апрель 2025", en: "Apr 2025" },
+    title: { uz: "Maktabimiz tajribasi boshqa maktablarga namuna bo‘ldi", ru: "Опыт нашей школы стал примером для других", en: "Our school's experience became a model for others" },
+    text: { uz: "Maktabimizda 250 ga yaqin ta’lim xodimi ishtirokida seminar o‘tdi. Mehmonlar sinf xonalari, laboratoriya va to‘garaklar bilan tanishdi, “Turon” teatr jamoasi chiqish qildi.",
+            ru: "В нашей школе прошёл семинар с участием около 250 работников образования. Гости осмотрели кабинеты, лабораторию и кружки, выступил театральный коллектив «Турон».",
+            en: "About 250 education staff attended a seminar at our school. The guests toured the classrooms, laboratory and clubs, and the Turon theatre group performed." },
+    src: "https://marifat.uz/show-post/358-maktab-tajribasini-organamiz-624" },
   { when: { uz: "20-mart, 2025", ru: "20 марта 2025", en: "20 Mar 2025" },
     title: { uz: "Maktabimizga Prezident tashrif buyurdi", ru: "Нашу школу посетил Президент", en: "The President visited our school" },
     text: { uz: "Shavkat Mirziyoyev Bektemir tumaniga tashrifi chog‘ida Iykota mahallasidagi yangi maktabimiz bilan tanishdi va o‘qituvchilar bilan suhbatlashdi.",
@@ -1078,7 +1088,7 @@ const T = {
     altSchool: "358-maktab binosi tepadan ko‘rinishi", altMahalla: "Iykota mahallasi tepadan ko‘rinishi", altIT: "Maktabdagi robototexnika va IT xonasi",
     photoCredit: "Rasmlar manbasi:",
     aboutTitle: "Maktab haqida",
-    aboutText: "Maktabimiz davlat budjeti hisobidan qurilib, 2025-yilda Bektemir tumanining Iykota mahallasida foydalanishga topshirilgan. Bino qariyb 1000 o‘quvchiga mo‘ljallangan. O‘sha yili maktabga Prezident tashrif buyurgan.",
+    aboutText: "Maktabimiz davlat budjeti hisobidan qurilib, 2025-yilda Bektemir tumanining Iykota mahallasida foydalanishga topshirilgan. Bino qariyb 1000 o‘quvchiga mo‘ljallangan. O‘sha yili maktabga Prezident tashrif buyurgan. Maktabda psixolog va logoped xonalari, tikuvchilik va mehnat xonalari bor, inklyuziv ta’lim yo‘lga qo‘yilgan.",
     tourTitle: "Binoni aylaning",
     tourNote: "Xonani bosing: chirog‘i yonadi, yonida esa xonaning 3D ko‘rinishi va tavsifi ochiladi.",
     tourEmpty: "Biror xonani tanlang", tourEmptyText: "Binodan istalgan xonani bosing: uning 3D ko‘rinishi shu yerda ochiladi.",
@@ -1171,7 +1181,7 @@ const T = {
     altSchool: "Здание школы №358, вид сверху", altMahalla: "Махалля Ийкота, вид сверху", altIT: "Кабинет робототехники и IT в школе",
     photoCredit: "Источник фотографий:",
     aboutTitle: "О школе",
-    aboutText: "Школа построена на средства государственного бюджета и сдана в эксплуатацию в 2025 году в махалле Ийкота Бектемирского района. Здание рассчитано почти на 1000 учеников. В том же году школу посетил Президент.",
+    aboutText: "Школа построена на средства государственного бюджета и сдана в эксплуатацию в 2025 году в махалле Ийкота Бектемирского района. Здание рассчитано почти на 1000 учеников. В том же году школу посетил Президент. В школе есть кабинеты психолога и логопеда, швейный кабинет и кабинет труда, действует инклюзивное образование.",
     tourTitle: "Пройдитесь по зданию",
     tourNote: "Нажмите на кабинет — в нём загорится свет и появится описание.",
     tourEmpty: "Выберите кабинет", tourEmptyText: "Нажмите на любой кабинет в здании: здесь откроется его 3D-вид.",
@@ -1264,7 +1274,7 @@ const T = {
     altSchool: "School 358 building seen from above", altMahalla: "Iykota mahalla seen from above", altIT: "The robotics and IT room at the school",
     photoCredit: "Photo source:",
     aboutTitle: "About the school",
-    aboutText: "Our school was built with state budget funds and opened in 2025 in Iykota mahalla, Bektemir district. The building is designed for about 1,000 students. The President visited the school that same year.",
+    aboutText: "Our school was built with state budget funds and opened in 2025 in Iykota mahalla, Bektemir district. The building is designed for about 1,000 students. The President visited the school that same year. The school has rooms for a psychologist and a speech therapist, sewing and craft rooms, and an inclusive education programme.",
     tourTitle: "Tour the building",
     tourNote: "Select a room: its light comes on and you see what is inside.",
     tourEmpty: "Pick a room", tourEmptyText: "Select any room in the building and its 3D view opens here.",
@@ -1731,10 +1741,9 @@ function renderTeachers() {
       const dd = el("dd");
       const cl = teacherClasses(t);
       if (cl.length) { const pills = el("div", "pills"); cl.forEach(function (c) { pills.appendChild(el("span", "", c)); }); dd.appendChild(pills); }
-      else dd.textContent = L.tNoClasses;
       r2.appendChild(dd);
-      dl.appendChild(r2);
-      pair(dl, L.tRoom, roomText(t.room), !t.room);
+      if (cl.length) dl.appendChild(r2);
+      if (t.room) pair(dl, L.tRoom, roomText(t.room));
       if (t.exp) pair(dl, "", t.exp[LANG]);
       more.appendChild(dl);
       li.appendChild(more);
