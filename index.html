@@ -8,14 +8,17 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;700&family=Unbounded:wght@500;800&display=swap" rel="stylesheet">
 <style>
+  /* Tartib: chapda matn, o'ngda maktab rasmi; pastida kanal to'lqinlari oqadi.
+     Ranglar Bektemir kanali suvidan va maktab qo'ng'irog'i sarig'idan olingan. */
   :root {
-    --canal: #0d5566;      /* Bektemir kanali rangi */
+    --canal: #0d5566;
     --canal-deep: #083b47;
     --water: #d3ecea;
+    --water-deep: #a9d6d3;
     --paper: #f6faf9;
     --ink: #12262b;
     --muted: #55707a;
-    --sun: #f2b705;        /* maktab qo'ng'irog'i sarig'i */
+    --sun: #f2b705;
     --line: #cfdedc;
     --card: #ffffff;
     --on-canal: #ffffff;
@@ -27,19 +30,19 @@
   }
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
-    --canal: #6cc4d1; --canal-deep: #a9dde3; --water: #143a44; --paper: #0e1f23;
-    --ink: #e6f1ef; --muted: #8fa9b0; --line: #24424a; --card: #152c32;
-    --on-canal: #08262d; --footer-bg: #071619; color-scheme: dark;
+      --canal: #6cc4d1; --canal-deep: #a9dde3; --water: #143a44; --water-deep: #1c4f5b;
+      --paper: #0e1f23; --ink: #e6f1ef; --muted: #8fa9b0; --line: #24424a; --card: #152c32;
+      --on-canal: #08262d; --footer-bg: #071619; color-scheme: dark;
     }
   }
   :root[data-theme="dark"] {
-    --canal: #6cc4d1; --canal-deep: #a9dde3; --water: #143a44; --paper: #0e1f23;
-    --ink: #e6f1ef; --muted: #8fa9b0; --line: #24424a; --card: #152c32;
+    --canal: #6cc4d1; --canal-deep: #a9dde3; --water: #143a44; --water-deep: #1c4f5b;
+    --paper: #0e1f23; --ink: #e6f1ef; --muted: #8fa9b0; --line: #24424a; --card: #152c32;
     --on-canal: #08262d; --footer-bg: #071619; color-scheme: dark;
   }
+
   * { box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  html { scroll-behavior: smooth; scroll-padding-top: 90px; }
   body {
     margin: 0;
     background: var(--paper);
@@ -49,196 +52,230 @@
     line-height: 1.6;
   }
   a { color: var(--canal); }
-  a:focus-visible, button:focus-visible {
-    outline: 3px solid var(--sun);
-    outline-offset: 2px;
-  }
-  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 20px; }
-
-  /* Qoralama belgisi */
-  .draft {
-    background: var(--sun);
-    color: var(--on-sun);
-    font-size: 14px;
-    font-weight: 500;
-    padding: 8px 20px;
-    text-align: center;
-  }
-
-  /* Sarlavha qismi */
-  .top {
-    background: var(--paper);
-    border-bottom: 1px solid var(--line);
-    position: sticky;
-    top: env(safe-area-inset-top, 0px);
-    z-index: 5;
-  }
-  .top .wrap {
-    display: flex;
-    align-items: center;
-    gap: 12px 24px;
-    flex-wrap: wrap;
-    padding-top: 12px;
-    padding-bottom: 12px;
-  }
-  .brand {
-    font-family: var(--display);
-    font-weight: 800;
-    font-size: 18px;
-    color: var(--canal);
-    text-decoration: none;
-    margin-right: auto;
-  }
-  .top nav { display: flex; gap: 4px 20px; flex-wrap: wrap; }
-  .top nav a {
-    color: var(--ink);
-    text-decoration: none;
-    font-weight: 500;
-    font-size: 15px;
-    padding: 4px 0;
-    border-bottom: 2px solid transparent;
-  }
-  .top nav a:hover { border-bottom-color: var(--sun); }
-  .langs { display: flex; border: 1px solid var(--canal); border-radius: 999px; overflow: hidden; }
-  .langs button {
-    font: 500 13px var(--body);
-    padding: 6px 12px;
-    border: 0;
-    background: transparent;
-    color: var(--canal);
-    cursor: pointer;
-  }
-  .langs button[aria-pressed="true"] { background: var(--canal); color: var(--on-canal); }
-
-  /* Bosh qism */
-  .hero { background: var(--water); overflow: hidden; }
-  .hero .wrap > * { min-width: 0; }
-  .hero .wrap {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    align-items: end;
-    gap: 16px 48px;
-    padding-top: 56px;
-    padding-bottom: 40px;
-  }
-  .num {
-    font-family: var(--display);
-    font-weight: 800;
-    font-size: clamp(6.5rem, 24vw, 17rem);
-    line-height: .8;
-    letter-spacing: -.04em;
-    color: var(--canal);
-    margin: 0;
-  }
-  .hero h1 {
-    font-family: var(--display);
-    font-weight: 500;
-    font-size: clamp(1.4rem, 3vw, 2.1rem);
-    line-height: 1.2;
-    margin: 0 0 10px;
-  }
-  .place { font-weight: 500; color: var(--canal-deep); margin: 0 0 14px; }
-  .lead { margin: 0; max-width: 46ch; }
-  .wave { display: block; width: 100%; height: 44px; }
-  @media (max-width: 760px) {
-    .hero .wrap { grid-template-columns: 1fr; padding-top: 36px; }
-  }
-
-  /* Bo'limlar */
-  section { padding: 64px 0; }
-  section + section { border-top: 1px solid var(--line); }
+  a:focus-visible, button:focus-visible { outline: 3px solid var(--sun); outline-offset: 2px; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 20px; }
   h2 {
-    text-wrap: balance;
     font-family: var(--display);
     font-weight: 500;
     font-size: clamp(1.5rem, 3.2vw, 2rem);
     line-height: 1.2;
     margin: 0 0 28px;
+    text-wrap: balance;
   }
   h3 { font-size: 1.05rem; margin: 0 0 12px; }
+  .note { color: var(--muted); font-size: 15px; margin: -14px 0 24px; max-width: 60ch; }
+
+  .draft {
+    background: var(--sun); color: var(--on-sun);
+    font-size: 14px; font-weight: 500; padding: 8px 20px; text-align: center;
+  }
+
+  /* Yuqori menyu */
+  .top {
+    background: var(--paper);
+    border-bottom: 1px solid var(--line);
+    position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5;
+  }
+  .top .wrap { display: flex; align-items: center; gap: 10px 24px; flex-wrap: wrap; padding-top: 12px; padding-bottom: 12px; }
+  .brand { font-family: var(--display); font-weight: 800; font-size: 18px; color: var(--canal); text-decoration: none; margin-right: auto; }
+  .top nav { display: flex; gap: 20px; overflow-x: auto; max-width: 100%; white-space: nowrap; scrollbar-width: none; }
+  .top nav a {
+    color: var(--ink); text-decoration: none; font-weight: 500; font-size: 15px;
+    padding: 4px 0; border-bottom: 2px solid transparent; transition: border-color .2s;
+  }
+  .top nav a:hover { border-bottom-color: var(--sun); }
+  .langs { display: flex; border: 1px solid var(--canal); border-radius: 999px; overflow: hidden; }
+  .langs button { font: 500 13px var(--body); padding: 6px 12px; border: 0; background: transparent; color: var(--canal); cursor: pointer; }
+  .langs button[aria-pressed="true"] { background: var(--canal); color: var(--on-canal); }
+  @media (max-width: 860px) { .top nav { order: 3; width: 100%; } }
+
+  /* Bosh qism */
+  .hero { background: var(--water); position: relative; overflow: hidden; }
+  .hero .wrap {
+    display: grid; grid-template-columns: 1.05fr 1fr; align-items: center; gap: 32px 56px;
+    padding-top: 56px; padding-bottom: 96px; position: relative; z-index: 1;
+  }
+  .hero .wrap > * { min-width: 0; }
+  .num {
+    font-family: var(--display); font-weight: 800;
+    font-size: clamp(5rem, 15vw, 11rem); line-height: .82; letter-spacing: -.04em;
+    color: var(--canal); margin: 0 0 20px; display: flex;
+  }
+  .num span { display: inline-block; }
+  .hero h1 { font-family: var(--display); font-weight: 500; font-size: clamp(1.35rem, 2.6vw, 1.9rem); line-height: 1.25; margin: 0 0 10px; text-wrap: balance; }
+  .place { font-weight: 500; color: var(--canal-deep); margin: 0 0 14px; }
+  .lead { margin: 0 0 24px; max-width: 44ch; }
+  .cta {
+    display: inline-block; background: var(--canal); color: var(--on-canal);
+    font-weight: 500; text-decoration: none; padding: 12px 22px; border-radius: 999px;
+    transition: transform .2s;
+  }
+  .cta:hover { transform: translateY(-2px); }
+
+  .photo { position: relative; margin: 0 14px 14px 0; }
+  .photo::before {
+    content: ""; position: absolute; inset: 14px -14px -14px 14px;
+    background: var(--sun); border-radius: 10px 56px 10px 56px;
+  }
+  .photo .frame {
+    position: relative; aspect-ratio: 4 / 3; max-width: 100%;
+    border-radius: 10px 56px 10px 56px; overflow: hidden; background: var(--water-deep);
+  }
+  .photo img, .photo svg { display: block; width: 100%; height: 100%; object-fit: cover; }
+  .photo figcaption {
+    position: absolute; left: 12px; bottom: 12px;
+    background: var(--sun); color: var(--on-sun);
+    font-size: 13px; font-weight: 500; padding: 3px 10px; border-radius: 4px;
+  }
+  /* chizilgan maktab (rasm qo'yilguncha) */
+  .il-sky { fill: var(--water-deep); }
+  .il-sun { fill: var(--sun); }
+  .il-wall { fill: var(--card); }
+  .il-roof, .il-door, .il-pole { fill: var(--canal); }
+  .il-ground { fill: var(--canal); opacity: .25; }
+  .il-win { fill: var(--water); }
+  .il-tree { fill: var(--canal); opacity: .7; }
+  .il-flag { fill: var(--sun); transform-origin: 318px 60px; }
+
+  .waves { position: absolute; left: 0; right: 0; bottom: -1px; height: 70px; }
+  .waves svg { position: absolute; left: 0; bottom: 0; width: 200%; height: 100%; display: block; }
+  .w-back { fill: var(--water-deep); }
+  .w-front { fill: var(--paper); }
+  .w-line { fill: none; stroke: var(--sun); stroke-width: 3; }
+
+  @media (max-width: 860px) {
+    .hero .wrap { grid-template-columns: 1fr; padding-top: 36px; }
+  }
+
+  /* Harakat. Hammasi faqat "harakatni kamaytirish" yoqilmagan bo'lsa ishlaydi. */
+  @media (prefers-reduced-motion: no-preference) {
+    .num span { animation: drop .7s cubic-bezier(.2, 1.3, .4, 1) both; }
+    .num span:nth-child(2) { animation-delay: .12s; }
+    .num span:nth-child(3) { animation-delay: .24s; }
+    .hero h1, .place, .lead, .cta { animation: rise .7s ease-out both; }
+    .hero h1 { animation-delay: .35s; }
+    .place { animation-delay: .45s; }
+    .lead { animation-delay: .55s; }
+    .cta { animation-delay: .65s; }
+    .photo { animation: unveil 1s cubic-bezier(.2, .8, .2, 1) .2s both; }
+    .il-win { animation: light 5s ease-in-out infinite; animation-delay: calc(var(--i) * .13s); }
+    .il-flag { animation: flag 2.4s ease-in-out infinite; }
+    .waves .s1 { animation: drift 16s linear infinite; }
+    .waves .s2 { animation: drift 9s linear infinite; }
+    .rv { transition: opacity .7s ease-out, transform .7s ease-out; }
+    .rv.rv-wait { opacity: .15; transform: translateY(32px); }
+    .chip i { transition: transform .9s cubic-bezier(.2, .8, .2, 1); transition-delay: calc(var(--n) * 40ms); }
+    .rv-wait .chip i { transform: scaleX(0); }
+    .tcard, .club, .chip { transition: transform .2s; }
+    .tcard:hover, .club:hover, .chip:hover { transform: translateY(-3px); }
+  }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  @keyframes drop { from { opacity: 0; transform: translateY(-60px) rotate(-6deg); } }
+  @keyframes rise { from { opacity: 0; transform: translateY(18px); } }
+  @keyframes unveil { from { opacity: 0; transform: translateX(40px) scale(.96); } }
+  @keyframes drift { to { transform: translateX(-50%); } }
+  @keyframes light { 0%, 70%, 100% { fill: var(--water); } 35% { fill: var(--sun); } }
+  @keyframes flag { 50% { transform: skewY(-8deg) scaleX(.92); } }
+
+  /* Bo'limlar */
+  section { padding: 64px 0; }
+  section + section { border-top: 1px solid var(--line); }
 
   .about { display: grid; grid-template-columns: 1.4fr 1fr; gap: 40px; align-items: start; }
+  .about > * { min-width: 0; }
   .about p { margin: 0 0 28px; max-width: 60ch; }
   .has { list-style: none; margin: 0; padding: 0; columns: 2; column-gap: 28px; }
   .has li { padding: 7px 0 7px 22px; position: relative; break-inside: avoid; }
-  .has li::before {
-    content: "";
-    position: absolute; left: 0; top: 16px;
-    width: 12px; height: 4px; border-radius: 2px;
-    background: var(--sun);
-  }
-  .facts {
-    background: var(--canal);
-    color: var(--on-canal);
-    border-radius: 6px 28px 6px 6px;
-    padding: 24px 26px;
-    margin: 0;
-  }
+  .has li::before { content: ""; position: absolute; left: 0; top: 16px; width: 12px; height: 4px; border-radius: 2px; background: var(--sun); }
+  .facts { background: var(--canal); color: var(--on-canal); border-radius: 6px 28px 6px 6px; padding: 24px 26px; margin: 0; }
   .facts div { padding: 10px 0; }
   .facts div + div { border-top: 1px solid color-mix(in srgb, currentColor 22%, transparent); }
   .facts dt { font-size: 14px; opacity: .8; }
   .facts dd { margin: 0; font-weight: 500; font-size: 1.05rem; }
-  .facts .todo dd { font-weight: 400; font-style: italic; opacity: .75; }
-  @media (max-width: 760px) {
-    .about { grid-template-columns: 1fr; }
-    .has { columns: 1; }
+  @media (max-width: 760px) { .about { grid-template-columns: 1fr; } .has { columns: 1; } }
+
+  /* Direktor */
+  .director { display: grid; grid-template-columns: 220px 1fr; gap: 36px; align-items: start; }
+  .director > * { min-width: 0; }
+  .portrait {
+    aspect-ratio: 4 / 5; border-radius: 6px 40px 6px 6px; overflow: hidden;
+    background: var(--water); display: grid; place-items: center; max-width: 100%;
+    font-family: var(--display); font-weight: 800; font-size: 3rem; color: var(--canal);
   }
+  .portrait img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .director .role { color: var(--canal); font-weight: 500; margin: 0 0 4px; }
+  .director .name { font-family: var(--display); font-weight: 500; font-size: 1.4rem; margin: 0 0 14px; }
+  .director .bio { margin: 0 0 20px; max-width: 60ch; }
+  .dfacts { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px 28px; margin: 0; }
+  .dfacts dt { font-size: 14px; color: var(--muted); }
+  .dfacts dd { margin: 0; font-weight: 500; }
+  @media (max-width: 640px) { .director { grid-template-columns: 1fr; } .portrait { max-width: 200px; } }
+
+  /* Sinflar */
+  .sample {
+    border: 1.5px dashed var(--sun); border-radius: 6px; padding: 12px 16px; margin: 0 0 28px;
+    font-size: 15px; max-width: 70ch;
+  }
+  .totals { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 0 0 36px; }
+  .totals div { border-left: 4px solid var(--sun); padding-left: 14px; min-width: 0; }
+  .totals dt { color: var(--muted); font-size: 15px; }
+  .totals dd { margin: 0; font-family: var(--display); font-weight: 800; font-size: clamp(1.6rem, 5vw, 2.6rem); color: var(--canal); font-variant-numeric: tabular-nums; line-height: 1.15; }
+  .stage { font-size: 15px; font-weight: 700; color: var(--canal-deep); margin: 28px 0 6px; }
+  .grade { display: grid; grid-template-columns: 96px 1fr auto; gap: 10px 20px; align-items: center; padding: 14px 0; border-top: 1px solid var(--line); }
+  .grade > * { min-width: 0; }
+  .grade .g { font-family: var(--display); font-weight: 500; font-size: 1.05rem; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; margin: 0; padding: 0; }
+  .chip { background: var(--card); border: 1px solid var(--line); border-radius: 6px; padding: 7px 12px 9px; min-width: 78px; }
+  .chip b { display: block; font-size: 15px; }
+  .chip span { font-size: 14px; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .chip .bar { display: block; height: 4px; border-radius: 2px; background: var(--line); margin-top: 6px; overflow: hidden; }
+  .chip i { display: block; height: 100%; background: var(--canal); border-radius: 2px; transform-origin: left; }
+  .grade .sum { font-size: 15px; color: var(--muted); text-align: right; font-variant-numeric: tabular-nums; }
+  @media (max-width: 640px) {
+    .grade { grid-template-columns: 1fr auto; }
+    .grade .chips { grid-column: 1 / -1; order: 3; }
+    .totals { grid-template-columns: 1fr; }
+  }
+
+  /* O'qituvchilar va to'garaklar */
+  .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 16px; list-style: none; margin: 0; padding: 0; }
+  .tcard { background: var(--card); border: 1px solid var(--line); border-radius: 6px 24px 6px 6px; padding: 18px; display: flex; gap: 14px; align-items: center; min-width: 0; }
+  .avatar {
+    flex: none; width: 56px; height: 56px; border-radius: 50%; overflow: hidden;
+    background: var(--water); color: var(--canal); display: grid; place-items: center;
+    font-family: var(--display); font-weight: 500; font-size: 16px;
+  }
+  .avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .tcard div { min-width: 0; }
+  .tcard strong { display: block; line-height: 1.3; }
+  .tcard .sub { color: var(--canal); font-size: 15px; font-weight: 500; }
+  .tcard .exp { color: var(--muted); font-size: 14px; display: block; }
+  .club { background: var(--card); border: 1px solid var(--line); border-left: 5px solid var(--canal); border-radius: 4px; padding: 14px 16px; }
+  .club strong { display: block; }
+  .club span { color: var(--muted); font-size: 15px; }
+
+  /* To'ldirilishi kerak bo'lgan joylar */
+  .todo { border-style: dashed; border-color: var(--muted); background: transparent; }
+  .todo strong, .todo .name, .todo .bio { color: var(--muted); }
+  .director.todo { border-width: 1.5px; border-radius: 6px; padding: 20px; }
+  .news li.todo { border: 0; border-top: 1px solid var(--line); }
+  .todo .bio { font-style: italic; }
+  .tag { display: inline-block; background: var(--sun); color: var(--on-sun); font: 500 12px var(--body); border-radius: 3px; padding: 1px 7px; margin-left: 6px; vertical-align: middle; }
 
   /* Yangiliklar */
   .news { list-style: none; margin: 0; padding: 0; }
-  .news li {
-    display: grid;
-    grid-template-columns: 130px 1fr;
-    gap: 6px 28px;
-    padding: 22px 0;
-    border-top: 1px solid var(--line);
-  }
+  .news li { display: grid; grid-template-columns: 130px 1fr; gap: 6px 28px; padding: 22px 0; border-top: 1px solid var(--line); }
+  .news li > * { min-width: 0; }
   .news li:first-child { border-top: 0; padding-top: 0; }
-  .news time, .news .when { font-family: var(--display); font-weight: 500; font-size: 14px; color: var(--canal); padding-top: 4px; }
+  .news .when { font-family: var(--display); font-weight: 500; font-size: 14px; color: var(--canal); padding-top: 4px; }
   .news h3 { margin-bottom: 6px; font-size: 1.15rem; }
   .news p { margin: 0; max-width: 64ch; }
   .news .src { font-size: 14px; display: inline-block; margin-top: 6px; }
+  .news li.todo h3, .news li.todo p { color: var(--muted); font-style: italic; }
   @media (max-width: 600px) { .news li { grid-template-columns: 1fr; } }
 
-  /* O'qituvchilar va to'garaklar */
-  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
-  @media (max-width: 760px) { .two { grid-template-columns: 1fr; } }
-  .people, .clubs { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
-  .people li, .clubs li {
-    background: var(--card);
-    border: 1px solid var(--line);
-    border-left: 5px solid var(--canal);
-    border-radius: 4px;
-    padding: 12px 16px;
-  }
-  .people strong, .clubs strong { display: block; }
-  .people span, .clubs span { color: var(--muted); font-size: 15px; }
-  .note { color: var(--muted); font-size: 15px; margin: 0 0 16px; max-width: 52ch; }
-
-  /* To'ldirilishi kerak bo'lgan joylar */
-  li.todo {
-    background: transparent;
-    border: 1.5px dashed var(--muted);
-    border-left: 1.5px dashed var(--muted);
-    color: var(--muted);
-  }
-  .news li.todo { border: 0; border-top: 1px solid var(--line); }
-  .news li.todo h3, .news li.todo p { color: var(--muted); font-style: italic; }
-  .tag {
-    display: inline-block;
-    background: var(--sun);
-    color: var(--on-sun);
-    font-size: 12px;
-    font-weight: 500;
-    font-style: normal;
-    border-radius: 3px;
-    padding: 1px 7px;
-    margin-left: 6px;
-    vertical-align: middle;
-  }
-
   footer { background: var(--footer-bg); color: var(--footer-fg); padding: 44px 0; }
-  footer h2 { color: var(--footer-fg); margin-bottom: 16px; }
+  footer h2 { margin-bottom: 16px; }
   footer p { margin: 0 0 6px; }
   footer .small { font-size: 14px; opacity: .75; margin-top: 22px; }
 </style>
@@ -252,8 +289,11 @@
     <a class="brand" href="#top" data-t="brand"></a>
     <nav aria-label="Bo'limlar">
       <a href="#about" data-t="navAbout"></a>
+      <a href="#director" data-t="navDirector"></a>
+      <a href="#classes" data-t="navClasses"></a>
+      <a href="#teachers" data-t="navTeachers"></a>
+      <a href="#clubs" data-t="navClubs"></a>
       <a href="#news" data-t="navNews"></a>
-      <a href="#people" data-t="navPeople"></a>
       <a href="#contact" data-t="navContact"></a>
     </nav>
     <div class="langs" role="group" aria-label="Til / Язык / Language">
@@ -267,21 +307,48 @@
 <main id="top">
   <div class="hero">
     <div class="wrap">
-      <p class="num" aria-hidden="true">358</p>
       <div>
+        <p class="num" aria-hidden="true"><span>3</span><span>5</span><span>8</span></p>
         <h1 data-t="h1"></h1>
         <p class="place" data-t="place"></p>
         <p class="lead" data-t="lead"></p>
+        <a class="cta" href="#classes" data-t="cta"></a>
       </div>
+      <figure class="photo">
+        <div class="frame" id="heroFrame">
+          <!-- Rasm qo'yilguncha ko'rinadigan chizma. rasmlar/maktab.jpg qo'shilsa, o'rnini o'sha rasm egallaydi. -->
+          <svg id="heroArt" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Maktab binosi chizmasi">
+            <rect class="il-sky" width="400" height="300"/>
+            <circle class="il-sun" cx="70" cy="62" r="26"/>
+            <rect class="il-ground" y="250" width="400" height="50"/>
+            <rect class="il-pole" x="315" y="56" width="3" height="76"/>
+            <path class="il-flag" d="M318 60 h34 l-8 9 l8 9 h-34 z"/>
+            <rect class="il-roof" x="52" y="124" width="296" height="10" rx="2"/>
+            <rect class="il-wall" x="60" y="132" width="280" height="120"/>
+            <g id="heroWins"></g>
+            <rect class="il-door" x="184" y="212" width="32" height="40" rx="3"/>
+            <circle class="il-tree" cx="34" cy="226" r="20"/>
+            <rect class="il-tree" x="32" y="240" width="4" height="14"/>
+            <circle class="il-tree" cx="368" cy="230" r="17"/>
+            <rect class="il-tree" x="366" y="242" width="4" height="12"/>
+          </svg>
+        </div>
+        <figcaption id="heroCap" data-t="photoTodo"></figcaption>
+      </figure>
     </div>
-    <svg class="wave" viewBox="0 0 1200 44" preserveAspectRatio="none" aria-hidden="true">
-      <path d="M0 22 C150 0 300 44 450 22 S750 0 900 22 S1100 40 1200 22 V44 H0 Z" style="fill:var(--paper)"/>
-      <path d="M0 22 C150 0 300 44 450 22 S750 0 900 22 S1100 40 1200 22" style="fill:none;stroke:var(--sun)" stroke-width="3"/>
-    </svg>
+    <div class="waves" aria-hidden="true">
+      <svg class="s1" viewBox="0 0 2400 70" preserveAspectRatio="none">
+        <path class="w-back" d="M0 26 Q150 2 300 26 T600 26 T900 26 T1200 26 T1500 26 T1800 26 T2100 26 T2400 26 V70 H0 Z"/>
+      </svg>
+      <svg class="s2" viewBox="0 0 2400 70" preserveAspectRatio="none">
+        <path class="w-front" d="M0 44 Q150 22 300 44 T600 44 T900 44 T1200 44 T1500 44 T1800 44 T2100 44 T2400 44 V70 H0 Z"/>
+        <path class="w-line" d="M0 44 Q150 22 300 44 T600 44 T900 44 T1200 44 T1500 44 T1800 44 T2100 44 T2400 44"/>
+      </svg>
+    </div>
   </div>
 
   <section id="about">
-    <div class="wrap">
+    <div class="wrap rv">
       <h2 data-t="aboutTitle"></h2>
       <div class="about">
         <div>
@@ -294,28 +361,42 @@
     </div>
   </section>
 
-  <section id="news">
-    <div class="wrap">
-      <h2 data-t="newsTitle"></h2>
-      <ul class="news" id="newsList"></ul>
+  <section id="director">
+    <div class="wrap rv">
+      <h2 data-t="directorTitle"></h2>
+      <div class="director" id="directorBox"></div>
     </div>
   </section>
 
-  <section id="people">
-    <div class="wrap">
-      <h2 data-t="peopleTitle"></h2>
-      <div class="two">
-        <div>
-          <h3 data-t="teachersTitle"></h3>
-          <p class="note" data-t="teachersNote"></p>
-          <ul class="people" id="teachers"></ul>
-        </div>
-        <div>
-          <h3 data-t="clubsTitle"></h3>
-          <p class="note" data-t="clubsNote"></p>
-          <ul class="clubs" id="clubs"></ul>
-        </div>
-      </div>
+  <section id="classes">
+    <div class="wrap rv" id="classesWrap">
+      <h2 data-t="classesTitle"></h2>
+      <p class="sample" id="sampleNote" data-t="sampleNote"></p>
+      <dl class="totals" id="totals"></dl>
+      <div id="grades"></div>
+    </div>
+  </section>
+
+  <section id="teachers">
+    <div class="wrap rv">
+      <h2 data-t="teachersTitle"></h2>
+      <p class="note" data-t="teachersNote"></p>
+      <ul class="cards" id="teacherList"></ul>
+    </div>
+  </section>
+
+  <section id="clubs">
+    <div class="wrap rv">
+      <h2 data-t="clubsTitle"></h2>
+      <p class="note" data-t="clubsNote"></p>
+      <ul class="cards" id="clubList"></ul>
+    </div>
+  </section>
+
+  <section id="news">
+    <div class="wrap rv">
+      <h2 data-t="newsTitle"></h2>
+      <ul class="news" id="newsList"></ul>
     </div>
   </section>
 </main>
@@ -333,11 +414,74 @@
 <script>
 /* =====================================================================
    1-QISM. SAYT MA'LUMOTLARI
-   Yangilik, o'qituvchi yoki to'garak qo'shish uchun faqat shu qismni
-   o'zgartiring. Har bir matn uch tilda yoziladi: uz, ru, en.
-   "todo: true" — hali to'ldirilmagan joy (saytda sariq belgi bilan
-   ko'rinadi). To'ldirgach, shu qatorni o'chirib tashlang.
+   Ma'lumot qo'shish yoki o'zgartirish uchun faqat shu qismga teging.
+   Matnlar uch tilda yoziladi: uz, ru, en.
+   "todo: true" — hali to'ldirilmagan joy (saytda sariq belgi chiqadi).
+   To'ldirgach, shu qatorni o'chirib tashlang.
    ===================================================================== */
+
+/* Rasmlar. Fayllarni "rasmlar" papkasiga shu nomlar bilan qo'ying. */
+const HERO_PHOTO = "rasmlar/maktab.jpg";
+
+const DIRECTOR = {
+  todo: true,
+  photo: "rasmlar/direktor.jpg",
+  name: { uz: "Ism Familiya", ru: "Имя Фамилия", en: "First and last name" },
+  bio: { uz: "Direktor haqida qisqa ma’lumot shu yerga yoziladi: ma’lumoti, ish tajribasi va maktabga qachon kelgani.",
+         ru: "Здесь будет краткая информация о директоре: образование, опыт работы и когда пришёл в школу.",
+         en: "A short note about the principal goes here: education, experience and when they joined the school." },
+  facts: [
+    { label: { uz: "Ish staji", ru: "Стаж работы", en: "Experience" },
+      value: { uz: "qo‘shiladi", ru: "будет добавлено", en: "to be added" } },
+    { label: { uz: "Qabul kunlari", ru: "Дни приёма", en: "Office hours" },
+      value: { uz: "qo‘shiladi", ru: "будет добавлено", en: "to be added" } }
+  ]
+};
+
+/* SINFLAR. Har bir qator: sinf raqami va undagi parallel sinflar.
+   Masalan 7-sinfda uchta sinf bo'lsa: { A: 28, B: 30, V: 26 } — harf va o'quvchilar soni.
+   DIQQAT: hozirgi sonlar NAMUNA, haqiqiy emas. Haqiqiy sonlarni yozgach,
+   CLASSES_SAMPLE ni false qiling — sahifadagi "Namuna" yozuvi yo'qoladi. */
+const CLASSES_SAMPLE = true;
+const CLASSES = [
+  { grade: 1,  groups: { A: 30, B: 29, V: 31, G: 28 } },
+  { grade: 2,  groups: { A: 31, B: 30, V: 29 } },
+  { grade: 3,  groups: { A: 28, B: 30, V: 27 } },
+  { grade: 4,  groups: { A: 29, B: 31, V: 28 } },
+  { grade: 5,  groups: { A: 30, B: 28, V: 29 } },
+  { grade: 6,  groups: { A: 27, B: 29 } },
+  { grade: 7,  groups: { A: 28, B: 30, V: 26 } },
+  { grade: 8,  groups: { A: 29, B: 27 } },
+  { grade: 9,  groups: { A: 26, B: 28 } },
+  { grade: 10, groups: { A: 24, B: 22 } },
+  { grade: 11, groups: { A: 21, B: 20 } }
+];
+
+/* O'QITUVCHILAR. photo — ixtiyoriy, masalan "rasmlar/karimova.jpg".
+   Ism va rasmni faqat o'qituvchining roziligi bilan qo'ying. */
+const TEACHERS = [
+  { todo: true, name: { uz: "Ism Familiya", ru: "Имя Фамилия", en: "First and last name" },
+    subject: { uz: "Fan nomi", ru: "Предмет", en: "Subject" },
+    exp: { uz: "Toifasi, ish staji", ru: "Категория, стаж", en: "Category, experience" } },
+  { todo: true, name: { uz: "Ism Familiya", ru: "Имя Фамилия", en: "First and last name" },
+    subject: { uz: "Fan nomi", ru: "Предмет", en: "Subject" },
+    exp: { uz: "Toifasi, ish staji", ru: "Категория, стаж", en: "Category, experience" } },
+  { todo: true, name: { uz: "Ism Familiya", ru: "Имя Фамилия", en: "First and last name" },
+    subject: { uz: "Fan nomi", ru: "Предмет", en: "Subject" },
+    exp: { uz: "Toifasi, ish staji", ru: "Категория, стаж", en: "Category, experience" } },
+  { todo: true, name: { uz: "Ism Familiya", ru: "Имя Фамилия", en: "First and last name" },
+    subject: { uz: "Fan nomi", ru: "Предмет", en: "Subject" },
+    exp: { uz: "Toifasi, ish staji", ru: "Категория, стаж", en: "Category, experience" } }
+];
+
+const CLUBS = [
+  { name: { uz: "Robototexnika", ru: "Робототехника", en: "Robotics" },
+    info: { uz: "Kun va vaqti qo‘shiladi", ru: "День и время будут добавлены", en: "Day and time to be added" } },
+  { todo: true, name: { uz: "To‘garak nomi", ru: "Название кружка", en: "Club name" },
+    info: { uz: "Kun, vaqt, xona", ru: "День, время, кабинет", en: "Day, time, room" } },
+  { todo: true, name: { uz: "To‘garak nomi", ru: "Название кружка", en: "Club name" },
+    info: { uz: "Kun, vaqt, xona", ru: "День, время, кабинет", en: "Day, time, room" } }
+];
 
 const FACTS = [
   { label: { uz: "Ochilgan yili", ru: "Год открытия", en: "Opened" },
@@ -346,11 +490,7 @@ const FACTS = [
     value: { uz: "qariyb 1000", ru: "почти 1000", en: "about 1,000" } },
   { label: { uz: "Mahalla", ru: "Махалля", en: "Mahalla" },
     value: { uz: "Iykota", ru: "Ийкота", en: "Iykota" } },
-  { todo: true,
-    label: { uz: "Direktor", ru: "Директор", en: "Principal" },
-    value: { uz: "ism-familiya qo‘shiladi", ru: "имя будет добавлено", en: "name to be added" } },
-  { todo: true,
-    label: { uz: "Ta’lim tili", ru: "Язык обучения", en: "Language of instruction" },
+  { label: { uz: "Ta’lim tili", ru: "Язык обучения", en: "Language of instruction" },
     value: { uz: "qo‘shiladi", ru: "будет добавлено", en: "to be added" } }
 ];
 
@@ -368,23 +508,17 @@ const HAS = [
 
 const NEWS = [
   { when: { uz: "20.03.2025", ru: "20.03.2025", en: "20 Mar 2025" },
-    title: { uz: "Maktabimizga Prezident tashrif buyurdi",
-             ru: "Нашу школу посетил Президент",
-             en: "The President visited our school" },
+    title: { uz: "Maktabimizga Prezident tashrif buyurdi", ru: "Нашу школу посетил Президент", en: "The President visited our school" },
     text: { uz: "Shavkat Mirziyoyev Bektemir tumaniga tashrifi chog‘ida Iykota mahallasidagi yangi maktabimiz bilan tanishdi va o‘qituvchilar bilan suhbatlashdi.",
             ru: "Во время поездки в Бектемирский район Шавкат Мирзиёев осмотрел нашу новую школу в махалле Ийкота и побеседовал с учителями.",
             en: "During a trip to Bektemir district, Shavkat Mirziyoyev toured our new school in Iykota mahalla and talked with the teachers." },
     src: "https://president.uz/oz/lists/view/7959" },
-
   { when: { uz: "Reja", ru: "В планах", en: "Planned" },
-    title: { uz: "Maktabimiz negizida robototexnika kursi",
-             ru: "Курс робототехники на базе нашей школы",
-             en: "A robotics course based at our school" },
+    title: { uz: "Maktabimiz negizida robototexnika kursi", ru: "Курс робототехники на базе нашей школы", en: "A robotics course based at our school" },
     text: { uz: "Toshkent axborot texnologiyalari universiteti ishchi guruhi tumandagi barcha o‘quvchilar uchun maktabimiz negizida robototexnika kursi tashkil etishni rejalashtirgan.",
             ru: "Рабочая группа Ташкентского университета информационных технологий планирует открыть на базе нашей школы курс робототехники для всех учеников района.",
             en: "A working group from Tashkent University of Information Technologies plans to set up a robotics course at our school for students from the whole district." },
     src: "https://tuit.uz/en/post/23312132123" },
-
   { todo: true,
     when: { uz: "kun.oy.yil", ru: "дд.мм.гггг", en: "date" },
     title: { uz: "Yangi e’lon sarlavhasi", ru: "Заголовок нового объявления", en: "New announcement title" },
@@ -393,111 +527,114 @@ const NEWS = [
             en: "The announcement text goes here: what is happening, when and where." } }
 ];
 
-const TEACHERS = [
-  { todo: true,
-    name: { uz: "Ism Familiya", ru: "Имя Фамилия", en: "First and last name" },
-    subject: { uz: "Fan nomi", ru: "Предмет", en: "Subject" } },
-  { todo: true,
-    name: { uz: "Ism Familiya", ru: "Имя Фамилия", en: "First and last name" },
-    subject: { uz: "Fan nomi", ru: "Предмет", en: "Subject" } },
-  { todo: true,
-    name: { uz: "Ism Familiya", ru: "Имя Фамилия", en: "First and last name" },
-    subject: { uz: "Fan nomi", ru: "Предмет", en: "Subject" } }
-];
-
-const CLUBS = [
-  { name: { uz: "Robototexnika", ru: "Робототехника", en: "Robotics" },
-    info: { uz: "Kun va vaqti qo‘shiladi", ru: "День и время будут добавлены", en: "Day and time to be added" } },
-  { todo: true,
-    name: { uz: "To‘garak nomi", ru: "Название кружка", en: "Club name" },
-    info: { uz: "Kun, vaqt, xona", ru: "День, время, кабинет", en: "Day, time, room" } },
-  { todo: true,
-    name: { uz: "To‘garak nomi", ru: "Название кружка", en: "Club name" },
-    info: { uz: "Kun, vaqt, xona", ru: "День, время, кабинет", en: "Day, time, room" } }
-];
-
 /* =====================================================================
    2-QISM. SAHIFADAGI DOIMIY MATNLAR (uch tilda)
    ===================================================================== */
+
+const STAGES = [
+  { from: 1, to: 4,   name: { uz: "Boshlang‘ich sinflar (1–4)", ru: "Начальные классы (1–4)", en: "Primary school (grades 1–4)" } },
+  { from: 5, to: 9,   name: { uz: "Tayanch o‘rta ta’lim (5–9)", ru: "Базовое среднее образование (5–9)", en: "Lower secondary (grades 5–9)" } },
+  { from: 10, to: 11, name: { uz: "O‘rta ta’lim (10–11)", ru: "Среднее образование (10–11)", en: "Upper secondary (grades 10–11)" } }
+];
 
 const T = {
   uz: {
     draft: "Qoralama. Sayt maktab ma’muriyati tasdiqlaganidan keyin e’lon qilinadi.",
     brand: "358-maktab",
-    navAbout: "Maktab haqida", navNews: "Yangiliklar", navPeople: "O‘qituvchilar va to‘garaklar", navContact: "Aloqa",
+    navAbout: "Maktab", navDirector: "Direktor", navClasses: "Sinflar", navTeachers: "O‘qituvchilar",
+    navClubs: "To‘garaklar", navNews: "Yangiliklar", navContact: "Aloqa",
     h1: "358-sonli umumta’lim maktabi",
     place: "Toshkent shahri, Bektemir tumani, Iykota mahallasi",
     lead: "2025-yilda ochilgan yangi maktab. Bu yerda laboratoriyalar, kompyuter sinflari, kutubxona va robototexnika to‘garagi bor.",
+    cta: "Sinflarni ko‘rish",
+    photoTodo: "Maktab rasmi qo‘shiladi",
     aboutTitle: "Maktab haqida",
     aboutText: "Maktabimiz davlat budjeti hisobidan qurilib, 2025-yilda Bektemir tumanining Iykota mahallasida foydalanishga topshirilgan. Bino qariyb 1000 o‘quvchiga mo‘ljallangan.",
     hasTitle: "Maktabda nimalar bor",
-    newsTitle: "Yangiliklar va tadbirlar",
-    source: "Manba",
-    peopleTitle: "O‘qituvchilar va to‘garaklar",
+    directorTitle: "Maktab direktori", directorRole: "Direktor",
+    classesTitle: "Sinflar va o‘quvchilar",
+    sampleNote: "Namuna. Quyidagi sonlar sahifa qanday ko‘rinishini ko‘rsatish uchun qo‘yilgan, haqiqiy emas. Maktabdan aniq ro‘yxat olingach almashtiriladi.",
+    totStudents: "Jami o‘quvchi", totClasses: "Jami sinf", totAvg: "Bir sinfda o‘rtacha",
+    gradeName: function (g) { return g + "-sinf"; },
+    gradeSum: function (c, s) { return c + " ta sinf, " + s + " o‘quvchi"; },
+    pupils: function (n) { return n + " o‘quvchi"; },
     teachersTitle: "O‘qituvchilar",
     teachersNote: "Ro‘yxat ma’muriyat bilan kelishilgach qo‘shiladi. Ism va rasmlar faqat o‘qituvchining roziligi bilan joylanadi.",
     clubsTitle: "To‘garaklar",
     clubsNote: "To‘garaklar jadvali ma’muriyatdan olingach to‘ldiriladi.",
+    newsTitle: "Yangiliklar va tadbirlar", source: "Manba",
     contactTitle: "Aloqa",
-    contactAddress: "Manzil: qo‘shiladi",
-    contactPhone: "Telefon: qo‘shiladi",
-    contactHours: "Qabul vaqti: qo‘shiladi",
+    contactAddress: "Manzil: qo‘shiladi", contactPhone: "Telefon: qo‘shiladi", contactHours: "Qabul vaqti: qo‘shiladi",
     footNote: "Sayt qoralamasini maktab o‘quvchisi tayyorlagan.",
     todo: "to‘ldiriladi"
   },
   ru: {
     draft: "Черновик. Сайт будет опубликован после утверждения администрацией школы.",
     brand: "Школа №358",
-    navAbout: "О школе", navNews: "Новости", navPeople: "Учителя и кружки", navContact: "Контакты",
+    navAbout: "Школа", navDirector: "Директор", navClasses: "Классы", navTeachers: "Учителя",
+    navClubs: "Кружки", navNews: "Новости", navContact: "Контакты",
     h1: "Общеобразовательная школа №358",
     place: "Город Ташкент, Бектемирский район, махалля Ийкота",
     lead: "Новая школа, открытая в 2025 году. Здесь есть лаборатории, компьютерные классы, библиотека и кружок робототехники.",
+    cta: "Посмотреть классы",
+    photoTodo: "Фото школы будет добавлено",
     aboutTitle: "О школе",
     aboutText: "Школа построена на средства государственного бюджета и сдана в эксплуатацию в 2025 году в махалле Ийкота Бектемирского района. Здание рассчитано почти на 1000 учеников.",
     hasTitle: "Что есть в школе",
-    newsTitle: "Новости и события",
-    source: "Источник",
-    peopleTitle: "Учителя и кружки",
+    directorTitle: "Директор школы", directorRole: "Директор",
+    classesTitle: "Классы и ученики",
+    sampleNote: "Образец. Числа ниже показывают, как будет выглядеть страница, они не настоящие. Их заменят, когда школа даст точный список.",
+    totStudents: "Всего учеников", totClasses: "Всего классов", totAvg: "В среднем в классе",
+    gradeName: function (g) { return g + " класс"; },
+    gradeSum: function (c, s) { return "Классов: " + c + ", учеников: " + s; },
+    pupils: function (n) { return "учеников: " + n; },
     teachersTitle: "Учителя",
     teachersNote: "Список появится после согласования с администрацией. Имена и фотографии размещаются только с согласия учителя.",
     clubsTitle: "Кружки",
     clubsNote: "Расписание кружков будет заполнено после получения от администрации.",
+    newsTitle: "Новости и события", source: "Источник",
     contactTitle: "Контакты",
-    contactAddress: "Адрес: будет добавлен",
-    contactPhone: "Телефон: будет добавлен",
-    contactHours: "Часы приёма: будут добавлены",
+    contactAddress: "Адрес: будет добавлен", contactPhone: "Телефон: будет добавлен", contactHours: "Часы приёма: будут добавлены",
     footNote: "Черновик сайта подготовил ученик школы.",
     todo: "заполнить"
   },
   en: {
     draft: "Draft. The site will go live once the school administration approves it.",
     brand: "School 358",
-    navAbout: "About", navNews: "News", navPeople: "Teachers and clubs", navContact: "Contact",
+    navAbout: "School", navDirector: "Principal", navClasses: "Classes", navTeachers: "Teachers",
+    navClubs: "Clubs", navNews: "News", navContact: "Contact",
     h1: "General Secondary School No. 358",
     place: "Tashkent city, Bektemir district, Iykota mahalla",
     lead: "A new school that opened in 2025, with laboratories, computer rooms, a library and a robotics club.",
+    cta: "See the classes",
+    photoTodo: "School photo to be added",
     aboutTitle: "About the school",
     aboutText: "Our school was built with state budget funds and opened in 2025 in Iykota mahalla, Bektemir district. The building is designed for about 1,000 students.",
     hasTitle: "What the school has",
-    newsTitle: "News and events",
-    source: "Source",
-    peopleTitle: "Teachers and clubs",
+    directorTitle: "School principal", directorRole: "Principal",
+    classesTitle: "Classes and students",
+    sampleNote: "Sample. The numbers below show how the page will look and are not real. They will be replaced once the school provides the exact list.",
+    totStudents: "Students in total", totClasses: "Classes in total", totAvg: "Average per class",
+    gradeName: function (g) { return "Grade " + g; },
+    gradeSum: function (c, s) { return c + " classes, " + s + " students"; },
+    pupils: function (n) { return n + " students"; },
     teachersTitle: "Teachers",
     teachersNote: "The list will be added once the administration agrees. Names and photos are posted only with the teacher's consent.",
     clubsTitle: "Clubs",
     clubsNote: "The club timetable will be filled in once we get it from the administration.",
+    newsTitle: "News and events", source: "Source",
     contactTitle: "Contact",
-    contactAddress: "Address: to be added",
-    contactPhone: "Phone: to be added",
-    contactHours: "Office hours: to be added",
+    contactAddress: "Address: to be added", contactPhone: "Phone: to be added", contactHours: "Office hours: to be added",
     footNote: "This draft was prepared by a student of the school.",
     todo: "to fill in"
   }
 };
 
 /* =====================================================================
-   3-QISM. SAHIFANI CHIZISH (bu yerga tegish shart emas)
+   3-QISM. SAHIFANI CHIZISH VA ANIMATSIYALAR (bu yerga tegish shart emas)
    ===================================================================== */
+
+const CALM = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 function el(tag, cls, text) {
   const node = document.createElement(tag);
@@ -508,67 +645,228 @@ function el(tag, cls, text) {
 function fill(id, items, build) {
   const box = document.getElementById(id);
   box.textContent = "";
-  items.forEach(function (item) { box.appendChild(build(item)); });
+  items.forEach(function (item, i) { box.appendChild(build(item, i)); });
+  return box;
 }
 function tag(lang) { return el("span", "tag", T[lang].todo); }
+function initials(name) {
+  return name.split(/\s+/).map(function (w) { return w.charAt(0); }).join("").slice(0, 2).toUpperCase();
+}
+/* Rasm bor bo'lsa ko'rsatadi, bo'lmasa o'rnida bosh harflar qoladi */
+function photoInto(box, src, alt) {
+  if (!src) return;
+  const img = new Image();
+  img.alt = alt;
+  img.onload = function () { box.textContent = ""; box.appendChild(img); };
+  img.src = src;
+}
+
+function totals() {
+  let students = 0, classes = 0, max = 0;
+  CLASSES.forEach(function (c) {
+    Object.keys(c.groups).forEach(function (k) {
+      students += c.groups[k]; classes += 1; max = Math.max(max, c.groups[k]);
+    });
+  });
+  return { students: students, classes: classes, avg: classes ? Math.round(students / classes) : 0, max: max };
+}
 
 function render(lang) {
+  const L = T[lang];
   document.documentElement.lang = lang;
-  document.querySelectorAll("[data-t]").forEach(function (node) {
-    node.textContent = T[lang][node.dataset.t];
-  });
+  document.querySelectorAll("[data-t]").forEach(function (node) { node.textContent = L[node.dataset.t]; });
   document.querySelectorAll("[data-lang]").forEach(function (btn) {
     btn.setAttribute("aria-pressed", String(btn.dataset.lang === lang));
   });
 
   fill("facts", FACTS, function (f) {
-    const row = el("div", f.todo ? "todo" : "");
+    const row = el("div");
     row.appendChild(el("dt", "", f.label[lang]));
     row.appendChild(el("dd", "", f.value[lang]));
     return row;
   });
-
   fill("has", HAS, function (h) { return el("li", "", h[lang]); });
 
-  fill("newsList", NEWS, function (n) {
-    const li = el("li", n.todo ? "todo" : "");
-    li.appendChild(el("div", "when", n.when[lang]));
+  /* Direktor */
+  const dbox = document.getElementById("directorBox");
+  dbox.textContent = "";
+  dbox.classList.toggle("todo", !!DIRECTOR.todo);
+  const portrait = el("div", "portrait", DIRECTOR.todo ? "?" : initials(DIRECTOR.name[lang]));
+  photoInto(portrait, DIRECTOR.photo, DIRECTOR.name[lang]);
+  dbox.appendChild(portrait);
+  const dtext = el("div");
+  dtext.appendChild(el("p", "role", L.directorRole));
+  const dname = el("p", "name", DIRECTOR.name[lang]);
+  if (DIRECTOR.todo) dname.appendChild(tag(lang));
+  dtext.appendChild(dname);
+  dtext.appendChild(el("p", "bio", DIRECTOR.bio[lang]));
+  const dl = el("dl", "dfacts");
+  DIRECTOR.facts.forEach(function (f) {
+    const row = el("div");
+    row.appendChild(el("dt", "", f.label[lang]));
+    row.appendChild(el("dd", "", f.value[lang]));
+    dl.appendChild(row);
+  });
+  dtext.appendChild(dl);
+  dbox.appendChild(dtext);
+
+  /* Sinflar */
+  const tot = totals();
+  document.getElementById("sampleNote").hidden = !CLASSES_SAMPLE;
+  fill("totals", [[L.totStudents, tot.students], [L.totClasses, tot.classes], [L.totAvg, tot.avg]], function (pair) {
+    const row = el("div");
+    row.appendChild(el("dt", "", pair[0]));
+    const dd = el("dd", "", String(pair[1]));
+    dd.dataset.count = pair[1];
+    row.appendChild(dd);
+    return row;
+  });
+  const grades = document.getElementById("grades");
+  grades.textContent = "";
+  let n = 0;
+  STAGES.forEach(function (stage) {
+    const rows = CLASSES.filter(function (c) { return c.grade >= stage.from && c.grade <= stage.to; });
+    if (!rows.length) return;
+    grades.appendChild(el("h3", "stage", stage.name[lang]));
+    rows.forEach(function (c) {
+      const row = el("div", "grade");
+      row.appendChild(el("div", "g", L.gradeName(c.grade)));
+      const chips = el("ul", "chips");
+      let sum = 0;
+      const keys = Object.keys(c.groups);
+      keys.forEach(function (k) {
+        const count = c.groups[k];
+        sum += count;
+        const chip = el("li", "chip");
+        chip.style.setProperty("--n", n++);
+        chip.appendChild(el("b", "", c.grade + "-" + k));
+        chip.appendChild(el("span", "", L.pupils(count)));
+        const bar = el("span", "bar");
+        const inner = el("i");
+        inner.style.width = Math.round(count / tot.max * 100) + "%";
+        bar.appendChild(inner);
+        chip.appendChild(bar);
+        chips.appendChild(chip);
+      });
+      row.appendChild(chips);
+      row.appendChild(el("div", "sum", L.gradeSum(keys.length, sum)));
+      grades.appendChild(row);
+    });
+  });
+
+  fill("teacherList", TEACHERS, function (t) {
+    const li = el("li", "tcard" + (t.todo ? " todo" : ""));
+    const av = el("span", "avatar", t.todo ? "?" : initials(t.name[lang]));
+    photoInto(av, t.photo, t.name[lang]);
+    li.appendChild(av);
     const body = el("div");
-    const h = el("h3", "", n.title[lang]);
-    if (n.todo) h.appendChild(tag(lang));
-    body.appendChild(h);
-    body.appendChild(el("p", "", n.text[lang]));
-    if (n.src) {
-      const a = el("a", "src", T[lang].source + ": " + new URL(n.src).hostname);
-      a.href = n.src; a.target = "_blank"; a.rel = "noopener";
-      body.appendChild(a);
-    }
+    const name = el("strong", "", t.name[lang]);
+    if (t.todo) name.appendChild(tag(lang));
+    body.appendChild(name);
+    body.appendChild(el("span", "sub", t.subject[lang]));
+    if (t.exp) body.appendChild(el("span", "exp", t.exp[lang]));
     li.appendChild(body);
     return li;
   });
 
-  fill("teachers", TEACHERS, function (t) {
-    const li = el("li", t.todo ? "todo" : "");
-    const name = el("strong", "", t.name[lang]);
-    if (t.todo) name.appendChild(tag(lang));
-    li.appendChild(name);
-    li.appendChild(el("span", "", t.subject[lang]));
-    return li;
-  });
-
-  fill("clubs", CLUBS, function (c) {
-    const li = el("li", c.todo ? "todo" : "");
+  fill("clubList", CLUBS, function (c) {
+    const li = el("li", "club" + (c.todo ? " todo" : ""));
     const name = el("strong", "", c.name[lang]);
     if (c.todo) name.appendChild(tag(lang));
     li.appendChild(name);
     li.appendChild(el("span", "", c.info[lang]));
     return li;
   });
+
+  fill("newsList", NEWS, function (item) {
+    const li = el("li", item.todo ? "todo" : "");
+    li.appendChild(el("div", "when", item.when[lang]));
+    const body = el("div");
+    const h = el("h3", "", item.title[lang]);
+    if (item.todo) h.appendChild(tag(lang));
+    body.appendChild(h);
+    body.appendChild(el("p", "", item.text[lang]));
+    if (item.src) {
+      const a = el("a", "src", L.source + ": " + new URL(item.src).hostname);
+      a.href = item.src; a.target = "_blank"; a.rel = "noopener";
+      body.appendChild(a);
+    }
+    li.appendChild(body);
+    return li;
+  });
+}
+
+/* Chizilgan maktabning derazalari */
+(function () {
+  const g = document.getElementById("heroWins");
+  const NS = "http://www.w3.org/2000/svg";
+  let i = 0;
+  for (let floor = 0; floor < 3; floor++) {
+    for (let col = 0; col < 8; col++) {
+      if (floor === 2 && (col === 3 || col === 4)) continue; /* eshik o'rni */
+      const r = document.createElementNS(NS, "rect");
+      r.setAttribute("class", "il-win");
+      r.setAttribute("x", 76 + col * 32);
+      r.setAttribute("y", 146 + floor * 34);
+      r.setAttribute("width", 20);
+      r.setAttribute("height", 22);
+      r.setAttribute("rx", 2);
+      r.style.setProperty("--i", (i++ * 7) % 22);
+      g.appendChild(r);
+    }
+  }
+})();
+
+/* Maktab rasmi: fayl bor bo'lsa chizma o'rniga qo'yiladi */
+(function () {
+  const img = new Image();
+  img.alt = "358-maktab binosi";
+  img.onload = function () {
+    document.getElementById("heroArt").remove();
+    document.getElementById("heroFrame").appendChild(img);
+    document.getElementById("heroCap").hidden = true;
+  };
+  img.src = HERO_PHOTO;
+})();
+
+/* Sonlarni noldan sanab chiqish */
+function countUp(scope) {
+  if (CALM) return;
+  scope.querySelectorAll("[data-count]").forEach(function (node) {
+    const to = Number(node.dataset.count);
+    const start = performance.now();
+    function step(now) {
+      const p = Math.min(1, (now - start) / 1100);
+      node.textContent = String(Math.round(to * (1 - Math.pow(1 - p, 3))));
+      if (p < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  });
+}
+
+/* Bo'limlar ekranga kirganda ko'tarilib chiqadi */
+function setupReveal() {
+  if (CALM || !("IntersectionObserver" in window)) return;
+  const io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      e.target.classList.remove("rv-wait");
+      countUp(e.target);
+      io.unobserve(e.target);
+    });
+  }, { rootMargin: "0px 0px -12% 0px" });
+  document.querySelectorAll(".rv").forEach(function (node) {
+    if (node.getBoundingClientRect().top > window.innerHeight * 0.85) {
+      node.classList.add("rv-wait");
+      io.observe(node);
+    }
+  });
 }
 
 let saved = null;
 try { saved = localStorage.getItem("lang"); } catch (e) {}
 render(T[saved] ? saved : "uz");
+setupReveal();
 
 document.querySelectorAll("[data-lang]").forEach(function (btn) {
   btn.addEventListener("click", function () {

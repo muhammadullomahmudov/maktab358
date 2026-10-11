@@ -7,6 +7,10 @@ Holati: qoralama. Maktab ma'muriyati tasdiqlaganidan keyin e'lon qilinadi.
 
 ## Ma'lumotlarni o'zgartirish
 
-Hamma narsa bitta `index.html` faylida. Yangilik, o'qituvchi yoki to'garak qo'shish uchun
-fayl ichidagi "1-QISM. SAYT MA'LUMOTLARI" bo'limini o'zgartiring. `todo: true` deb
-belgilangan joylar hali to'ldirilmagan.
+Hamma narsa bitta `index.html` faylida. Fayl ichidagi "1-QISM. SAYT MA'LUMOTLARI"
+bo'limida direktor, sinflar, o'qituvchilar, to'garaklar va yangiliklar yoziladi.
+
+- `todo: true` deb belgilangan joylar hali to'ldirilmagan.
+- Sinflardagi o'quvchilar soni hozircha **namuna**. Haqiqiy sonlarni yozgach,
+  `CLASSES_SAMPLE` ni `false` qiling.
+- Rasmlar `rasmlar` papkasiga qo'yiladi (ichidagi README ga qarang).
