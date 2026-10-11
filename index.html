@@ -1611,8 +1611,8 @@ function tickNow() {
   document.getElementById("nowRing").setAttribute("stroke-dashoffset", String(C * (1 - frac)));
   document.getElementById("bellTag").hidden = !BELLS_SAMPLE;
   /* qo'ng'iroq: dars va tanaffus almashganda chalinadi */
-  const key = now.day + ":" + num;
-  if (LASTBELL !== null && key !== LASTBELL && BELL && (/^[0-9]+$/.test(num) || num === "♪" || num === "✓")) ring();
+  const key = bellState(now);
+  if (LASTBELL !== null && key !== LASTBELL && BELL && key !== "off" && key !== "before") ring();
   LASTBELL = key;
   lf.classList.toggle("soonbell", !!(left && left[1] && /^0:0\d$/.test(left[1])));
   /* kun vaqti: fon va salom */
@@ -1622,6 +1622,17 @@ function tickNow() {
   document.querySelector("#now .lbl span").textContent = L.greet[sky] + " " + L.nowLabel;
   renderMine(now);
   tickCountdown();
+}
+
+/* Hozirgi holat: "off" — dam olish kuni, "before" — darslar boshlanmagan,
+   "L3" — 3-dars, "B3" — 3-darsdan keyingi tanaffus, "after" — darslar tugagan */
+function bellState(now) {
+  if (SCHOOL_DAYS.indexOf(now.day) === -1) return "off";
+  if (now.sec < mins(BELLS[0][0]) * 60) return "before";
+  for (let i = 0; i < BELLS.length; i++) {
+    if (now.sec < mins(BELLS[i][1]) * 60) return now.sec >= mins(BELLS[i][0]) * 60 ? "L" + (i + 1) : "B" + i;
+  }
+  return "after";
 }
 
 /* ---------- Qo'ng'iroq ovozi ---------- */
