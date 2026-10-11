@@ -90,21 +90,19 @@
   .btn.fill:hover { box-shadow: 0 2px 0 color-mix(in srgb, var(--a) 55%, #000); }
   .btn:active { transform: translateY(4px); box-shadow: none; }
 
-  /* 3D sahna: sichqonchaga qarab egiladigan rasm */
-  .scene { perspective: 1100px; }
-  .tilt { position: relative; transform-style: preserve-3d; transform: rotateX(var(--rx, 6deg)) rotateY(var(--ry, -14deg)); transition: transform .25s ease-out; }
+  /* Bosh qismdagi rasm */
+  .tilt { position: relative; }
   .snap { margin: 0; position: relative; }
   .snap .frame { overflow: hidden; background: var(--a-soft); border-radius: var(--r); max-width: 100%; position: relative; }
   .snap img { display: block; width: 100%; height: 100%; object-fit: cover; will-change: transform; }
   .snap figcaption { font-size: 13px; color: var(--muted); padding-top: 8px; }
   .tilt .snap .frame { aspect-ratio: 3 / 2; box-shadow: var(--deep); }
-  .tilt .snap figcaption { transform: translateZ(20px); }
-  .chip3 { position: absolute; transform: translateZ(70px); background: var(--glass); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); border: 1px solid var(--line); border-radius: 16px; padding: 10px 14px; box-shadow: var(--shadow); font-weight: 600; font-size: 13px; line-height: 1.2; }
+  .chip3 { position: absolute; background: var(--glass); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); border: 1px solid var(--line); border-radius: 16px; padding: 10px 14px; box-shadow: var(--shadow); font-weight: 600; font-size: 13px; line-height: 1.2; }
   .chip3 b { display: block; font-size: 1.5rem; font-weight: 800; letter-spacing: -.03em; color: var(--a); }
   .chip3 i { font-style: normal; color: var(--muted); }
   .chip3.c1 { left: -18px; top: 16%; }
-  .chip3.c2 { right: -14px; bottom: 24%; transform: translateZ(110px); }
-  .chip3.c3 { right: 9%; top: -16px; transform: translateZ(50px); background: var(--ink); color: var(--bg); border-color: transparent; }
+  .chip3.c2 { right: -14px; bottom: 24%; }
+  .chip3.c3 { right: 9%; top: -16px; background: var(--ink); color: var(--bg); border-color: transparent; }
 
   /* Hozir maktabda */
   .now { margin-top: 26px; display: flex; gap: 16px; align-items: center; padding: 14px 18px; max-width: 460px; }
@@ -1868,20 +1866,8 @@ function renderCube() {
   m.textContent = "";
   L.marquee.concat(L.marquee).forEach(function (w) { m.appendChild(el("span", "", w)); });
 }
-/* 3D: sichqonchaga qarab egilish va kubni aylantirish */
+/* 3D kubni aylantirish */
 function setup3D() {
-  [["scene", "tilt", 6, -14]].forEach(function (cfg) {
-    const scene = document.getElementById(cfg[0]), obj = document.getElementById(cfg[1]);
-    if (!scene || !obj || CALM) return;
-    scene.addEventListener("pointermove", function (e) {
-      if (e.pointerType === "touch") return;
-      const r = scene.getBoundingClientRect();
-      const x = (e.clientX - r.left) / r.width - 0.5, y = (e.clientY - r.top) / r.height - 0.5;
-      obj.style.setProperty("--ry", (cfg[3] + x * 22).toFixed(1) + "deg");
-      obj.style.setProperty("--rx", (cfg[2] - y * 16).toFixed(1) + "deg");
-    });
-    scene.addEventListener("pointerleave", function () { obj.style.removeProperty("--ry"); obj.style.removeProperty("--rx"); });
-  });
   const wrap = document.getElementById("cubeWrap"), cube = document.getElementById("cube");
   let drag = null, cx = -22, cy = 32;
   wrap.addEventListener("pointerdown", function (e) {
