@@ -23,3 +23,7 @@ bo'limida direktor, sinflar, o'qituvchilar, to'garaklar va yangiliklar yoziladi.
 - **Nazorat ishi**: savollar `QUIZ` da, birinchi javob to'g'risi.
 - **Manzil**: `LOCATION` da. Aniq koordinata yozilgach `exact: true` qiling.
 - Kunduzgi rejim katak daftar, tungi rejim doska ko'rinishida.
+- **Kim hozir qayerda**: o'qituvchilar `TEACHERS` da, dars jadvali `SCHEDULE` da (hozircha namuna, `SCHEDULE_SAMPLE`).
+- **Faxrimiz**: bitiruvchi va o'quvchilar yutuqlari `ACHIEVEMENTS` da. Faqat rozilik bilan qo'shing.
+- **Favqulodda holat**: qoidalar `SAFETY` da. Chiqish yo'llari (`EXITS`) va yig'ilish joyi (`ASSEMBLY`)
+  faqat maktabning rasmiy evakuatsiya rejasidan yoziladi.

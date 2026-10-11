@@ -28,6 +28,8 @@
     --lit: #ffd84a;           /* yoniq deraza */
     --wall: #eef3fa;
     --grass: #7fcf8a;
+    --warn: #ffcf33;
+    --exit: #0c7d43;
     --shade: rgba(12, 20, 43, .14);
     --hand: "Caveat", "Segoe Script", "Comic Sans MS", cursive;
     --font: "Golos Text", system-ui, -apple-system, "Segoe UI", sans-serif;
@@ -276,6 +278,78 @@
   .mapbox { margin-top: 22px; border: 2px solid var(--ink); border-radius: 6px; overflow: hidden; }
   .mapbox iframe { display: block; width: 100%; height: 320px; border: 0; }
 
+  /* Dars jadvali: kim hozir qayerda */
+  .pick { display: flex; flex-wrap: wrap; gap: 10px 22px; align-items: center; margin: 0 0 18px; }
+  .pick .grp { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+  .pick .cap { font-size: 14px; font-weight: 600; color: var(--muted); margin-right: 2px; }
+  .pk { cursor: pointer; font-weight: 600; font-size: 14px; padding: 5px 12px; border: 2px solid var(--ink); border-radius: 999px; background: var(--card); }
+  .pk[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+  .pk.live[aria-pressed="true"] { background: var(--red); border-color: var(--red); }
+  .slot { font-family: var(--hand); font-weight: 700; font-size: 1.9rem; line-height: 1.1; margin: 0 0 6px; }
+  .slothint { color: var(--muted); font-size: 15px; margin: 0 0 16px; }
+  .board { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px; list-style: none; margin: 0 0 44px; padding: 0; }
+  .tl { padding: 13px 16px 15px; min-width: 0; border-left: 7px solid var(--line); }
+  .tl.busy { border-left-color: var(--red); }
+  .tl .subj { font-size: 14px; font-weight: 700; color: var(--pen); display: block; }
+  .tl strong { display: block; line-height: 1.3; }
+  .tl .cl { display: block; font-family: var(--hand); font-size: 2rem; font-weight: 700; color: var(--red); line-height: 1; margin-top: 8px; }
+  .tl .st { display: block; font-size: 15px; font-weight: 600; }
+  .tl.free .st { color: var(--muted); font-weight: 500; margin-top: 8px; }
+  .ttwrap { overflow-x: auto; border: 2px solid var(--ink); border-radius: 6px; background: var(--card); }
+  .tt { width: 100%; border-collapse: collapse; min-width: 480px; }
+  .tt th, .tt td { text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--line); font-size: 15px; }
+  .tt tr:last-child td { border-bottom: 0; }
+  .tt th { font-size: 13px; color: var(--muted); }
+  .tt td:first-child { font-family: var(--hand); font-weight: 700; font-size: 1.4rem; color: var(--pen); line-height: 1; }
+  .tt tr.cur td { background: var(--note1); color: var(--note-ink); font-weight: 700; }
+  .sub2 { font-family: var(--hand); font-weight: 700; font-size: 1.9rem; line-height: 1.1; margin: 0 0 6px; }
+
+  /* Faxrimiz */
+  .pride { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 20px; list-style: none; margin: 0; padding: 0; }
+  .pr { padding: 16px 18px 18px; min-width: 0; }
+  .pr:nth-child(odd) { transform: rotate(-1deg); }
+  .pr:nth-child(even) { transform: rotate(1deg); }
+  .pr .ty { display: inline-block; background: var(--pen); color: var(--on-pen); font-size: 13px; font-weight: 700; padding: 2px 10px; border-radius: 3px; margin-bottom: 10px; }
+  .pr .res { font-family: var(--hand); font-weight: 700; font-size: 2.2rem; line-height: 1.05; color: var(--red); margin: 0 0 6px; }
+  .pr strong { display: block; }
+  .pr span.how { font-size: 15px; color: var(--muted); display: block; }
+  .pr.todo { border-style: dashed; }
+
+  /* Favqulodda holat */
+  .hz { border: 3px solid var(--ink); background: var(--card); }
+  .hz::before { content: ""; display: block; height: 18px; background: repeating-linear-gradient(-45deg, var(--warn) 0 16px, #16181d 16px 32px); border-bottom: 3px solid var(--ink); }
+  .hz .in { padding: 22px 24px 26px; }
+  .modes { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; }
+  .mode { cursor: pointer; font-weight: 800; font-size: 1.05rem; padding: 10px 22px; border: 3px solid var(--ink); border-radius: 8px; background: var(--card); }
+  .mode[aria-pressed="true"] { background: var(--red); color: var(--bg); border-color: var(--red); }
+  .steps { list-style: none; counter-reset: s; margin: 0 0 26px; padding: 0; display: grid; gap: 10px; }
+  .steps li { counter-increment: s; display: grid; grid-template-columns: 40px 1fr; gap: 14px; align-items: start; padding: 12px 16px; border: 2px solid var(--line); border-radius: 8px; }
+  .steps li::before { content: counter(s); font-family: var(--hand); font-weight: 700; font-size: 2.4rem; line-height: .9; color: var(--red); text-align: center; }
+  .steps b { display: block; }
+  .steps li > div { min-width: 0; }
+  .exitrow { display: grid; grid-template-columns: auto 1fr; gap: 16px 22px; align-items: center; margin-bottom: 24px; }
+  .exitrow > * { min-width: 0; }
+  .exitsign { background: var(--exit); color: #ffffff; font-weight: 800; letter-spacing: .05em; padding: 12px 18px; border-radius: 6px; display: inline-flex; gap: 12px; align-items: center; font-size: 1.15rem; border: 3px solid #ffffff; outline: 2px solid var(--exit); }
+  .exitsign svg { width: 28px; height: 28px; display: block; }
+  .exitrow p { margin: 0; }
+  .exits { border: 2px dashed var(--muted); border-radius: 8px; padding: 14px 16px; margin: 0 0 24px; }
+  .exits h3 { margin-bottom: 6px; }
+  .exits p, .exits ul { margin: 0; }
+  .calls { display: flex; flex-wrap: wrap; gap: 12px; margin: 0; }
+  .calls div { border: 2px solid var(--ink); border-radius: 8px; padding: 8px 18px 10px; min-width: 120px; }
+  .calls dd { margin: 0; font-family: var(--hand); font-weight: 700; font-size: 2.8rem; line-height: 1; color: var(--red); }
+  .calls dt { font-size: 14px; font-weight: 600; }
+  @media (max-width: 640px) { .exitrow { grid-template-columns: 1fr; } }
+  @media (prefers-reduced-motion: no-preference) {
+    .steps li { animation: rise .4s ease-out both; animation-delay: calc(var(--s) * 70ms); }
+    .exitsign svg { animation: nudge 1s ease-in-out infinite; }
+    .tl { transition: transform .2s; }
+    .tl.busy .cl { animation: rise .4s ease-out both; }
+    .pr { transition: transform .2s; }
+    .pr:hover { transform: rotate(0) translateY(-4px); }
+  }
+  @keyframes nudge { 50% { transform: translateX(6px); } }
+
   footer { border-top: 2px solid var(--ink); padding: 26px 0 34px; background: var(--bg); position: relative; }
   footer p { margin: 0 0 6px; font-size: 15px; }
   footer .small { font-size: 14px; color: var(--muted); }
@@ -378,9 +452,12 @@
       <a href="#director" data-t="navDirector"></a>
       <a href="#classes" data-t="navClasses"></a>
       <a href="#teachers" data-t="navTeachers"></a>
+      <a href="#schedule" data-t="navSchedule"></a>
       <a href="#clubs" data-t="navClubs"></a>
       <a href="#quiz" data-t="navQuiz"></a>
+      <a href="#pride" data-t="navPride"></a>
       <a href="#news" data-t="navNews"></a>
+      <a href="#safety" data-t="navSafety"></a>
       <a href="#where" data-t="navWhere"></a>
     </nav>
   </div>
@@ -455,6 +532,22 @@
     </div>
   </section>
 
+  <section id="schedule">
+    <div class="wrap rv">
+      <h2><span data-t="scheduleTitle"></span></h2>
+      <p class="note" data-t="scheduleNote"></p>
+      <p class="sample" id="schedSample" data-t="scheduleSample"></p>
+      <div class="pick" id="pick"></div>
+      <p class="slot" id="slotLine"></p>
+      <p class="slothint" id="slotHint"></p>
+      <ul class="board" id="board"></ul>
+      <p class="sub2" data-t="ttTitle"></p>
+      <p class="slothint" data-t="ttNote"></p>
+      <div class="pick" id="ttPick"></div>
+      <div class="ttwrap" id="ttBox"></div>
+    </div>
+  </section>
+
   <section id="clubs">
     <div class="wrap rv">
       <h2><span data-t="clubsTitle"></span></h2>
@@ -471,10 +564,39 @@
     </div>
   </section>
 
+  <section id="pride">
+    <div class="wrap rv">
+      <h2><span data-t="prideTitle"></span></h2>
+      <p class="note" data-t="prideNote"></p>
+      <div class="pick" id="pridePick"></div>
+      <ul class="pride" id="prideList"></ul>
+    </div>
+  </section>
+
   <section id="news">
     <div class="wrap rv">
       <h2><span data-t="newsTitle"></span></h2>
       <ul class="news" id="newsList"></ul>
+    </div>
+  </section>
+
+  <section id="safety">
+    <div class="wrap rv">
+      <h2><span data-t="safetyTitle"></span></h2>
+      <p class="note" data-t="safetyNote"></p>
+      <div class="hz">
+        <div class="in">
+          <div class="modes" id="modes"></div>
+          <ol class="steps" id="steps"></ol>
+          <div class="exitrow">
+            <span class="exitsign"><span data-t="exitSign"></span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg></span>
+            <p data-t="exitText"></p>
+          </div>
+          <div class="exits" id="exitsBox"></div>
+          <h3 data-t="callsTitle"></h3>
+          <dl class="calls" id="calls"></dl>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -575,14 +697,152 @@ const CLASSES = [
 const CLASS_INFO = {
 };
 
-/* O'QITUVCHILAR. photo — ixtiyoriy, masalan "rasmlar/karimova.jpg".
-   Ism va rasmni faqat o'qituvchining roziligi bilan qo'ying. */
-const TEACHER_BLANK = {
-  todo: true, name: { uz: "Ism Familiya", ru: "Имя Фамилия", en: "First and last name" },
-  subject: { uz: "Fan nomi", ru: "Предмет", en: "Subject" },
-  exp: { uz: "Toifasi, ish staji", ru: "Категория, стаж", en: "Category, experience" }
+/* FANLAR. Kalit so'z (mat, ona ...) jadvalda va o'qituvchilarda ishlatiladi. */
+const SUBJECTS = {
+  mat: { uz: "Matematika", ru: "Математика", en: "Maths" },
+  ona: { uz: "Ona tili va adabiyot", ru: "Родной язык и литература", en: "Uzbek language and literature" },
+  ing: { uz: "Ingliz tili", ru: "Английский язык", en: "English" },
+  fiz: { uz: "Fizika", ru: "Физика", en: "Physics" },
+  tar: { uz: "Tarix", ru: "История", en: "History" },
+  inf: { uz: "Informatika", ru: "Информатика", en: "Computer science" },
+  bio: { uz: "Biologiya", ru: "Биология", en: "Biology" },
+  jis: { uz: "Jismoniy tarbiya", ru: "Физкультура", en: "PE" }
 };
-const TEACHERS = [ TEACHER_BLANK, TEACHER_BLANK, TEACHER_BLANK, TEACHER_BLANK ];
+
+/* O'QITUVCHILAR. name: "Ism Familiya" (bo'sh bo'lsa "Matematika o'qituvchisi" deb chiqadi).
+   room — o'qituvchi dars o'tadigan xona. photo — ixtiyoriy, masalan "rasmlar/karimova.jpg".
+   exp — ixtiyoriy, masalan { uz: "Oliy toifa, 12 yil", ru: "...", en: "..." }.
+   Ism va rasmni faqat o'qituvchining roziligi bilan qo'ying. Xona raqamlari hozircha NAMUNA. */
+const TEACHERS = [
+  { subject: "mat", name: null, room: "201" },
+  { subject: "ona", name: null, room: "202" },
+  { subject: "ing", name: null, room: "305" },
+  { subject: "fiz", name: null, room: "210" },
+  { subject: "tar", name: null, room: "204" },
+  { subject: "inf", name: null, room: "301" },
+  { subject: "bio", name: null, room: "208" },
+  { subject: "jis", name: null, room: { uz: "Sport zali", ru: "Спортзал", en: "Sports hall" } }
+];
+
+/* DARS JADVALI. Har bir sinf uchun: kun raqami (1 — dushanba ... 6 — shanba) va
+   o'sha kungi darslar tartib bilan (fan kalit so'zlari). "Kim hozir qayerda" oynasi shundan hisoblanadi.
+   DIQQAT: bu jadval NAMUNA va faqat to'rtta sinf uchun. Haqiqiy jadvalni yozgach,
+   SCHEDULE_SAMPLE ni false qiling. */
+const SCHEDULE_SAMPLE = true;
+const SCHEDULE = {
+  "5-A": {
+    1: ["fiz", "tar", "inf", "bio", "jis", "mat"],
+    2: ["bio", "jis", "mat", "ona", "ing", "fiz"],
+    3: ["ona", "ing", "fiz", "tar", "inf", "bio"],
+    4: ["tar", "inf", "bio", "jis", "mat", "ona"],
+    5: ["jis", "mat", "ona", "ing", "fiz", "tar"],
+    6: ["ing", "fiz", "tar", "inf"]
+  },
+  "7-A": {
+    1: ["inf", "bio", "jis", "mat", "ona", "ing"],
+    2: ["mat", "ona", "ing", "fiz", "tar", "inf"],
+    3: ["fiz", "tar", "inf", "bio", "jis", "mat"],
+    4: ["bio", "jis", "mat", "ona", "ing", "fiz"],
+    5: ["ona", "ing", "fiz", "tar", "inf", "bio"],
+    6: ["tar", "inf", "bio", "jis"]
+  },
+  "9-A": {
+    1: ["jis", "mat", "ona", "ing", "fiz", "tar"],
+    2: ["ing", "fiz", "tar", "inf", "bio", "jis"],
+    3: ["inf", "bio", "jis", "mat", "ona", "ing"],
+    4: ["mat", "ona", "ing", "fiz", "tar", "inf"],
+    5: ["fiz", "tar", "inf", "bio", "jis", "mat"],
+    6: ["bio", "jis", "mat", "ona"]
+  },
+  "11-A": {
+    1: ["ona", "ing", "fiz", "tar", "inf", "bio"],
+    2: ["tar", "inf", "bio", "jis", "mat", "ona"],
+    3: ["jis", "mat", "ona", "ing", "fiz", "tar"],
+    4: ["ing", "fiz", "tar", "inf", "bio", "jis"],
+    5: ["inf", "bio", "jis", "mat", "ona", "ing"],
+    6: ["mat", "ona", "ing", "fiz"]
+  }
+};
+
+/* YUTUQLAR: oliy ta'limga qabul, sertifikatlar, olimpiadalar.
+   type: "uni" | "ielts" | "sat" | "olymp". Hozirgilari NAMUNA kartochkalar (todo: true).
+   Haqiqiy o'quvchini faqat o'zi va ota-onasining roziligi bilan qo'shing. Misol:
+   { type: "ielts", result: { uz: "IELTS 7.5", ru: "IELTS 7.5", en: "IELTS 7.5" },
+     who: { uz: "Ism Familiya, 11-A", ru: "...", en: "..." },
+     how: { uz: "2026-yil, may", ru: "...", en: "..." } }, */
+const ACHIEVEMENTS = [
+  { todo: true, type: "uni",
+    result: { uz: "Davlat granti", ru: "Государственный грант", en: "State grant" },
+    who: { uz: "Ism Familiya, bitiruvchi", ru: "Имя Фамилия, выпускник", en: "Name Surname, graduate" },
+    how: { uz: "Oliygoh nomi va yo‘nalishi", ru: "Название вуза и направление", en: "University and programme" } },
+  { todo: true, type: "ielts",
+    result: { uz: "IELTS: ball", ru: "IELTS: балл", en: "IELTS: score" },
+    who: { uz: "Ism Familiya, sinfi", ru: "Имя Фамилия, класс", en: "Name Surname, class" },
+    how: { uz: "Sertifikat olingan sana", ru: "Дата получения сертификата", en: "Date of the certificate" } },
+  { todo: true, type: "sat",
+    result: { uz: "SAT: ball", ru: "SAT: балл", en: "SAT: score" },
+    who: { uz: "Ism Familiya, sinfi", ru: "Имя Фамилия, класс", en: "Name Surname, class" },
+    how: { uz: "Sertifikat olingan sana", ru: "Дата получения сертификата", en: "Date of the certificate" } },
+  { todo: true, type: "olymp",
+    result: { uz: "Olimpiada: o‘rin", ru: "Олимпиада: место", en: "Olympiad: place" },
+    who: { uz: "Ism Familiya, sinfi", ru: "Имя Фамилия, класс", en: "Name Surname, class" },
+    how: { uz: "Fan va bosqich", ru: "Предмет и этап", en: "Subject and stage" } }
+];
+const ACH_TYPES = {
+  uni: { uz: "Oliy ta’lim", ru: "Вуз", en: "University" },
+  ielts: { uz: "IELTS", ru: "IELTS", en: "IELTS" },
+  sat: { uz: "SAT", ru: "SAT", en: "SAT" },
+  olymp: { uz: "Olimpiada", ru: "Олимпиада", en: "Olympiad" }
+};
+
+/* FAVQULODDA HOLAT. EXITS — maktabning RASMIY evakuatsiya rejasidagi chiqish yo'llari.
+   Faqat ma'muriyat tasdiqlagan yo'llarni yozing, taxmin bilan yozmang. Misol:
+   { uz: "2-qavat, o'ng qanot: o'ng zinadan pastga, yon eshikdan hovliga", ru: "...", en: "..." }
+   ASSEMBLY — yig'ilish joyi, masalan { uz: "Futbol maydoni", ru: "...", en: "..." }. */
+const EXITS = [];
+const ASSEMBLY = null;
+const CALLS = [
+  { num: "101", label: { uz: "O‘t o‘chirish xizmati", ru: "Пожарная служба", en: "Fire service" } },
+  { num: "103", label: { uz: "Tez yordam", ru: "Скорая помощь", en: "Ambulance" } },
+  { num: "102", label: { uz: "Ichki ishlar", ru: "Милиция", en: "Police" } },
+  { num: "112", label: { uz: "Yagona qutqaruv raqami", ru: "Единый номер спасения", en: "Single emergency number" } }
+];
+const SAFETY = {
+  fire: [
+    { uz: ["Signalni eshitdingizmi, to‘xtang", "Ishingizni qoldiring va o‘qituvchini tinglang. Sumka va kiyim uchun qaytmang."],
+      ru: ["Услышали сигнал — остановитесь", "Оставьте дела и слушайте учителя. Не возвращайтесь за сумкой и одеждой."],
+      en: ["Stop when you hear the alarm", "Leave what you are doing and listen to the teacher. Do not go back for bags or coats."] },
+    { uz: ["Saf bo‘lib eng yaqin chiqishga boring", "Yugurmang va itarishmang. Yashil «Chiqish» belgilariga ergashing."],
+      ru: ["Идите строем к ближайшему выходу", "Не бегите и не толкайтесь. Следуйте зелёным знакам «Выход»."],
+      en: ["Walk in line to the nearest exit", "No running or pushing. Follow the green exit signs."] },
+    { uz: ["Tutun bo‘lsa, egilib yuring", "Og‘iz va burningizni ro‘molcha yoki kiyim bilan yoping. Toza havo pastda bo‘ladi."],
+      ru: ["Если дым — пригнитесь", "Закройте рот и нос платком или одеждой. Чистый воздух внизу."],
+      en: ["Stay low if there is smoke", "Cover your mouth and nose with cloth. The cleaner air is near the floor."] },
+    { uz: ["Liftga kirmang", "Faqat zinadan tushing. Eshik qizib turgan bo‘lsa, uni ochmang, boshqa yo‘lni tanlang."],
+      ru: ["Не пользуйтесь лифтом", "Спускайтесь только по лестнице. Если дверь горячая, не открывайте её, ищите другой путь."],
+      en: ["Never use the lift", "Take the stairs only. If a door feels hot, do not open it; use another way."] },
+    { uz: ["Yig‘ilish joyida sinfingiz bilan turing", "O‘qituvchi yo‘qlama qiladi. Ruxsat berilmaguncha binoga qaytmang."],
+      ru: ["Оставайтесь с классом в месте сбора", "Учитель проведёт перекличку. Не возвращайтесь в здание без разрешения."],
+      en: ["Stay with your class at the assembly point", "The teacher takes the register. Do not go back inside until told."] }
+  ],
+  quake: [
+    { uz: ["Silkinish paytida yugurmang", "Parta ostiga kiring, boshingizni qo‘llaringiz bilan yoping va parta oyog‘ini ushlab turing."],
+      ru: ["Во время толчков не бегите", "Спрячьтесь под парту, закройте голову руками и держитесь за ножку парты."],
+      en: ["Do not run while it is shaking", "Get under a desk, cover your head with your arms and hold on to the desk leg."] },
+    { uz: ["Deraza va shkaflardan uzoqroq turing", "Oyna sinishi, og‘ir narsalar qulashi mumkin."],
+      ru: ["Держитесь дальше от окон и шкафов", "Стекло может разбиться, тяжёлые предметы могут упасть."],
+      en: ["Keep away from windows and cupboards", "Glass may break and heavy things may fall."] },
+    { uz: ["Silkinish to‘xtagach, tartib bilan chiqing", "O‘qituvchi aytganidan keyin zinadan tushing. Liftga kirmang."],
+      ru: ["Когда толчки прекратятся, выходите организованно", "Спускайтесь по лестнице по команде учителя. В лифт не заходите."],
+      en: ["When the shaking stops, leave in order", "Take the stairs when the teacher says so. Do not use the lift."] },
+    { uz: ["Ochiq joyga boring", "Binolar, simyog‘ochlar va daraxtlardan uzoqroq turing."],
+      ru: ["Выйдите на открытое место", "Держитесь дальше от зданий, столбов и деревьев."],
+      en: ["Go to an open space", "Stay away from buildings, poles and trees."] },
+    { uz: ["Binoga qaytishga shoshilmang", "Takroriy silkinish bo‘lishi mumkin. Ruxsat berilishini kuting."],
+      ru: ["Не спешите возвращаться в здание", "Возможны повторные толчки. Дождитесь разрешения."],
+      en: ["Do not hurry back inside", "Aftershocks can follow. Wait until you are told it is safe."] }
+  ]
+};
 
 const CLUBS = [
   { name: { uz: "Robototexnika", ru: "Робототехника", en: "Robotics" },
@@ -713,7 +973,7 @@ const T = {
     privacy: "O‘quvchilarning ism-familiyalari shaxsiy ma’lumot bo‘lgani uchun saytda e’lon qilinmaydi.",
     close: "Yopish",
     teachersTitle: "Ustozlarimiz",
-    teachersNote: "Ro‘yxat ma’muriyat bilan kelishilgach qo‘shiladi. Ism va rasmlar faqat o‘qituvchining roziligi bilan joylanadi.",
+    teachersNote: "Hozircha fanlar bo‘yicha joy ajratilgan. Ism va rasmlar ma’muriyat bilan kelishilgach, faqat o‘qituvchining roziligi bilan qo‘shiladi.",
     clubsTitle: "To‘garaklar",
     clubsNote: "To‘garaklar jadvali ma’muriyatdan olingach to‘ldiriladi.",
     quizTitle: "Nazorat ishi",
@@ -730,6 +990,34 @@ const T = {
     mapGoogle: "Google Xaritada ochish", mapYandex: "Yandex Xaritada ochish",
     whereApprox: "Xaritada hozircha Iykota mahallasi ko‘rsatilgan. Maktabning aniq nuqtasi keyin qo‘shiladi.",
     footNote: "Sayt qoralamasini maktab o‘quvchisi tayyorlagan. Maktab ma’muriyati tasdiqlaganidan keyin e’lon qilinadi.",
+    navSchedule: "Dars jadvali", navPride: "Yutuqlar", navSafety: "Xavfsizlik",
+    scheduleTitle: "Kim hozir qayerda?",
+    scheduleNote: "Toshkent vaqti bo‘yicha qaysi o‘qituvchi qaysi sinfda va qaysi xonada dars o‘tayotgani ko‘rinadi. Boshqa kun yoki darsni tanlab ham ko‘rishingiz mumkin.",
+    scheduleSample: "Namuna. Bu jadval va xona raqamlari sahifani ko‘rsatish uchun tuzilgan, haqiqiy emas. Maktabning dars jadvali olingach almashtiriladi.",
+    pkLive: "Hozir (jonli)", pkDay: "Kun:", pkLesson: "Dars:", pkClass: "Sinf:",
+    daysShort: ["Yak", "Du", "Se", "Chor", "Pay", "Ju", "Sha"],
+    daysFull: ["Yakshanba", "Dushanba", "Seshanba", "Chorshanba", "Payshanba", "Juma", "Shanba"],
+    slotText: function (d, n, a, b) { return d + ", " + n + "-dars (" + a + "–" + b + ")"; },
+    noNow: "Hozir dars yo‘q", noNowHint: "Yuqoridan kun va darsni tanlasangiz, o‘sha paytda kim qayerda bo‘lishini ko‘rasiz.",
+    teacherOf: function (subj) { return subj + " o‘qituvchisi"; },
+    inClass: function (c) { return c + " sinf"; },
+    roomIs: function (r) { return r + "-xona"; },
+    free: "Bo‘sh, darsi yo‘q",
+    ttTitle: "Sinf jadvali", ttNote: "Sinfni tanlang: qaysi fandan qaysi o‘qituvchi kirishi chiqadi.",
+    thNo: "№", thTime: "Vaqt", thSubject: "Fan", thTeacher: "O‘qituvchi", thRoom: "Xona",
+    ttEmpty: "Bu kunga jadval kiritilmagan.",
+    prideTitle: "Faxrimiz",
+    prideNote: "Bitiruvchi va o‘quvchilarimizning yutuqlari: oliy ta’limga qabul (grant yoki kontrakt), IELTS va SAT sertifikatlari, olimpiadalar. Hozircha namuna kartochkalar turibdi; haqiqiy yutuqlar o‘quvchi va ota-onasining roziligi bilan qo‘shiladi.",
+    all: "Hammasi",
+    safetyTitle: "Favqulodda holatda",
+    safetyNote: "Yong‘in yoki zilzila paytida nima qilish kerak. Holatni tanlang va qadamlarni tartib bilan o‘qing.",
+    modeFire: "Yong‘in", modeQuake: "Zilzila",
+    exitSign: "CHIQISH",
+    exitText: "Eng yaqin chiqishni har bir qavatdagi evakuatsiya rejasi va yashil belgilar ko‘rsatadi. Belgilarga ergashing.",
+    exitsTitle: "Chiqish yo‘llari va yig‘ilish joyi",
+    exitsTodo: "Maktabning rasmiy evakuatsiya rejasi (qaysi qavatdan qaysi eshikka chiqiladi, yig‘ilish joyi qayerda) ma’muriyatdan olingach shu yerga qo‘shiladi. Taxminiy yo‘l yozilmadi, chunki noto‘g‘ri yo‘l xavfli.",
+    assembly: "Yig‘ilish joyi",
+    callsTitle: "Kattalarga ayting va qo‘ng‘iroq qiling",
     todo: "to‘ldiriladi"
   },
   ru: {
@@ -789,6 +1077,34 @@ const T = {
     mapGoogle: "Открыть в Google Картах", mapYandex: "Открыть в Яндекс Картах",
     whereApprox: "На карте пока показана махалля Ийкота. Точное место школы будет добавлено позже.",
     footNote: "Черновик сайта подготовил ученик школы. Сайт будет опубликован после утверждения администрацией.",
+    navSchedule: "Расписание", navPride: "Достижения", navSafety: "Безопасность",
+    scheduleTitle: "Кто сейчас где?",
+    scheduleNote: "По ташкентскому времени видно, какой учитель в каком классе и кабинете ведёт урок. Можно выбрать другой день или урок.",
+    scheduleSample: "Образец. Это расписание и номера кабинетов составлены для примера, они не настоящие. Их заменят, когда будет получено расписание школы.",
+    pkLive: "Сейчас", pkDay: "День:", pkLesson: "Урок:", pkClass: "Класс:",
+    daysShort: ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"],
+    daysFull: ["Воскресенье", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"],
+    slotText: function (d, n, a, b) { return d + ", " + n + "-й урок (" + a + "–" + b + ")"; },
+    noNow: "Сейчас уроков нет", noNowHint: "Выберите выше день и урок, чтобы увидеть, кто где будет в это время.",
+    teacherOf: function (subj) { return "Учитель: " + subj; },
+    inClass: function (c) { return "Класс " + c; },
+    roomIs: function (r) { return "каб. " + r; },
+    free: "Свободен, урока нет",
+    ttTitle: "Расписание класса", ttNote: "Выберите класс: будет видно, какой учитель ведёт какой предмет.",
+    thNo: "№", thTime: "Время", thSubject: "Предмет", thTeacher: "Учитель", thRoom: "Кабинет",
+    ttEmpty: "На этот день расписание не внесено.",
+    prideTitle: "Наша гордость",
+    prideNote: "Достижения выпускников и учеников: поступление в вузы (грант или контракт), сертификаты IELTS и SAT, олимпиады. Пока здесь образцы карточек; настоящие достижения добавляются с согласия ученика и родителей.",
+    all: "Все",
+    safetyTitle: "В чрезвычайной ситуации",
+    safetyNote: "Что делать при пожаре или землетрясении. Выберите ситуацию и читайте шаги по порядку.",
+    modeFire: "Пожар", modeQuake: "Землетрясение",
+    exitSign: "ВЫХОД",
+    exitText: "Ближайший выход показывают план эвакуации на каждом этаже и зелёные знаки. Следуйте знакам.",
+    exitsTitle: "Пути выхода и место сбора",
+    exitsTodo: "Официальный план эвакуации школы (с какого этажа к какой двери идти, где место сбора) будет добавлен после получения от администрации. Примерный путь не указан, потому что неверный путь опасен.",
+    assembly: "Место сбора",
+    callsTitle: "Скажите взрослым и позвоните",
     todo: "заполнить"
   },
   en: {
@@ -848,6 +1164,34 @@ const T = {
     mapGoogle: "Open in Google Maps", mapYandex: "Open in Yandex Maps",
     whereApprox: "For now the map shows Iykota mahalla. The school's exact spot will be added later.",
     footNote: "This draft was prepared by a student of the school. It will go live once the administration approves it.",
+    navSchedule: "Timetable", navPride: "Achievements", navSafety: "Safety",
+    scheduleTitle: "Who is where right now?",
+    scheduleNote: "Using Tashkent time, see which teacher is teaching which class in which room. You can also pick another day or lesson.",
+    scheduleSample: "Sample. This timetable and the room numbers were made up to show the page and are not real. They will be replaced once the school's timetable is provided.",
+    pkLive: "Live now", pkDay: "Day:", pkLesson: "Lesson:", pkClass: "Class:",
+    daysShort: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+    daysFull: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+    slotText: function (d, n, a, b) { return d + ", lesson " + n + " (" + a + "–" + b + ")"; },
+    noNow: "No lessons right now", noNowHint: "Pick a day and a lesson above to see who would be where at that time.",
+    teacherOf: function (subj) { return subj + " teacher"; },
+    inClass: function (c) { return "Class " + c; },
+    roomIs: function (r) { return "room " + r; },
+    free: "Free, no lesson",
+    ttTitle: "Class timetable", ttNote: "Pick a class to see which teacher takes which subject.",
+    thNo: "No.", thTime: "Time", thSubject: "Subject", thTeacher: "Teacher", thRoom: "Room",
+    ttEmpty: "No timetable entered for this day.",
+    prideTitle: "Our pride",
+    prideNote: "Achievements of our graduates and students: university admission (grant or contract), IELTS and SAT certificates, olympiads. For now these are sample cards; real achievements are added with the consent of the student and their parents.",
+    all: "All",
+    safetyTitle: "In an emergency",
+    safetyNote: "What to do in a fire or an earthquake. Pick the situation and read the steps in order.",
+    modeFire: "Fire", modeQuake: "Earthquake",
+    exitSign: "EXIT",
+    exitText: "The evacuation plan on each floor and the green signs show the nearest exit. Follow the signs.",
+    exitsTitle: "Exit routes and assembly point",
+    exitsTodo: "The school's official evacuation plan (which door to use from each floor, where the assembly point is) will be added once the administration provides it. No estimated route is given here, because a wrong route is dangerous.",
+    assembly: "Assembly point",
+    callsTitle: "Tell an adult and call",
     todo: "to fill in"
   }
 };
@@ -861,6 +1205,11 @@ let LANG = "uz";
 let OPEN = null;         /* ochiq turgan sinf, masalan "7-A" */
 let ROOM = null;         /* tanlangan xona raqami */
 const QZ = { i: 0, score: 0, picked: null, order: [], done: false };
+let PICK = null;         /* null — jonli vaqt; aks holda { day, lesson } */
+let TTCLASS = Object.keys(SCHEDULE)[0] || null;
+let ACHF = "all";
+let MODE = "fire";
+let LASTSLOT = "";
 
 function el(tag, cls, text) {
   const node = document.createElement(tag);
@@ -1071,6 +1420,165 @@ function renderQuiz() {
   }
 }
 
+/* ---------- Dars jadvali: kim hozir qayerda ---------- */
+function liveSlot() {
+  const now = tashkentNow();
+  let idx = -1;
+  if (SCHOOL_DAYS.indexOf(now.day) !== -1) {
+    for (let i = 0; i < BELLS.length; i++) { if (now.sec >= mins(BELLS[i][0]) * 60 && now.sec < mins(BELLS[i][1]) * 60) idx = i; }
+  }
+  return { day: now.day, idx: idx };
+}
+function slot() { return PICK ? { day: PICK.day, idx: PICK.lesson } : liveSlot(); }
+function teacherName(t) { return t.name || T[LANG].teacherOf(SUBJECTS[t.subject][LANG]); }
+function roomText(r) { if (!r) return T[LANG].soon; return typeof r === "string" ? T[LANG].roomIs(r) : r[LANG]; }
+function teacherBySubject(key) { for (let i = 0; i < TEACHERS.length; i++) { if (TEACHERS[i].subject === key) return TEACHERS[i]; } return null; }
+function pk(label, pressed, onClick, extra) {
+  const b = el("button", "pk" + (extra ? " " + extra : ""), label);
+  b.type = "button";
+  b.setAttribute("aria-pressed", String(pressed));
+  b.addEventListener("click", onClick);
+  return b;
+}
+function renderSchedule() {
+  const L = T[LANG];
+  const s = slot();
+  LASTSLOT = s.day + ":" + s.idx;
+  document.getElementById("schedSample").hidden = !SCHEDULE_SAMPLE;
+  const schoolDay = SCHOOL_DAYS.indexOf(s.day) !== -1 ? s.day : SCHOOL_DAYS[0];
+
+  const pick = document.getElementById("pick");
+  pick.textContent = "";
+  const g0 = el("div", "grp");
+  g0.appendChild(pk(L.pkLive, PICK === null, function () { PICK = null; renderSchedule(); }, "live"));
+  pick.appendChild(g0);
+  const g1 = el("div", "grp");
+  g1.appendChild(el("span", "cap", L.pkDay));
+  SCHOOL_DAYS.forEach(function (d) {
+    g1.appendChild(pk(L.daysShort[d], PICK !== null && PICK.day === d, function () { PICK = { day: d, lesson: PICK ? PICK.lesson : Math.max(0, s.idx) }; renderSchedule(); }));
+  });
+  pick.appendChild(g1);
+  const g2 = el("div", "grp");
+  g2.appendChild(el("span", "cap", L.pkLesson));
+  BELLS.forEach(function (b, i) {
+    g2.appendChild(pk(String(i + 1), PICK !== null && PICK.lesson === i, function () { PICK = { day: PICK ? PICK.day : schoolDay, lesson: i }; renderSchedule(); }));
+  });
+  pick.appendChild(g2);
+
+  const on = s.idx >= 0 && SCHOOL_DAYS.indexOf(s.day) !== -1;
+  document.getElementById("slotLine").textContent = on ? L.slotText(L.daysFull[s.day], s.idx + 1, BELLS[s.idx][0], BELLS[s.idx][1]) : L.noNow;
+  document.getElementById("slotHint").textContent = on ? "" : L.noNowHint;
+
+  fill("board", TEACHERS, function (t) {
+    let cls = null;
+    if (on) Object.keys(SCHEDULE).forEach(function (c) { const day = SCHEDULE[c][s.day]; if (day && day[s.idx] === t.subject) cls = c; });
+    const li = el("li", "tl paper " + (cls ? "busy" : "free"));
+    li.appendChild(el("span", "subj", SUBJECTS[t.subject][LANG]));
+    const nm = el("strong", "", teacherName(t));
+    if (!t.name) nm.appendChild(tag());
+    li.appendChild(nm);
+    if (cls) { li.appendChild(el("span", "cl", L.inClass(cls))); li.appendChild(el("span", "st", roomText(t.room))); }
+    else li.appendChild(el("span", "st", L.free));
+    return li;
+  });
+
+  const ttPick = document.getElementById("ttPick");
+  ttPick.textContent = "";
+  const g3 = el("div", "grp");
+  g3.appendChild(el("span", "cap", L.pkClass));
+  Object.keys(SCHEDULE).forEach(function (c) { g3.appendChild(pk(c, TTCLASS === c, function () { TTCLASS = c; renderSchedule(); })); });
+  ttPick.appendChild(g3);
+  ttPick.appendChild(el("span", "cap", L.daysFull[schoolDay]));
+
+  const box = document.getElementById("ttBox");
+  box.textContent = "";
+  const lessons = TTCLASS && SCHEDULE[TTCLASS] ? SCHEDULE[TTCLASS][schoolDay] || [] : [];
+  if (!lessons.length) { const p = el("p", "", L.ttEmpty); p.style.padding = "14px"; p.style.margin = "0"; box.appendChild(p); return; }
+  const table = el("table", "tt");
+  const hr = el("tr");
+  [L.thNo, L.thTime, L.thSubject, L.thTeacher, L.thRoom].forEach(function (h) { const th = el("th", "", h); th.scope = "col"; hr.appendChild(th); });
+  const thead = el("thead"); thead.appendChild(hr); table.appendChild(thead);
+  const tb = el("tbody");
+  lessons.forEach(function (key, i) {
+    const t = teacherBySubject(key);
+    const tr = el("tr", on && s.day === schoolDay && s.idx === i ? "cur" : "");
+    tr.appendChild(el("td", "", String(i + 1)));
+    tr.appendChild(el("td", "", BELLS[i] ? BELLS[i][0] + "–" + BELLS[i][1] : ""));
+    tr.appendChild(el("td", "", SUBJECTS[key][LANG]));
+    tr.appendChild(el("td", "", t ? teacherName(t) : L.soon));
+    tr.appendChild(el("td", "", t ? roomText(t.room) : L.soon));
+    tb.appendChild(tr);
+  });
+  table.appendChild(tb);
+  box.appendChild(table);
+}
+function liveCheck() {
+  if (PICK) return;
+  const s = liveSlot();
+  if (s.day + ":" + s.idx !== LASTSLOT) renderSchedule();
+}
+
+/* ---------- Faxrimiz ---------- */
+function renderPride() {
+  const L = T[LANG];
+  const pick = document.getElementById("pridePick");
+  pick.textContent = "";
+  const g = el("div", "grp");
+  g.appendChild(pk(L.all, ACHF === "all", function () { ACHF = "all"; renderPride(); }));
+  Object.keys(ACH_TYPES).forEach(function (k) { g.appendChild(pk(ACH_TYPES[k][LANG], ACHF === k, function () { ACHF = k; renderPride(); })); });
+  pick.appendChild(g);
+  fill("prideList", ACHIEVEMENTS, function (a) {
+    if (ACHF !== "all" && a.type !== ACHF) return null;
+    const li = el("li", "pr paper" + (a.todo ? " todo" : ""));
+    li.appendChild(el("span", "ty", ACH_TYPES[a.type][LANG]));
+    li.appendChild(el("p", "res", a.result[LANG]));
+    const who = el("strong", "", a.who[LANG]);
+    if (a.todo) who.appendChild(tag());
+    li.appendChild(who);
+    if (a.how) li.appendChild(el("span", "how", a.how[LANG]));
+    return li;
+  });
+}
+
+/* ---------- Favqulodda holat ---------- */
+function renderSafety() {
+  const L = T[LANG];
+  const modes = document.getElementById("modes");
+  modes.textContent = "";
+  [["fire", L.modeFire], ["quake", L.modeQuake]].forEach(function (m) {
+    const b = el("button", "mode", m[1]);
+    b.type = "button";
+    b.setAttribute("aria-pressed", String(MODE === m[0]));
+    b.addEventListener("click", function () { MODE = m[0]; renderSafety(); });
+    modes.appendChild(b);
+  });
+  fill("steps", SAFETY[MODE], function (st, i) {
+    const li = el("li");
+    li.style.setProperty("--s", i);
+    const d = el("div");
+    d.appendChild(el("b", "", st[LANG][0]));
+    d.appendChild(document.createTextNode(st[LANG][1]));
+    li.appendChild(d);
+    return li;
+  });
+  const ex = document.getElementById("exitsBox");
+  ex.textContent = "";
+  ex.appendChild(el("h3", "", L.exitsTitle));
+  if (!EXITS.length && !ASSEMBLY) ex.appendChild(el("p", "", L.exitsTodo));
+  else {
+    const ul = el("ul");
+    EXITS.forEach(function (e) { ul.appendChild(el("li", "", e[LANG])); });
+    if (ASSEMBLY) ul.appendChild(el("li", "", L.assembly + ": " + ASSEMBLY[LANG]));
+    ex.appendChild(ul);
+  }
+  fill("calls", CALLS, function (c) {
+    const row = el("div");
+    row.appendChild(el("dd", "", c.num));
+    row.appendChild(el("dt", "", c.label[LANG]));
+    return row;
+  });
+}
+
 /* ---------- Manzil ---------- */
 function renderWhere() {
   const L = T[LANG];
@@ -1152,19 +1660,22 @@ function render(lang) {
   renderGrades();
 
   fill("teacherList", TEACHERS, function (t) {
-    const li = el("li", "tcard paper" + (t.todo ? " todo" : ""));
-    const av = el("span", "avatar", t.todo ? "?" : initials(t.name[lang]));
-    photoInto(av, t.photo, t.name[lang]);
+    const li = el("li", "tcard paper" + (t.name ? "" : " todo"));
+    const av = el("span", "avatar", t.name ? initials(t.name) : "?");
+    photoInto(av, t.photo, teacherName(t));
     li.appendChild(av);
     const body = el("div");
-    const name = el("strong", "", t.name[lang]);
-    if (t.todo) name.appendChild(tag());
+    const name = el("strong", "", teacherName(t));
+    if (!t.name) name.appendChild(tag());
     body.appendChild(name);
-    body.appendChild(el("span", "sub", t.subject[lang]));
-    if (t.exp) body.appendChild(el("span", "exp", t.exp[lang]));
+    body.appendChild(el("span", "sub", SUBJECTS[t.subject][lang]));
+    body.appendChild(el("span", "exp", t.exp ? t.exp[lang] : roomText(t.room)));
     li.appendChild(body);
     return li;
   });
+  renderSchedule();
+  renderPride();
+  renderSafety();
   fill("clubList", CLUBS, function (c) {
     const li = el("li", "club");
     const name = el("strong", "", c.name[lang]);
@@ -1290,7 +1801,7 @@ setupReveal();
 setupScrollPhotos();
 setupTabs();
 setupMap();
-setInterval(tickNow, 1000);
+setInterval(function () { tickNow(); liveCheck(); }, 1000);
 
 document.querySelectorAll("[data-lang]").forEach(function (btn) {
   btn.addEventListener("click", function () {
