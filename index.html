@@ -221,8 +221,24 @@
   .detail p { margin: 0; font-size: 14px; opacity: .85; max-width: 70ch; }
 
   /* O'qituvchilar va to'garaklar */
-  .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 18px; list-style: none; margin: 0; padding: 0; }
-  .tcard { padding: 16px; display: flex; gap: 14px; align-items: center; min-width: 0; }
+  .cards { align-items: start; display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 18px; list-style: none; margin: 0; padding: 0; }
+  .tcard { min-width: 0; }
+  .tbtn { display: flex; gap: 14px; align-items: center; width: 100%; padding: 16px; background: none; border: 0; text-align: left; cursor: pointer; }
+  .tbtn::after { content: "+"; margin-left: auto; font-family: var(--hand); font-weight: 700; font-size: 1.8rem; line-height: 1; color: var(--pen); transition: transform .2s; }
+  .tbtn[aria-expanded="true"]::after { transform: rotate(45deg); }
+  .tcard.open { transform: none; outline: 3px solid var(--pen); }
+  .tmore { padding: 14px 16px 16px; border-top: 2px dashed var(--line); }
+  .tmore dl { margin: 0; display: grid; gap: 10px; }
+  .tmore dt { font-size: 13px; font-weight: 600; color: var(--muted); }
+  .tmore dd { margin: 0; font-weight: 700; }
+  .tmore .nowin { font-family: var(--hand); font-size: 1.6rem; line-height: 1.1; color: var(--red); }
+  .tmore .pills { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 2px; }
+  .tmore .pills span { border: 2px solid var(--ink); border-radius: 999px; padding: 1px 10px; font-size: 14px; }
+  .search { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; margin: 0 0 18px; }
+  .search label { font-weight: 700; }
+  .search input { flex: 1 1 260px; max-width: 460px; min-width: 0; font: inherit; color: var(--ink); background: var(--card); border: 2px solid var(--ink); border-radius: 8px; padding: 10px 14px; box-shadow: 3px 3px 0 var(--shade); }
+  .search input:focus { outline: 3px solid var(--pen); outline-offset: 1px; }
+  .found { font-size: 15px; color: var(--muted); margin: 0 0 14px; min-height: 1.6em; }
   .tcard:nth-child(odd) { transform: rotate(-.8deg); }
   .tcard:nth-child(even) { transform: rotate(.8deg); }
   .avatar { flex: none; width: 56px; height: 56px; border-radius: 50%; overflow: hidden; background: var(--note2); color: var(--note-ink); display: grid; place-items: center; font-family: var(--hand); font-weight: 700; font-size: 1.5rem; }
@@ -386,7 +402,8 @@
     .pin::after { animation: ping 1.8s ease-out infinite; }
     .room[aria-pressed="true"] { animation: flick .5s steps(2, end) 1; }
     .tcard, .club { transition: transform .2s; }
-    .tcard:hover, .club:hover { transform: rotate(0) translateY(-4px); }
+    .tcard:not(.open):hover, .club:hover { transform: rotate(0) translateY(-4px); }
+    .tmore { animation: rise .3s ease-out both; }
   }
   @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
   @keyframes rise { from { opacity: 0; transform: translateY(18px); } }
@@ -528,6 +545,12 @@
     <div class="wrap rv">
       <h2><span data-t="teachersTitle"></span></h2>
       <p class="note" data-t="teachersNote"></p>
+      <p class="sample" id="teachSample" data-t="teachersSample"></p>
+      <div class="search">
+        <label for="teacherSearch" data-t="searchLabel"></label>
+        <input type="search" id="teacherSearch" autocomplete="off">
+      </div>
+      <p class="found" id="teacherFound" aria-live="polite"></p>
       <ul class="cards" id="teacherList"></ul>
     </div>
   </section>
@@ -712,16 +735,18 @@ const SUBJECTS = {
 /* O'QITUVCHILAR. name: "Ism Familiya" (bo'sh bo'lsa "Matematika o'qituvchisi" deb chiqadi).
    room — o'qituvchi dars o'tadigan xona. photo — ixtiyoriy, masalan "rasmlar/karimova.jpg".
    exp — ixtiyoriy, masalan { uz: "Oliy toifa, 12 yil", ru: "...", en: "..." }.
-   Ism va rasmni faqat o'qituvchining roziligi bilan qo'ying. Xona raqamlari hozircha NAMUNA. */
+   Ism va rasmni faqat o'qituvchining roziligi bilan qo'ying.
+   DIQQAT: hozirgi ism-familiyalar va xona raqamlari NAMUNA (sample: true), haqiqiy o'qituvchilar emas.
+   Haqiqiy o'qituvchini yozganda sample: true ni o'chirib tashlang. */
 const TEACHERS = [
-  { subject: "mat", name: null, room: "201" },
-  { subject: "ona", name: null, room: "202" },
-  { subject: "ing", name: null, room: "305" },
-  { subject: "fiz", name: null, room: "210" },
-  { subject: "tar", name: null, room: "204" },
-  { subject: "inf", name: null, room: "301" },
-  { subject: "bio", name: null, room: "208" },
-  { subject: "jis", name: null, room: { uz: "Sport zali", ru: "Спортзал", en: "Sports hall" } }
+  { subject: "mat", name: "Dilnoza Karimova", sample: true, room: "201" },
+  { subject: "ona", name: "Shahlo Yusupova", sample: true, room: "202" },
+  { subject: "ing", name: "Jasur Rahimov", sample: true, room: "305" },
+  { subject: "fiz", name: "Bobur Tursunov", sample: true, room: "210" },
+  { subject: "tar", name: "Nodira Aliyeva", sample: true, room: "204" },
+  { subject: "inf", name: "Sardor Karimov", sample: true, room: "301" },
+  { subject: "bio", name: "Malika Ergasheva", sample: true, room: "208" },
+  { subject: "jis", name: "Otabek Yusupov", sample: true, room: { uz: "Sport zali", ru: "Спортзал", en: "Sports hall" } }
 ];
 
 /* DARS JADVALI. Har bir sinf uchun: kun raqami (1 — dushanba ... 6 — shanba) va
@@ -973,7 +998,7 @@ const T = {
     privacy: "O‘quvchilarning ism-familiyalari shaxsiy ma’lumot bo‘lgani uchun saytda e’lon qilinmaydi.",
     close: "Yopish",
     teachersTitle: "Ustozlarimiz",
-    teachersNote: "Hozircha fanlar bo‘yicha joy ajratilgan. Ism va rasmlar ma’muriyat bilan kelishilgach, faqat o‘qituvchining roziligi bilan qo‘shiladi.",
+    teachersNote: "Ism yoki familiyani yozib qidiring. O‘qituvchi ustiga bossangiz, qaysi fandan dars berishi, qaysi sinflarga kirishi va hozir qaysi xonada ekani chiqadi.",
     clubsTitle: "To‘garaklar",
     clubsNote: "To‘garaklar jadvali ma’muriyatdan olingach to‘ldiriladi.",
     quizTitle: "Nazorat ishi",
@@ -1018,6 +1043,11 @@ const T = {
     exitsTodo: "Maktabning rasmiy evakuatsiya rejasi (qaysi qavatdan qaysi eshikka chiqiladi, yig‘ilish joyi qayerda) ma’muriyatdan olingach shu yerga qo‘shiladi. Taxminiy yo‘l yozilmadi, chunki noto‘g‘ri yo‘l xavfli.",
     assembly: "Yig‘ilish joyi",
     callsTitle: "Kattalarga ayting va qo‘ng‘iroq qiling",
+    teachersSample: "Namuna. Bu ism-familiyalar qidiruv qanday ishlashini ko‘rsatish uchun o‘ylab topilgan, haqiqiy o‘qituvchilar emas. Haqiqiy ro‘yxat olingach almashtiriladi.",
+    searchLabel: "O‘qituvchini qidirish", searchPh: "Ism, familiya yoki fan nomi",
+    foundN: function (n) { return n + " ta o‘qituvchi topildi"; }, noFound: "Bunday o‘qituvchi topilmadi. Boshqacha yozib ko‘ring.",
+    tSubject: "Fani", tClasses: "Dars beradigan sinflari", tNow: "Hozir", tRoom: "Xonasi",
+    tNowFree: "Hozir darsi yo‘q", tNoClasses: "Jadvalga hali kiritilmagan",
     todo: "to‘ldiriladi"
   },
   ru: {
@@ -1060,7 +1090,7 @@ const T = {
     privacy: "Имена и фамилии учеников — личные данные, поэтому на сайте они не публикуются.",
     close: "Закрыть",
     teachersTitle: "Наши учителя",
-    teachersNote: "Список появится после согласования с администрацией. Имена и фотографии размещаются только с согласия учителя.",
+    teachersNote: "Ищите по имени или фамилии. Нажмите на учителя, чтобы увидеть его предмет, классы и кабинет, где он сейчас.",
     clubsTitle: "Кружки",
     clubsNote: "Расписание кружков будет заполнено после получения от администрации.",
     quizTitle: "Контрольная работа",
@@ -1105,6 +1135,11 @@ const T = {
     exitsTodo: "Официальный план эвакуации школы (с какого этажа к какой двери идти, где место сбора) будет добавлен после получения от администрации. Примерный путь не указан, потому что неверный путь опасен.",
     assembly: "Место сбора",
     callsTitle: "Скажите взрослым и позвоните",
+    teachersSample: "Образец. Эти имена и фамилии придуманы, чтобы показать работу поиска, это не настоящие учителя. Их заменят, когда будет получен настоящий список.",
+    searchLabel: "Поиск учителя", searchPh: "Имя, фамилия или предмет",
+    foundN: function (n) { return "Найдено учителей: " + n; }, noFound: "Такой учитель не найден. Попробуйте написать иначе.",
+    tSubject: "Предмет", tClasses: "Ведёт уроки в классах", tNow: "Сейчас", tRoom: "Кабинет",
+    tNowFree: "Сейчас урока нет", tNoClasses: "В расписание пока не внесён",
     todo: "заполнить"
   },
   en: {
@@ -1147,7 +1182,7 @@ const T = {
     privacy: "Students' names are personal data, so they are not published on the site.",
     close: "Close",
     teachersTitle: "Our teachers",
-    teachersNote: "The list will be added once the administration agrees. Names and photos are posted only with the teacher's consent.",
+    teachersNote: "Search by first name or surname. Select a teacher to see their subject, their classes and which room they are in right now.",
     clubsTitle: "Clubs",
     clubsNote: "The club timetable will be filled in once we get it from the administration.",
     quizTitle: "Pop quiz",
@@ -1192,6 +1227,11 @@ const T = {
     exitsTodo: "The school's official evacuation plan (which door to use from each floor, where the assembly point is) will be added once the administration provides it. No estimated route is given here, because a wrong route is dangerous.",
     assembly: "Assembly point",
     callsTitle: "Tell an adult and call",
+    teachersSample: "Sample. These names were made up to show how the search works; they are not real teachers. They will be replaced once the real list is provided.",
+    searchLabel: "Find a teacher", searchPh: "First name, surname or subject",
+    foundN: function (n) { return n + " teachers found"; }, noFound: "No teacher found. Try a different spelling.",
+    tSubject: "Subject", tClasses: "Teaches these classes", tNow: "Right now", tRoom: "Room",
+    tNowFree: "No lesson right now", tNoClasses: "Not in the timetable yet",
     todo: "to fill in"
   }
 };
@@ -1205,6 +1245,8 @@ let LANG = "uz";
 let OPEN = null;         /* ochiq turgan sinf, masalan "7-A" */
 let ROOM = null;         /* tanlangan xona raqami */
 const QZ = { i: 0, score: 0, picked: null, order: [], done: false };
+let TQ = "";             /* qidiruv matni */
+let TOPEN = null;        /* ochiq turgan o'qituvchi raqami */
 let PICK = null;         /* null — jonli vaqt; aks holda { day, lesson } */
 let TTCLASS = Object.keys(SCHEDULE)[0] || null;
 let ACHF = "all";
@@ -1515,7 +1557,78 @@ function renderSchedule() {
 function liveCheck() {
   if (PICK) return;
   const s = liveSlot();
-  if (s.day + ":" + s.idx !== LASTSLOT) renderSchedule();
+  if (s.day + ":" + s.idx !== LASTSLOT) { renderSchedule(); if (TOPEN !== null) renderTeachers(); }
+}
+
+/* ---------- O'qituvchilar: qidiruv va batafsil ma'lumot ---------- */
+function norm(x) { return String(x).toLowerCase().replace(/[‘’ʻʼ'`]/g, "").replace(/\s+/g, " ").trim(); }
+function teacherClasses(t) {
+  const out = [];
+  Object.keys(SCHEDULE).forEach(function (c) {
+    const days = SCHEDULE[c];
+    if (Object.keys(days).some(function (d) { return days[d].indexOf(t.subject) !== -1; })) out.push(c);
+  });
+  return out;
+}
+function teacherNowClass(t) {
+  const s = liveSlot();
+  let cls = null;
+  if (s.idx >= 0) Object.keys(SCHEDULE).forEach(function (c) { const day = SCHEDULE[c][s.day]; if (day && day[s.idx] === t.subject) cls = c; });
+  return cls;
+}
+function renderTeachers() {
+  const L = T[LANG];
+  const q = norm(TQ);
+  document.getElementById("teachSample").hidden = !TEACHERS.some(function (t) { return t.sample; });
+  let shown = 0;
+  fill("teacherList", TEACHERS, function (t, i) {
+    const subj = SUBJECTS[t.subject];
+    const hay = norm([teacherName(t), subj.uz, subj.ru, subj.en].join(" "));
+    if (q && !q.split(" ").every(function (w) { return hay.indexOf(w) !== -1; })) return null;
+    shown += 1;
+    const open = TOPEN === i;
+    const li = el("li", "tcard paper" + (open ? " open" : "") + (t.name ? "" : " todo"));
+    const btn = el("button", "tbtn");
+    btn.type = "button";
+    btn.setAttribute("aria-expanded", String(open));
+    const av = el("span", "avatar", t.name ? initials(t.name) : "?");
+    photoInto(av, t.photo, teacherName(t));
+    btn.appendChild(av);
+    const body = el("div");
+    const name = el("strong", "", teacherName(t));
+    if (!t.name) name.appendChild(tag());
+    else if (t.sample) name.appendChild(el("span", "tag", L.sampleTag));
+    body.appendChild(name);
+    body.appendChild(el("span", "sub", subj[LANG]));
+    btn.appendChild(body);
+    btn.addEventListener("click", function () { TOPEN = open ? null : i; renderTeachers(); });
+    li.appendChild(btn);
+    if (open) {
+      const more = el("div", "tmore");
+      const dl = el("dl");
+      const now = teacherNowClass(t);
+      const r0 = el("div");
+      r0.appendChild(el("dt", "", L.tNow));
+      r0.appendChild(el("dd", "nowin", now ? L.inClass(now) + ", " + roomText(t.room) : L.tNowFree));
+      dl.appendChild(r0);
+      pair(dl, L.tSubject, subj[LANG]);
+      const r2 = el("div");
+      r2.appendChild(el("dt", "", L.tClasses));
+      const dd = el("dd");
+      const cl = teacherClasses(t);
+      if (cl.length) { const pills = el("div", "pills"); cl.forEach(function (c) { pills.appendChild(el("span", "", c)); }); dd.appendChild(pills); }
+      else dd.textContent = L.tNoClasses;
+      r2.appendChild(dd);
+      dl.appendChild(r2);
+      pair(dl, L.tRoom, roomText(t.room), !t.room);
+      if (t.exp) pair(dl, "", t.exp[LANG]);
+      more.appendChild(dl);
+      li.appendChild(more);
+    }
+    return li;
+  });
+  const found = document.getElementById("teacherFound");
+  found.textContent = shown === 0 ? L.noFound : q ? L.foundN(shown) : "";
 }
 
 /* ---------- Faxrimiz ---------- */
@@ -1659,20 +1772,8 @@ function render(lang) {
   });
   renderGrades();
 
-  fill("teacherList", TEACHERS, function (t) {
-    const li = el("li", "tcard paper" + (t.name ? "" : " todo"));
-    const av = el("span", "avatar", t.name ? initials(t.name) : "?");
-    photoInto(av, t.photo, teacherName(t));
-    li.appendChild(av);
-    const body = el("div");
-    const name = el("strong", "", teacherName(t));
-    if (!t.name) name.appendChild(tag());
-    body.appendChild(name);
-    body.appendChild(el("span", "sub", SUBJECTS[t.subject][lang]));
-    body.appendChild(el("span", "exp", t.exp ? t.exp[lang] : roomText(t.room)));
-    li.appendChild(body);
-    return li;
-  });
+  document.getElementById("teacherSearch").placeholder = L.searchPh;
+  renderTeachers();
   renderSchedule();
   renderPride();
   renderSafety();
@@ -1802,6 +1903,8 @@ setupScrollPhotos();
 setupTabs();
 setupMap();
 setInterval(function () { tickNow(); liveCheck(); }, 1000);
+
+document.getElementById("teacherSearch").addEventListener("input", function (e) { TQ = e.target.value; TOPEN = null; renderTeachers(); });
 
 document.querySelectorAll("[data-lang]").forEach(function (btn) {
   btn.addEventListener("click", function () {
