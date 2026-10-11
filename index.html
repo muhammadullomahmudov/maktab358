@@ -1,0 +1,581 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>358-maktab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;700&family=Unbounded:wght@500;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --canal: #0d5566;      /* Bektemir kanali rangi */
+    --canal-deep: #083b47;
+    --water: #d3ecea;
+    --paper: #f6faf9;
+    --ink: #12262b;
+    --muted: #55707a;
+    --sun: #f2b705;        /* maktab qo'ng'irog'i sarig'i */
+    --line: #cfdedc;
+    --card: #ffffff;
+    --on-canal: #ffffff;
+    --on-sun: #12262b;
+    --footer-bg: #083b47;
+    --footer-fg: #e4f1ef;
+    --display: "Unbounded", "Golos Text", system-ui, sans-serif;
+    --body: "Golos Text", system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+    --canal: #6cc4d1; --canal-deep: #a9dde3; --water: #143a44; --paper: #0e1f23;
+    --ink: #e6f1ef; --muted: #8fa9b0; --line: #24424a; --card: #152c32;
+    --on-canal: #08262d; --footer-bg: #071619; color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --canal: #6cc4d1; --canal-deep: #a9dde3; --water: #143a44; --paper: #0e1f23;
+    --ink: #e6f1ef; --muted: #8fa9b0; --line: #24424a; --card: #152c32;
+    --on-canal: #08262d; --footer-bg: #071619; color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--body);
+    font-size: 17px;
+    line-height: 1.6;
+  }
+  a { color: var(--canal); }
+  a:focus-visible, button:focus-visible {
+    outline: 3px solid var(--sun);
+    outline-offset: 2px;
+  }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 20px; }
+
+  /* Qoralama belgisi */
+  .draft {
+    background: var(--sun);
+    color: var(--on-sun);
+    font-size: 14px;
+    font-weight: 500;
+    padding: 8px 20px;
+    text-align: center;
+  }
+
+  /* Sarlavha qismi */
+  .top {
+    background: var(--paper);
+    border-bottom: 1px solid var(--line);
+    position: sticky;
+    top: env(safe-area-inset-top, 0px);
+    z-index: 5;
+  }
+  .top .wrap {
+    display: flex;
+    align-items: center;
+    gap: 12px 24px;
+    flex-wrap: wrap;
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+  .brand {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 18px;
+    color: var(--canal);
+    text-decoration: none;
+    margin-right: auto;
+  }
+  .top nav { display: flex; gap: 4px 20px; flex-wrap: wrap; }
+  .top nav a {
+    color: var(--ink);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 15px;
+    padding: 4px 0;
+    border-bottom: 2px solid transparent;
+  }
+  .top nav a:hover { border-bottom-color: var(--sun); }
+  .langs { display: flex; border: 1px solid var(--canal); border-radius: 999px; overflow: hidden; }
+  .langs button {
+    font: 500 13px var(--body);
+    padding: 6px 12px;
+    border: 0;
+    background: transparent;
+    color: var(--canal);
+    cursor: pointer;
+  }
+  .langs button[aria-pressed="true"] { background: var(--canal); color: var(--on-canal); }
+
+  /* Bosh qism */
+  .hero { background: var(--water); overflow: hidden; }
+  .hero .wrap > * { min-width: 0; }
+  .hero .wrap {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: end;
+    gap: 16px 48px;
+    padding-top: 56px;
+    padding-bottom: 40px;
+  }
+  .num {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: clamp(6.5rem, 24vw, 17rem);
+    line-height: .8;
+    letter-spacing: -.04em;
+    color: var(--canal);
+    margin: 0;
+  }
+  .hero h1 {
+    font-family: var(--display);
+    font-weight: 500;
+    font-size: clamp(1.4rem, 3vw, 2.1rem);
+    line-height: 1.2;
+    margin: 0 0 10px;
+  }
+  .place { font-weight: 500; color: var(--canal-deep); margin: 0 0 14px; }
+  .lead { margin: 0; max-width: 46ch; }
+  .wave { display: block; width: 100%; height: 44px; }
+  @media (max-width: 760px) {
+    .hero .wrap { grid-template-columns: 1fr; padding-top: 36px; }
+  }
+
+  /* Bo'limlar */
+  section { padding: 64px 0; }
+  section + section { border-top: 1px solid var(--line); }
+  h2 {
+    text-wrap: balance;
+    font-family: var(--display);
+    font-weight: 500;
+    font-size: clamp(1.5rem, 3.2vw, 2rem);
+    line-height: 1.2;
+    margin: 0 0 28px;
+  }
+  h3 { font-size: 1.05rem; margin: 0 0 12px; }
+
+  .about { display: grid; grid-template-columns: 1.4fr 1fr; gap: 40px; align-items: start; }
+  .about p { margin: 0 0 28px; max-width: 60ch; }
+  .has { list-style: none; margin: 0; padding: 0; columns: 2; column-gap: 28px; }
+  .has li { padding: 7px 0 7px 22px; position: relative; break-inside: avoid; }
+  .has li::before {
+    content: "";
+    position: absolute; left: 0; top: 16px;
+    width: 12px; height: 4px; border-radius: 2px;
+    background: var(--sun);
+  }
+  .facts {
+    background: var(--canal);
+    color: var(--on-canal);
+    border-radius: 6px 28px 6px 6px;
+    padding: 24px 26px;
+    margin: 0;
+  }
+  .facts div { padding: 10px 0; }
+  .facts div + div { border-top: 1px solid color-mix(in srgb, currentColor 22%, transparent); }
+  .facts dt { font-size: 14px; opacity: .8; }
+  .facts dd { margin: 0; font-weight: 500; font-size: 1.05rem; }
+  .facts .todo dd { font-weight: 400; font-style: italic; opacity: .75; }
+  @media (max-width: 760px) {
+    .about { grid-template-columns: 1fr; }
+    .has { columns: 1; }
+  }
+
+  /* Yangiliklar */
+  .news { list-style: none; margin: 0; padding: 0; }
+  .news li {
+    display: grid;
+    grid-template-columns: 130px 1fr;
+    gap: 6px 28px;
+    padding: 22px 0;
+    border-top: 1px solid var(--line);
+  }
+  .news li:first-child { border-top: 0; padding-top: 0; }
+  .news time, .news .when { font-family: var(--display); font-weight: 500; font-size: 14px; color: var(--canal); padding-top: 4px; }
+  .news h3 { margin-bottom: 6px; font-size: 1.15rem; }
+  .news p { margin: 0; max-width: 64ch; }
+  .news .src { font-size: 14px; display: inline-block; margin-top: 6px; }
+  @media (max-width: 600px) { .news li { grid-template-columns: 1fr; } }
+
+  /* O'qituvchilar va to'garaklar */
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
+  @media (max-width: 760px) { .two { grid-template-columns: 1fr; } }
+  .people, .clubs { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+  .people li, .clubs li {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-left: 5px solid var(--canal);
+    border-radius: 4px;
+    padding: 12px 16px;
+  }
+  .people strong, .clubs strong { display: block; }
+  .people span, .clubs span { color: var(--muted); font-size: 15px; }
+  .note { color: var(--muted); font-size: 15px; margin: 0 0 16px; max-width: 52ch; }
+
+  /* To'ldirilishi kerak bo'lgan joylar */
+  li.todo {
+    background: transparent;
+    border: 1.5px dashed var(--muted);
+    border-left: 1.5px dashed var(--muted);
+    color: var(--muted);
+  }
+  .news li.todo { border: 0; border-top: 1px solid var(--line); }
+  .news li.todo h3, .news li.todo p { color: var(--muted); font-style: italic; }
+  .tag {
+    display: inline-block;
+    background: var(--sun);
+    color: var(--on-sun);
+    font-size: 12px;
+    font-weight: 500;
+    font-style: normal;
+    border-radius: 3px;
+    padding: 1px 7px;
+    margin-left: 6px;
+    vertical-align: middle;
+  }
+
+  footer { background: var(--footer-bg); color: var(--footer-fg); padding: 44px 0; }
+  footer h2 { color: var(--footer-fg); margin-bottom: 16px; }
+  footer p { margin: 0 0 6px; }
+  footer .small { font-size: 14px; opacity: .75; margin-top: 22px; }
+</style>
+</head>
+<body>
+
+<div class="draft" data-t="draft"></div>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#top" data-t="brand"></a>
+    <nav aria-label="Bo'limlar">
+      <a href="#about" data-t="navAbout"></a>
+      <a href="#news" data-t="navNews"></a>
+      <a href="#people" data-t="navPeople"></a>
+      <a href="#contact" data-t="navContact"></a>
+    </nav>
+    <div class="langs" role="group" aria-label="Til / Язык / Language">
+      <button type="button" data-lang="uz">O‘zb</button>
+      <button type="button" data-lang="ru">Рус</button>
+      <button type="button" data-lang="en">Eng</button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+  <div class="hero">
+    <div class="wrap">
+      <p class="num" aria-hidden="true">358</p>
+      <div>
+        <h1 data-t="h1"></h1>
+        <p class="place" data-t="place"></p>
+        <p class="lead" data-t="lead"></p>
+      </div>
+    </div>
+    <svg class="wave" viewBox="0 0 1200 44" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0 22 C150 0 300 44 450 22 S750 0 900 22 S1100 40 1200 22 V44 H0 Z" style="fill:var(--paper)"/>
+      <path d="M0 22 C150 0 300 44 450 22 S750 0 900 22 S1100 40 1200 22" style="fill:none;stroke:var(--sun)" stroke-width="3"/>
+    </svg>
+  </div>
+
+  <section id="about">
+    <div class="wrap">
+      <h2 data-t="aboutTitle"></h2>
+      <div class="about">
+        <div>
+          <p data-t="aboutText"></p>
+          <h3 data-t="hasTitle"></h3>
+          <ul class="has" id="has"></ul>
+        </div>
+        <dl class="facts" id="facts"></dl>
+      </div>
+    </div>
+  </section>
+
+  <section id="news">
+    <div class="wrap">
+      <h2 data-t="newsTitle"></h2>
+      <ul class="news" id="newsList"></ul>
+    </div>
+  </section>
+
+  <section id="people">
+    <div class="wrap">
+      <h2 data-t="peopleTitle"></h2>
+      <div class="two">
+        <div>
+          <h3 data-t="teachersTitle"></h3>
+          <p class="note" data-t="teachersNote"></p>
+          <ul class="people" id="teachers"></ul>
+        </div>
+        <div>
+          <h3 data-t="clubsTitle"></h3>
+          <p class="note" data-t="clubsNote"></p>
+          <ul class="clubs" id="clubs"></ul>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer id="contact">
+  <div class="wrap">
+    <h2 data-t="contactTitle"></h2>
+    <p data-t="contactAddress"></p>
+    <p data-t="contactPhone"></p>
+    <p data-t="contactHours"></p>
+    <p class="small" data-t="footNote"></p>
+  </div>
+</footer>
+
+<script>
+/* =====================================================================
+   1-QISM. SAYT MA'LUMOTLARI
+   Yangilik, o'qituvchi yoki to'garak qo'shish uchun faqat shu qismni
+   o'zgartiring. Har bir matn uch tilda yoziladi: uz, ru, en.
+   "todo: true" — hali to'ldirilmagan joy (saytda sariq belgi bilan
+   ko'rinadi). To'ldirgach, shu qatorni o'chirib tashlang.
+   ===================================================================== */
+
+const FACTS = [
+  { label: { uz: "Ochilgan yili", ru: "Год открытия", en: "Opened" },
+    value: { uz: "2025", ru: "2025", en: "2025" } },
+  { label: { uz: "O‘quvchi o‘rni", ru: "Ученических мест", en: "Student places" },
+    value: { uz: "qariyb 1000", ru: "почти 1000", en: "about 1,000" } },
+  { label: { uz: "Mahalla", ru: "Махалля", en: "Mahalla" },
+    value: { uz: "Iykota", ru: "Ийкота", en: "Iykota" } },
+  { todo: true,
+    label: { uz: "Direktor", ru: "Директор", en: "Principal" },
+    value: { uz: "ism-familiya qo‘shiladi", ru: "имя будет добавлено", en: "name to be added" } },
+  { todo: true,
+    label: { uz: "Ta’lim tili", ru: "Язык обучения", en: "Language of instruction" },
+    value: { uz: "qo‘shiladi", ru: "будет добавлено", en: "to be added" } }
+];
+
+const HAS = [
+  { uz: "Fan xonalari", ru: "Предметные кабинеты", en: "Subject classrooms" },
+  { uz: "Laboratoriyalar", ru: "Лаборатории", en: "Laboratories" },
+  { uz: "Kompyuter sinflari", ru: "Компьютерные классы", en: "Computer rooms" },
+  { uz: "Chet tillari markazi", ru: "Центр иностранных языков", en: "Foreign language centre" },
+  { uz: "Kutubxona", ru: "Библиотека", en: "Library" },
+  { uz: "Robototexnika to‘garagi", ru: "Кружок робототехники", en: "Robotics club" },
+  { uz: "Sport zali", ru: "Спортивный зал", en: "Sports hall" },
+  { uz: "Futbol maydoni", ru: "Футбольное поле", en: "Football pitch" },
+  { uz: "Oshxona", ru: "Столовая", en: "Canteen" }
+];
+
+const NEWS = [
+  { when: { uz: "20.03.2025", ru: "20.03.2025", en: "20 Mar 2025" },
+    title: { uz: "Maktabimizga Prezident tashrif buyurdi",
+             ru: "Нашу школу посетил Президент",
+             en: "The President visited our school" },
+    text: { uz: "Shavkat Mirziyoyev Bektemir tumaniga tashrifi chog‘ida Iykota mahallasidagi yangi maktabimiz bilan tanishdi va o‘qituvchilar bilan suhbatlashdi.",
+            ru: "Во время поездки в Бектемирский район Шавкат Мирзиёев осмотрел нашу новую школу в махалле Ийкота и побеседовал с учителями.",
+            en: "During a trip to Bektemir district, Shavkat Mirziyoyev toured our new school in Iykota mahalla and talked with the teachers." },
+    src: "https://president.uz/oz/lists/view/7959" },
+
+  { when: { uz: "Reja", ru: "В планах", en: "Planned" },
+    title: { uz: "Maktabimiz negizida robototexnika kursi",
+             ru: "Курс робототехники на базе нашей школы",
+             en: "A robotics course based at our school" },
+    text: { uz: "Toshkent axborot texnologiyalari universiteti ishchi guruhi tumandagi barcha o‘quvchilar uchun maktabimiz negizida robototexnika kursi tashkil etishni rejalashtirgan.",
+            ru: "Рабочая группа Ташкентского университета информационных технологий планирует открыть на базе нашей школы курс робототехники для всех учеников района.",
+            en: "A working group from Tashkent University of Information Technologies plans to set up a robotics course at our school for students from the whole district." },
+    src: "https://tuit.uz/en/post/23312132123" },
+
+  { todo: true,
+    when: { uz: "kun.oy.yil", ru: "дд.мм.гггг", en: "date" },
+    title: { uz: "Yangi e’lon sarlavhasi", ru: "Заголовок нового объявления", en: "New announcement title" },
+    text: { uz: "E’lon matni shu yerga yoziladi: nima bo‘ladi, qachon va qayerda.",
+            ru: "Здесь пишется текст объявления: что будет, когда и где.",
+            en: "The announcement text goes here: what is happening, when and where." } }
+];
+
+const TEACHERS = [
+  { todo: true,
+    name: { uz: "Ism Familiya", ru: "Имя Фамилия", en: "First and last name" },
+    subject: { uz: "Fan nomi", ru: "Предмет", en: "Subject" } },
+  { todo: true,
+    name: { uz: "Ism Familiya", ru: "Имя Фамилия", en: "First and last name" },
+    subject: { uz: "Fan nomi", ru: "Предмет", en: "Subject" } },
+  { todo: true,
+    name: { uz: "Ism Familiya", ru: "Имя Фамилия", en: "First and last name" },
+    subject: { uz: "Fan nomi", ru: "Предмет", en: "Subject" } }
+];
+
+const CLUBS = [
+  { name: { uz: "Robototexnika", ru: "Робототехника", en: "Robotics" },
+    info: { uz: "Kun va vaqti qo‘shiladi", ru: "День и время будут добавлены", en: "Day and time to be added" } },
+  { todo: true,
+    name: { uz: "To‘garak nomi", ru: "Название кружка", en: "Club name" },
+    info: { uz: "Kun, vaqt, xona", ru: "День, время, кабинет", en: "Day, time, room" } },
+  { todo: true,
+    name: { uz: "To‘garak nomi", ru: "Название кружка", en: "Club name" },
+    info: { uz: "Kun, vaqt, xona", ru: "День, время, кабинет", en: "Day, time, room" } }
+];
+
+/* =====================================================================
+   2-QISM. SAHIFADAGI DOIMIY MATNLAR (uch tilda)
+   ===================================================================== */
+
+const T = {
+  uz: {
+    draft: "Qoralama. Sayt maktab ma’muriyati tasdiqlaganidan keyin e’lon qilinadi.",
+    brand: "358-maktab",
+    navAbout: "Maktab haqida", navNews: "Yangiliklar", navPeople: "O‘qituvchilar va to‘garaklar", navContact: "Aloqa",
+    h1: "358-sonli umumta’lim maktabi",
+    place: "Toshkent shahri, Bektemir tumani, Iykota mahallasi",
+    lead: "2025-yilda ochilgan yangi maktab. Bu yerda laboratoriyalar, kompyuter sinflari, kutubxona va robototexnika to‘garagi bor.",
+    aboutTitle: "Maktab haqida",
+    aboutText: "Maktabimiz davlat budjeti hisobidan qurilib, 2025-yilda Bektemir tumanining Iykota mahallasida foydalanishga topshirilgan. Bino qariyb 1000 o‘quvchiga mo‘ljallangan.",
+    hasTitle: "Maktabda nimalar bor",
+    newsTitle: "Yangiliklar va tadbirlar",
+    source: "Manba",
+    peopleTitle: "O‘qituvchilar va to‘garaklar",
+    teachersTitle: "O‘qituvchilar",
+    teachersNote: "Ro‘yxat ma’muriyat bilan kelishilgach qo‘shiladi. Ism va rasmlar faqat o‘qituvchining roziligi bilan joylanadi.",
+    clubsTitle: "To‘garaklar",
+    clubsNote: "To‘garaklar jadvali ma’muriyatdan olingach to‘ldiriladi.",
+    contactTitle: "Aloqa",
+    contactAddress: "Manzil: qo‘shiladi",
+    contactPhone: "Telefon: qo‘shiladi",
+    contactHours: "Qabul vaqti: qo‘shiladi",
+    footNote: "Sayt qoralamasini maktab o‘quvchisi tayyorlagan.",
+    todo: "to‘ldiriladi"
+  },
+  ru: {
+    draft: "Черновик. Сайт будет опубликован после утверждения администрацией школы.",
+    brand: "Школа №358",
+    navAbout: "О школе", navNews: "Новости", navPeople: "Учителя и кружки", navContact: "Контакты",
+    h1: "Общеобразовательная школа №358",
+    place: "Город Ташкент, Бектемирский район, махалля Ийкота",
+    lead: "Новая школа, открытая в 2025 году. Здесь есть лаборатории, компьютерные классы, библиотека и кружок робототехники.",
+    aboutTitle: "О школе",
+    aboutText: "Школа построена на средства государственного бюджета и сдана в эксплуатацию в 2025 году в махалле Ийкота Бектемирского района. Здание рассчитано почти на 1000 учеников.",
+    hasTitle: "Что есть в школе",
+    newsTitle: "Новости и события",
+    source: "Источник",
+    peopleTitle: "Учителя и кружки",
+    teachersTitle: "Учителя",
+    teachersNote: "Список появится после согласования с администрацией. Имена и фотографии размещаются только с согласия учителя.",
+    clubsTitle: "Кружки",
+    clubsNote: "Расписание кружков будет заполнено после получения от администрации.",
+    contactTitle: "Контакты",
+    contactAddress: "Адрес: будет добавлен",
+    contactPhone: "Телефон: будет добавлен",
+    contactHours: "Часы приёма: будут добавлены",
+    footNote: "Черновик сайта подготовил ученик школы.",
+    todo: "заполнить"
+  },
+  en: {
+    draft: "Draft. The site will go live once the school administration approves it.",
+    brand: "School 358",
+    navAbout: "About", navNews: "News", navPeople: "Teachers and clubs", navContact: "Contact",
+    h1: "General Secondary School No. 358",
+    place: "Tashkent city, Bektemir district, Iykota mahalla",
+    lead: "A new school that opened in 2025, with laboratories, computer rooms, a library and a robotics club.",
+    aboutTitle: "About the school",
+    aboutText: "Our school was built with state budget funds and opened in 2025 in Iykota mahalla, Bektemir district. The building is designed for about 1,000 students.",
+    hasTitle: "What the school has",
+    newsTitle: "News and events",
+    source: "Source",
+    peopleTitle: "Teachers and clubs",
+    teachersTitle: "Teachers",
+    teachersNote: "The list will be added once the administration agrees. Names and photos are posted only with the teacher's consent.",
+    clubsTitle: "Clubs",
+    clubsNote: "The club timetable will be filled in once we get it from the administration.",
+    contactTitle: "Contact",
+    contactAddress: "Address: to be added",
+    contactPhone: "Phone: to be added",
+    contactHours: "Office hours: to be added",
+    footNote: "This draft was prepared by a student of the school.",
+    todo: "to fill in"
+  }
+};
+
+/* =====================================================================
+   3-QISM. SAHIFANI CHIZISH (bu yerga tegish shart emas)
+   ===================================================================== */
+
+function el(tag, cls, text) {
+  const node = document.createElement(tag);
+  if (cls) node.className = cls;
+  if (text !== undefined) node.textContent = text;
+  return node;
+}
+function fill(id, items, build) {
+  const box = document.getElementById(id);
+  box.textContent = "";
+  items.forEach(function (item) { box.appendChild(build(item)); });
+}
+function tag(lang) { return el("span", "tag", T[lang].todo); }
+
+function render(lang) {
+  document.documentElement.lang = lang;
+  document.querySelectorAll("[data-t]").forEach(function (node) {
+    node.textContent = T[lang][node.dataset.t];
+  });
+  document.querySelectorAll("[data-lang]").forEach(function (btn) {
+    btn.setAttribute("aria-pressed", String(btn.dataset.lang === lang));
+  });
+
+  fill("facts", FACTS, function (f) {
+    const row = el("div", f.todo ? "todo" : "");
+    row.appendChild(el("dt", "", f.label[lang]));
+    row.appendChild(el("dd", "", f.value[lang]));
+    return row;
+  });
+
+  fill("has", HAS, function (h) { return el("li", "", h[lang]); });
+
+  fill("newsList", NEWS, function (n) {
+    const li = el("li", n.todo ? "todo" : "");
+    li.appendChild(el("div", "when", n.when[lang]));
+    const body = el("div");
+    const h = el("h3", "", n.title[lang]);
+    if (n.todo) h.appendChild(tag(lang));
+    body.appendChild(h);
+    body.appendChild(el("p", "", n.text[lang]));
+    if (n.src) {
+      const a = el("a", "src", T[lang].source + ": " + new URL(n.src).hostname);
+      a.href = n.src; a.target = "_blank"; a.rel = "noopener";
+      body.appendChild(a);
+    }
+    li.appendChild(body);
+    return li;
+  });
+
+  fill("teachers", TEACHERS, function (t) {
+    const li = el("li", t.todo ? "todo" : "");
+    const name = el("strong", "", t.name[lang]);
+    if (t.todo) name.appendChild(tag(lang));
+    li.appendChild(name);
+    li.appendChild(el("span", "", t.subject[lang]));
+    return li;
+  });
+
+  fill("clubs", CLUBS, function (c) {
+    const li = el("li", c.todo ? "todo" : "");
+    const name = el("strong", "", c.name[lang]);
+    if (c.todo) name.appendChild(tag(lang));
+    li.appendChild(name);
+    li.appendChild(el("span", "", c.info[lang]));
+    return li;
+  });
+}
+
+let saved = null;
+try { saved = localStorage.getItem("lang"); } catch (e) {}
+render(T[saved] ? saved : "uz");
+
+document.querySelectorAll("[data-lang]").forEach(function (btn) {
+  btn.addEventListener("click", function () {
+    render(btn.dataset.lang);
+    try { localStorage.setItem("lang", btn.dataset.lang); } catch (e) {}
+  });
+});
+</script>
+</body>
+</html>
