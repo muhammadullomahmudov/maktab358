@@ -158,6 +158,17 @@
   .clist span.v.soon { font-weight: 500; font-style: italic; color: var(--muted); }
   .credit { font-size: 13px; color: var(--muted); margin: 14px 0 0; }
 
+  /* Biz haqimizda */
+  .us { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 16px; }
+  .us > * { min-width: 0; }
+  .us .tile p { margin: 0; color: var(--muted); }
+  .us h3 { font-weight: 800; font-size: 1.15rem; letter-spacing: -.02em; }
+  .u-who { grid-row: span 2; background: var(--a); color: var(--on-a); border-color: transparent; }
+  .us .u-who p { color: inherit; font-size: 1.2rem; line-height: 1.45; }
+  .us .tile:last-child { grid-column: span 2; }
+  .us .clist { grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); }
+  @media (max-width: 900px) { .us { grid-template-columns: 1fr; } .us .tile:last-child { grid-column: auto; } }
+
   /* 3D kub */
   .cubewrap { perspective: 900px; width: 170px; height: 170px; touch-action: none; cursor: grab; }
   .cubewrap:active { cursor: grabbing; }
@@ -512,6 +523,7 @@
       <a href="#news" data-t="navNews"></a>
       <a href="#safety" data-t="navSafety"></a>
       <a href="#where" data-t="navWhere"></a>
+      <a href="#us" data-t="navUs"></a>
     </nav>
   </div>
 </div>
@@ -686,6 +698,29 @@
         </div>
       </div>
       <div class="mapbox" id="mapBox" hidden></div>
+    </div>
+  </section>
+  <section id="us">
+    <div class="wrap rv">
+      <h2><span data-t="usTitle"></span></h2>
+      <div class="us">
+        <div class="tile u-who">
+          <h3 data-t="usWhoTitle"></h3>
+          <p data-t="usWho"></p>
+        </div>
+        <div class="tile">
+          <h3 data-t="usSiteTitle"></h3>
+          <p data-t="usSite"></p>
+        </div>
+        <div class="tile">
+          <h3 data-t="usMadeTitle"></h3>
+          <p data-t="usMade"></p>
+        </div>
+        <div class="tile">
+          <h3 data-t="contactTitle"></h3>
+          <ul class="clist" id="contacts2"></ul>
+        </div>
+      </div>
     </div>
   </section>
 </main>
@@ -1103,6 +1138,13 @@ const T = {
     cubeSchool: "maktab", cubeDistrict: "Bektemir", cubeDistrictLabel: "tuman",
     contactTitle: "Biz bilan aloqa", cTelegram: "Telegram kanal", cInstagram: "Instagram", cPhone: "Murojaat uchun telefon",
     marquee: ["358-maktab", "Iykota mahallasi", "Robototexnika", "Laboratoriyalar", "Kutubxona", "Chet tillari markazi", "Sport zali", "Bektemir tumani"],
+    navUs: "Biz haqimizda", usTitle: "Biz haqimizda",
+    usWhoTitle: "Biz kimmiz",
+    usWho: "Biz Toshkent shahri Bektemir tumanidagi 358-sonli umumta’lim maktabining jamoasimiz: o‘quvchilar, ustozlar va ota-onalar. Maktabimiz 2025-yilda Iykota mahallasida ochilgan.",
+    usSiteTitle: "Bu sayt nima uchun",
+    usSite: "Maktab hayoti bir joyda bo‘lishi uchun: sinflar, ustozlar, dars jadvali, yangiliklar, yutuqlar va xavfsizlik qoidalari.",
+    usMadeTitle: "Saytni kim qildi",
+    usMade: "Saytni maktab o‘quvchisi tayyorlagan. Xato yoki taklif bo‘lsa, maktab ma’muriyatiga murojaat qiling.",
     todo: "to‘ldiriladi"
   },
   ru: {
@@ -1201,6 +1243,13 @@ const T = {
     cubeSchool: "школа", cubeDistrict: "Бектемир", cubeDistrictLabel: "район",
     contactTitle: "Связаться с нами", cTelegram: "Телеграм-канал", cInstagram: "Instagram", cPhone: "Телефон для обращений",
     marquee: ["Школа №358", "Махалля Ийкота", "Робототехника", "Лаборатории", "Библиотека", "Центр иностранных языков", "Спортзал", "Бектемирский район"],
+    navUs: "О нас", usTitle: "О нас",
+    usWhoTitle: "Кто мы",
+    usWho: "Мы — коллектив общеобразовательной школы №358 Бектемирского района Ташкента: ученики, учителя и родители. Наша школа открылась в 2025 году в махалле Ийкота.",
+    usSiteTitle: "Зачем этот сайт",
+    usSite: "Чтобы школьная жизнь была в одном месте: классы, учителя, расписание, новости, достижения и правила безопасности.",
+    usMadeTitle: "Кто сделал сайт",
+    usMade: "Сайт подготовил ученик школы. Если нашли ошибку или есть предложение, обратитесь в администрацию школы.",
     todo: "заполнить"
   },
   en: {
@@ -1299,6 +1348,13 @@ const T = {
     cubeSchool: "school", cubeDistrict: "Bektemir", cubeDistrictLabel: "district",
     contactTitle: "Get in touch", cTelegram: "Telegram channel", cInstagram: "Instagram", cPhone: "Phone for enquiries",
     marquee: ["School 358", "Iykota mahalla", "Robotics", "Laboratories", "Library", "Language centre", "Sports hall", "Bektemir district"],
+    navUs: "About us", usTitle: "About us",
+    usWhoTitle: "Who we are",
+    usWho: "We are the community of General Secondary School No. 358 in Bektemir district, Tashkent: students, teachers and parents. Our school opened in 2025 in Iykota mahalla.",
+    usSiteTitle: "What this site is for",
+    usSite: "To keep school life in one place: classes, teachers, the timetable, news, achievements and safety rules.",
+    usMadeTitle: "Who made the site",
+    usMade: "The site was prepared by a student of the school. If you spot a mistake or have a suggestion, please contact the school administration.",
     todo: "to fill in"
   }
 };
@@ -1833,7 +1889,7 @@ const ICONS = {
 function renderContacts() {
   const L = T[LANG];
   const rows = [["telegram", L.cTelegram, CONTACTS.telegram], ["instagram", L.cInstagram, CONTACTS.instagram], ["phone", L.cPhone, CONTACTS.phone || LOCATION.phone]];
-  fill("contacts", rows, function (r) {
+  ["contacts", "contacts2"].forEach(function (cid) { fill(cid, rows, function (r) {
     const li = el("li");
     const ic = el("span", "ic");
     const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
@@ -1849,7 +1905,7 @@ function renderContacts() {
     else { const a = el("a", "", r[2].replace(/^https?:\/\/(www\.)?/, "")); a.href = r[2]; a.target = "_blank"; a.rel = "noopener"; body.appendChild(a); }
     li.appendChild(body);
     return li;
-  });
+  }); });
 }
 function renderCube() {
   const L = T[LANG];
