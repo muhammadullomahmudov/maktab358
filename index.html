@@ -157,7 +157,7 @@
   .stickies dd { margin: 0; font-weight: 800; font-size: 1.55rem; letter-spacing: -.04em; line-height: 1.05; }
   .stickies div:first-child { background: var(--a); border-color: transparent; color: var(--on-a); }
   .stickies div:first-child dt { color: inherit; opacity: .85; }
-  .bento .snap { grid-column: span 2; padding: 0; overflow: hidden; }
+  .bento .snap { grid-column: span 3; padding: 0; overflow: hidden; }
   .bento .snap .frame { aspect-ratio: 3 / 2; border-radius: 0; }
   .bento .snap figcaption { padding: 10px 16px 12px; font-weight: 600; color: var(--ink); }
   .t-contact { grid-column: span 2; padding: 20px 22px; }
@@ -551,10 +551,6 @@
           <div class="frame"><img src="rasmlar/it-xona.jpg" data-par="1" width="764" height="508" alt="" data-alt="altIT" loading="lazy"></div>
           <figcaption data-t="capIT"></figcaption>
         </figure>
-        <div class="tile t-contact">
-          <h3 data-t="contactTitle"></h3>
-          <ul class="clist" id="contacts"></ul>
-        </div>
       </div>
       <p class="credit"><span data-t="photoCredit"></span> <a href="https://president.uz/oz/lists/view/7959" target="_blank" rel="noopener">president.uz</a></p>
     </div>
@@ -1825,7 +1821,7 @@ const ICONS = {
 function renderContacts() {
   const L = T[LANG];
   const rows = [["telegram", L.cTelegram, CONTACTS.telegram], ["instagram", L.cInstagram, CONTACTS.instagram], ["phone", L.cPhone, CONTACTS.phone || LOCATION.phone]].filter(function (r) { return r[2]; });
-  ["contacts", "contacts2"].forEach(function (cid) { fill(cid, rows, function (r) {
+  ["contacts2"].forEach(function (cid) { fill(cid, rows, function (r) {
     const li = el("li");
     const ic = el("span", "ic");
     const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
