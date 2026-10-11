@@ -1530,7 +1530,7 @@ let ROOM = null;         /* tanlangan xona raqami */
 let TQ = "";             /* qidiruv matni */
 let TOPEN = null;        /* ochiq turgan o'qituvchi raqami */
 let MYCLASS = null;       /* tanlangan "mening sinfim" */
-let BELL = false;         /* qo'ng'iroq ovozi yoniqmi */
+let BELL = true;          /* qo'ng'iroq ovozi yoniqmi */
 let LASTBELL = null;
 let AC = null;
 let NEWSALL = false;     /* hamma yangiliklar ochiqmi */
@@ -1630,7 +1630,8 @@ function ring() {
     const C = window.AudioContext || window.webkitAudioContext;
     if (!C) return;
     AC = AC || new C();
-    const t = AC.currentTime;
+    if (AC.state === "suspended") AC.resume();
+    const t = AC.currentTime + 0.05;
     for (let i = 0; i < 8; i++) {
       const o = AC.createOscillator(), g = AC.createGain();
       o.type = "triangle";
@@ -2482,7 +2483,7 @@ function setupTabs() {
   Object.keys(links).forEach(function (k) { const s = document.getElementById(k); if (s) io.observe(s); });
 }
 
-try { MYCLASS = localStorage.getItem("myClass") || null; BELL = localStorage.getItem("bell") === "1"; } catch (e) {}
+try { MYCLASS = localStorage.getItem("myClass") || null; BELL = localStorage.getItem("bell") !== "0"; } catch (e) {}
 let savedLang = null;
 try { savedLang = localStorage.getItem("lang"); } catch (e) {}
 render(T[savedLang] ? savedLang : "uz");
@@ -2493,6 +2494,19 @@ setup3D();
 buildBackground();
 setupDots();
 setInterval(function () { tickNow(); liveCheck(); }, 1000);
+
+/* Brauzer ovozga faqat foydalanuvchi sahifaga bir marta tekkanidan keyin ruxsat beradi:
+   birinchi bosish yoki tugma bosilishi ovozni "ochadi", shundan keyin qo'ng'iroq o'zi chalinadi. */
+function unlockSound() {
+  try {
+    const C = window.AudioContext || window.webkitAudioContext;
+    if (C) { AC = AC || new C(); if (AC.state === "suspended") AC.resume(); }
+  } catch (e) {}
+  window.removeEventListener("pointerdown", unlockSound);
+  window.removeEventListener("keydown", unlockSound);
+}
+window.addEventListener("pointerdown", unlockSound);
+window.addEventListener("keydown", unlockSound);
 
 document.getElementById("myClass").addEventListener("change", function (e) {
   MYCLASS = e.target.value || null;
