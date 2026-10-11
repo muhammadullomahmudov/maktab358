@@ -571,7 +571,6 @@
             </div>
           </div>
           <div class="outside"><div id="wing"></div><div id="pitch"></div></div>
-          <p class="fine" data-t="tourFine"></p>
         </div>
         <div class="roominfo paper" id="roomInfo" aria-live="polite"></div>
       </div>
@@ -588,7 +587,6 @@
   <section id="classes">
     <div class="wrap rv">
       <h2><span data-t="classesTitle"></span></h2>
-      <p class="sample" id="sampleNote" data-t="sampleNote"></p>
       <dl class="totals" id="totals"></dl>
       <p class="hint" data-t="classHint"></p>
       <div id="grades"></div>
@@ -599,7 +597,6 @@
     <div class="wrap rv">
       <h2><span data-t="teachersTitle"></span></h2>
       <p class="note" data-t="teachersNote"></p>
-      <p class="sample" id="teachSample" data-t="teachersSample"></p>
       <div class="search">
         <label for="teacherSearch" data-t="searchLabel"></label>
         <input type="search" id="teacherSearch" autocomplete="off">
@@ -613,7 +610,6 @@
     <div class="wrap rv">
       <h2><span data-t="scheduleTitle"></span></h2>
       <p class="note" data-t="scheduleNote"></p>
-      <p class="sample" id="schedSample" data-t="scheduleSample"></p>
       <div class="pick" id="pick"></div>
       <p class="slot" id="slotLine"></p>
       <p class="slothint" id="slotHint"></p>
@@ -683,7 +679,6 @@
             <a class="btn fill" id="mapG" target="_blank" rel="noopener" data-t="mapGoogle"></a>
             <a class="btn" id="mapY" target="_blank" rel="noopener" data-t="mapYandex"></a>
           </div>
-          <p class="fine" id="whereFine"></p>
         </div>
       </div>
     </div>
@@ -1082,12 +1077,10 @@ const T = {
     aboutText: "Maktabimiz davlat budjeti hisobidan qurilib, 2025-yilda Bektemir tumanining Iykota mahallasida foydalanishga topshirilgan. Bino qariyb 1000 o‘quvchiga mo‘ljallangan. O‘sha yili maktabga Prezident tashrif buyurgan.",
     tourTitle: "Binoni aylaning",
     tourNote: "Xonani bosing: chirog‘i yonadi, yonida esa xonaning 3D ko‘rinishi va tavsifi ochiladi.",
-    tourFine: "Sxema shartli: xonalarning haqiqiy joylashuvi boshqacha bo‘lishi mumkin.",
     tourEmpty: "Biror xonani tanlang", tourEmptyText: "Binodan istalgan xonani bosing: uning 3D ko‘rinishi shu yerda ochiladi.",
-    r3Hint: "3D ko‘rinish shartli. Aylantirish uchun sichqonchani yoki barmoqni chapga-o‘ngga suring.",
+    r3Hint: "Aylantirish uchun sichqonchani yoki barmoqni chapga-o‘ngga suring.",
     directorTitle: "Maktab direktori", directorRole: "Direktor",
     classesTitle: "Sinflar va o‘quvchilar",
-    sampleNote: "Namuna. Quyidagi sonlar sahifa qanday ko‘rinishini ko‘rsatish uchun qo‘yilgan, haqiqiy emas. Maktabdan aniq ro‘yxat olingach almashtiriladi.",
     classHint: "Harf yonidagi son — o‘quvchilar soni. Sinf haqida ko‘proq bilish uchun uning ustiga bosing.",
     totStudents: "o‘quvchi", totClasses: "sinf", totAvg: "bir sinfda o‘rtacha",
     gradeName: function (g) { return g + "-sinf"; },
@@ -1096,7 +1089,6 @@ const T = {
     dCount: "O‘quvchilar soni", dBoys: "O‘g‘il bolalar", dGirls: "Qiz bolalar",
     dTeacher: "Sinf rahbari", dRoom: "Xona", dShift: "Smena", soon: "qo‘shiladi",
     shiftName: function (n) { return n + "-smena"; },
-    privacy: "O‘quvchilarning ism-familiyalari shaxsiy ma’lumot bo‘lgani uchun saytda e’lon qilinmaydi.",
     close: "Yopish",
     teachersTitle: "Ustozlarimiz",
     teachersNote: "Ism yoki familiyani yozib qidiring. O‘qituvchi ustiga bossangiz, qaysi fandan dars berishi, qaysi sinflarga kirishi va hozir qaysi xonada ekani chiqadi.",
@@ -1107,12 +1099,10 @@ const T = {
     wAddress: "Manzil", wPhone: "Telefon", wHours: "Qabul vaqti",
     wAddressBase: "Toshkent shahri, Bektemir tumani, Iykota mahallasi",
     mapGoogle: "Google Xaritada ochish", mapYandex: "Yandex Xaritada ochish",
-    whereApprox: "Xaritada Iykota mahallasi ko‘rsatiladi.",
     footNote: "Namoyish versiyasi: direktor, o‘qituvchilar, sinflar soni va dars jadvali namuna ma’lumotlar. Yangiliklar va yutuqlar maktabning Telegram kanalidan olingan.",
     navSchedule: "Dars jadvali", navPride: "Yutuqlar", navSafety: "Xavfsizlik",
     scheduleTitle: "Kim hozir qayerda?",
     scheduleNote: "Toshkent vaqti bo‘yicha qaysi o‘qituvchi qaysi sinfda va qaysi xonada dars o‘tayotgani ko‘rinadi. Boshqa kun yoki darsni tanlab ham ko‘rishingiz mumkin.",
-    scheduleSample: "Namuna. Bu jadval va xona raqamlari sahifani ko‘rsatish uchun tuzilgan, haqiqiy emas. Maktabning dars jadvali olingach almashtiriladi.",
     pkLive: "Hozir (jonli)", pkDay: "Kun:", pkLesson: "Dars:", pkClass: "Sinf:",
     daysShort: ["Yak", "Du", "Se", "Chor", "Pay", "Ju", "Sha"],
     daysFull: ["Yakshanba", "Dushanba", "Seshanba", "Chorshanba", "Payshanba", "Juma", "Shanba"],
@@ -1137,7 +1127,6 @@ const T = {
     exitsTodo: "Har bir qavatda evakuatsiya rejasi osilgan. Signal berilganda sinf rahbari boshchiligida shu rejada ko‘rsatilgan eng yaqin chiqishdan foydalaning.",
     assembly: "Yig‘ilish joyi",
     callsTitle: "Kattalarga ayting va qo‘ng‘iroq qiling",
-    teachersSample: "Namuna. Bu ism-familiyalar qidiruv qanday ishlashini ko‘rsatish uchun o‘ylab topilgan, haqiqiy o‘qituvchilar emas. Haqiqiy ro‘yxat olingach almashtiriladi.",
     searchLabel: "O‘qituvchini qidirish", searchPh: "Ism, familiya yoki fan nomi",
     foundN: function (n) { return n + " ta o‘qituvchi topildi"; }, noFound: "Bunday o‘qituvchi topilmadi. Boshqacha yozib ko‘ring.",
     tSubject: "Fani", tClasses: "Dars beradigan sinflari", tNow: "Hozir", tRoom: "Xonasi",
@@ -1180,12 +1169,10 @@ const T = {
     aboutText: "Школа построена на средства государственного бюджета и сдана в эксплуатацию в 2025 году в махалле Ийкота Бектемирского района. Здание рассчитано почти на 1000 учеников. В том же году школу посетил Президент.",
     tourTitle: "Пройдитесь по зданию",
     tourNote: "Нажмите на кабинет — в нём загорится свет и появится описание.",
-    tourFine: "Схема условная: настоящее расположение кабинетов может быть другим.",
     tourEmpty: "Выберите кабинет", tourEmptyText: "Нажмите на любой кабинет в здании: здесь откроется его 3D-вид.",
-    r3Hint: "3D-вид условный. Чтобы повернуть, ведите мышью или пальцем влево-вправо.",
+    r3Hint: "Чтобы повернуть, ведите мышью или пальцем влево-вправо.",
     directorTitle: "Директор школы", directorRole: "Директор",
     classesTitle: "Классы и ученики",
-    sampleNote: "Образец. Числа ниже показывают, как будет выглядеть страница, они не настоящие. Их заменят, когда школа даст точный список.",
     classHint: "Число рядом с буквой — количество учеников. Нажмите на класс, чтобы узнать больше.",
     totStudents: "учеников", totClasses: "классов", totAvg: "в среднем в классе",
     gradeName: function (g) { return g + " класс"; },
@@ -1194,7 +1181,6 @@ const T = {
     dCount: "Число учеников", dBoys: "Мальчики", dGirls: "Девочки",
     dTeacher: "Классный руководитель", dRoom: "Кабинет", dShift: "Смена", soon: "будет добавлено",
     shiftName: function (n) { return n + "-я смена"; },
-    privacy: "Имена и фамилии учеников — личные данные, поэтому на сайте они не публикуются.",
     close: "Закрыть",
     teachersTitle: "Наши учителя",
     teachersNote: "Ищите по имени или фамилии. Нажмите на учителя, чтобы увидеть его предмет, классы и кабинет, где он сейчас.",
@@ -1205,12 +1191,10 @@ const T = {
     wAddress: "Адрес", wPhone: "Телефон", wHours: "Часы приёма",
     wAddressBase: "Город Ташкент, Бектемирский район, махалля Ийкота",
     mapGoogle: "Открыть в Google Картах", mapYandex: "Открыть в Яндекс Картах",
-    whereApprox: "На карте показана махалля Ийкота.",
     footNote: "Демо-версия: директор, учителя, число учеников и расписание заполнены примерами. Новости и достижения взяты из телеграм-канала школы.",
     navSchedule: "Расписание", navPride: "Достижения", navSafety: "Безопасность",
     scheduleTitle: "Кто сейчас где?",
     scheduleNote: "По ташкентскому времени видно, какой учитель в каком классе и кабинете ведёт урок. Можно выбрать другой день или урок.",
-    scheduleSample: "Образец. Это расписание и номера кабинетов составлены для примера, они не настоящие. Их заменят, когда будет получено расписание школы.",
     pkLive: "Сейчас", pkDay: "День:", pkLesson: "Урок:", pkClass: "Класс:",
     daysShort: ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"],
     daysFull: ["Воскресенье", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"],
@@ -1235,7 +1219,6 @@ const T = {
     exitsTodo: "На каждом этаже висит план эвакуации. По сигналу идите за классным руководителем к ближайшему выходу, указанному на плане.",
     assembly: "Место сбора",
     callsTitle: "Скажите взрослым и позвоните",
-    teachersSample: "Образец. Эти имена и фамилии придуманы, чтобы показать работу поиска, это не настоящие учителя. Их заменят, когда будет получен настоящий список.",
     searchLabel: "Поиск учителя", searchPh: "Имя, фамилия или предмет",
     foundN: function (n) { return "Найдено учителей: " + n; }, noFound: "Такой учитель не найден. Попробуйте написать иначе.",
     tSubject: "Предмет", tClasses: "Ведёт уроки в классах", tNow: "Сейчас", tRoom: "Кабинет",
@@ -1278,12 +1261,10 @@ const T = {
     aboutText: "Our school was built with state budget funds and opened in 2025 in Iykota mahalla, Bektemir district. The building is designed for about 1,000 students. The President visited the school that same year.",
     tourTitle: "Tour the building",
     tourNote: "Select a room: its light comes on and you see what is inside.",
-    tourFine: "The plan is illustrative: the real layout of the rooms may differ.",
     tourEmpty: "Pick a room", tourEmptyText: "Select any room in the building and its 3D view opens here.",
-    r3Hint: "The 3D view is illustrative. Move the mouse or drag left and right to turn it.",
+    r3Hint: "Move the mouse or drag left and right to turn it.",
     directorTitle: "School principal", directorRole: "Principal",
     classesTitle: "Classes and students",
-    sampleNote: "Sample. The numbers below show how the page will look and are not real. They will be replaced once the school provides the exact list.",
     classHint: "The number next to each letter is the class size. Select a class to learn more.",
     totStudents: "students", totClasses: "classes", totAvg: "average per class",
     gradeName: function (g) { return "Grade " + g; },
@@ -1292,7 +1273,6 @@ const T = {
     dCount: "Students", dBoys: "Boys", dGirls: "Girls",
     dTeacher: "Class teacher", dRoom: "Room", dShift: "Shift", soon: "to be added",
     shiftName: function (n) { return "Shift " + n; },
-    privacy: "Students' names are personal data, so they are not published on the site.",
     close: "Close",
     teachersTitle: "Our teachers",
     teachersNote: "Search by first name or surname. Select a teacher to see their subject, their classes and which room they are in right now.",
@@ -1303,12 +1283,10 @@ const T = {
     wAddress: "Address", wPhone: "Phone", wHours: "Office hours",
     wAddressBase: "Tashkent city, Bektemir district, Iykota mahalla",
     mapGoogle: "Open in Google Maps", mapYandex: "Open in Yandex Maps",
-    whereApprox: "The map shows Iykota mahalla.",
     footNote: "Demo version: the principal, teachers, class sizes and timetable are sample data. News and achievements come from the school's Telegram channel.",
     navSchedule: "Timetable", navPride: "Achievements", navSafety: "Safety",
     scheduleTitle: "Who is where right now?",
     scheduleNote: "Using Tashkent time, see which teacher is teaching which class in which room. You can also pick another day or lesson.",
-    scheduleSample: "Sample. This timetable and the room numbers were made up to show the page and are not real. They will be replaced once the school's timetable is provided.",
     pkLive: "Live now", pkDay: "Day:", pkLesson: "Lesson:", pkClass: "Class:",
     daysShort: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
     daysFull: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
@@ -1333,7 +1311,6 @@ const T = {
     exitsTodo: "An evacuation plan is posted on every floor. When the alarm sounds, follow your class teacher to the nearest exit shown on that plan.",
     assembly: "Assembly point",
     callsTitle: "Tell an adult and call",
-    teachersSample: "Sample. These names were made up to show how the search works; they are not real teachers. They will be replaced once the real list is provided.",
     searchLabel: "Find a teacher", searchPh: "First name, surname or subject",
     foundN: function (n) { return n + " teachers found"; }, noFound: "No teacher found. Try a different spelling.",
     tSubject: "Subject", tClasses: "Teaches these classes", tNow: "Right now", tRoom: "Room",
@@ -1553,7 +1530,6 @@ function detailBox(id, count) {
   pair(dl, L.dRoom, info.room || L.soon, !info.room);
   pair(dl, L.dShift, info.shift ? L.shiftName(info.shift) : L.soon, !info.shift);
   box.appendChild(dl);
-  box.appendChild(el("p", "", L.privacy));
   return box;
 }
 function renderGrades() {
@@ -1618,7 +1594,6 @@ function renderSchedule() {
   const L = T[LANG];
   const s = slot();
   LASTSLOT = s.day + ":" + s.idx;
-  document.getElementById("schedSample").hidden = !SCHEDULE_SAMPLE;
   const schoolDay = SCHOOL_DAYS.indexOf(s.day) !== -1 ? s.day : SCHOOL_DAYS[0];
 
   const pick = document.getElementById("pick");
@@ -1711,7 +1686,6 @@ function teacherNowClass(t) {
 function renderTeachers() {
   const L = T[LANG];
   const q = norm(TQ);
-  document.getElementById("teachSample").hidden = !TEACHERS.some(function (t) { return t.sample; });
   let shown = 0;
   fill("teacherList", TEACHERS, function (t, i) {
     const subj = SUBJECTS[t.subject];
@@ -1920,7 +1894,6 @@ function renderWhere() {
   const ll = LOCATION.lat + "," + LOCATION.lng;
   document.getElementById("mapG").href = "https://www.google.com/maps/search/?api=1&query=" + ll;
   document.getElementById("mapY").href = "https://yandex.uz/maps/?pt=" + LOCATION.lng + "," + LOCATION.lat + "&z=15&l=map";
-  document.getElementById("whereFine").textContent = L.whereApprox;
 }
 function setThemeLabel() {
   const dark = document.documentElement.dataset.mode === "dark";
@@ -1966,7 +1939,6 @@ function render(lang) {
   dbox.appendChild(dtext);
 
   const tot = totals();
-  document.getElementById("sampleNote").hidden = !CLASSES_SAMPLE;
   fill("totals", [[L.totStudents, tot.students], [L.totClasses, tot.classes], [L.totAvg, tot.avg]], function (p) {
     const row = el("div");
     const dd = el("dd", "", String(p[1]));
