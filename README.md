@@ -28,6 +28,8 @@ Hamma narsa bitta `index.html` faylida, "1-QISM. SAYT MA'LUMOTLARI" bo'limida:
 | Yangiliklar | `NEWS` |
 | Bino xonalari | `ROOMS` |
 | Favqulodda holat | `SAFETY`, `EXITS`, `ASSEMBLY`, `CALLS` |
+| Murojaat va qabul | `APPEAL` (qabul qiluvchi Telegram manzili, qabul kunlari) |
+| Natijalar grafigi | `RESULTS` (sonlar namuna) |
 | Ta'tilgacha sanoq | `HOLIDAYS` (sanalar namuna) |
 | Maktab yo'li (tarix) | `PATH` |
 
@@ -35,3 +37,9 @@ Rasmlar `rasmlar` papkasida (ichidagi README ga qarang).
 
 O'quvchilarning ism-familiyasi va rasmi faqat o'zi va ota-onasining roziligi bilan qo'yiladi.
 Chiqish yo'llari (`EXITS`) faqat maktabning rasmiy evakuatsiya rejasidan yoziladi.
+
+## Telefonga o'rnatish
+
+`manifest.webmanifest`, `sw.js` va `icons` papkasi saytni telefonga ilova kabi o'rnatish va internetsiz
+ochish uchun kerak. Ular faqat sayt `https` manzilida ishlaganda faollashadi. `index.html` yoki rasmlar
+o'zgarsa, `sw.js` dagi `CACHE` nomini yangilang (masalan `maktab358-v2`).

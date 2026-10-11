@@ -4,6 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>358-maktab</title>
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#2447f9">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -418,6 +421,38 @@
   .club:first-child { background: var(--ink); color: var(--bg); border-color: transparent; }
   .club:first-child span { color: inherit; opacity: .75; }
 
+  /* Natijalar: har bir ko'rsatkich alohida kichik grafik */
+  .results { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; }
+  .rcard { padding: 20px 22px 22px; min-width: 0; }
+  .rcard h3 { font-weight: 800; font-size: 1.05rem; letter-spacing: -.01em; margin: 0 0 4px; }
+  .rcard .delta { font-size: 13px; font-weight: 600; color: var(--muted); margin: 0 0 16px; }
+  .rbars { display: grid; gap: 10px; margin: 0; }
+  .rbars div { display: grid; grid-template-columns: 86px 1fr 44px; gap: 10px; align-items: center; }
+  .rbars dt { font-size: 13px; font-weight: 600; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .rbars dd { margin: 0; }
+  .rbars .track { height: 16px; border-radius: 4px; background: var(--bg); overflow: hidden; }
+  .rbars .bar { display: block; height: 100%; border-radius: 0 4px 4px 0; background: var(--a); transform-origin: left; transition: opacity .2s; }
+  .rbars div:hover .bar { opacity: .75; }
+  .rbars .val { font-weight: 800; font-size: 1.05rem; text-align: right; font-variant-numeric: tabular-nums; }
+
+  /* Murojaat va qabul */
+  .appeal { display: grid; grid-template-columns: 1.25fr 1fr; gap: 16px; align-items: start; }
+  .appeal > * { min-width: 0; }
+  .aform { display: grid; gap: 14px; }
+  .aform .modes { margin-bottom: 0; justify-self: start; }
+  .frow { display: grid; gap: 5px; min-width: 0; }
+  .frow.two { grid-template-columns: 1fr 1fr; gap: 12px; }
+  .frow.two > div { display: grid; gap: 5px; min-width: 0; }
+  .frow label { font-size: 13px; font-weight: 700; }
+  .frow input, .frow select, .frow textarea { font: inherit; color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 12px; padding: 10px 14px; width: 100%; min-width: 0; }
+  .frow textarea { resize: vertical; min-height: 96px; }
+  .ferr { margin: 0; min-height: 1.4em; font-size: 14px; font-weight: 600; color: var(--danger); }
+  .ferr.ok { color: var(--exit); }
+  :root[data-mode="dark"] .ferr.ok { color: #5fd08f; }
+  .apreview h3 { margin-bottom: 10px; }
+  .apreview pre { margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; font: 500 14px/1.5 var(--font); background: var(--bg); border-radius: 12px; padding: 14px; min-height: 120px; }
+  @media (max-width: 900px) { .appeal { grid-template-columns: 1fr; } }
+
   /* Faxrimiz */
   .pride { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 14px; list-style: none; margin: 0; padding: 0; }
   .pr { padding: 18px 20px 20px; min-width: 0; }
@@ -506,6 +541,8 @@
     .chip3.c2 { animation: bob 6s ease-in-out -2s infinite; }
     .marquee div { animation: slide 28s linear infinite; }
     .cube.spin { animation: spin 16s linear infinite; }
+    .rbars .bar { transition: transform .9s cubic-bezier(.2, .8, .2, 1), opacity .2s; }
+    .rv-wait .rbars .bar { transform: scaleX(0); }
     .theme .orb, .theme .rays, .theme .cut, .theme .stars { transition: transform .6s cubic-bezier(.3, 1.5, .5, 1), opacity .4s; }
     .theme svg { transition: transform .7s cubic-bezier(.3, 1.4, .5, 1); }
     :root[data-mode="dark"] .theme svg { transform: rotate(180deg); }
@@ -581,6 +618,7 @@
       <div class="btns">
         <a class="btn fill" href="#tour" data-t="cta"></a>
         <a class="btn" href="#classes" data-t="cta2"></a>
+        <button type="button" class="btn" id="installBtn" hidden data-t="install"></button>
       </div>
       <div class="now paper" id="now" aria-live="off">
         <div class="ring">
@@ -628,9 +666,11 @@
       <a href="#schedule" data-t="navSchedule"></a>
       <a href="#clubs" data-t="navClubs"></a>
       <a href="#path" data-t="navPath"></a>
+      <a href="#results" data-t="navResults"></a>
       <a href="#pride" data-t="navPride"></a>
       <a href="#news" data-t="navNews"></a>
       <a href="#safety" data-t="navSafety"></a>
+      <a href="#appeal" data-t="navAppeal"></a>
       <a href="#where" data-t="navWhere"></a>
       <a href="#us" data-t="navUs"></a>
     </nav>
@@ -751,6 +791,14 @@
     </div>
   </section>
 
+  <section id="results">
+    <div class="wrap rv">
+      <h2><span data-t="resultsTitle"></span></h2>
+      <p class="note" data-t="resultsNote"></p>
+      <div class="results" id="resultsBox"></div>
+    </div>
+  </section>
+
   <section id="pride">
     <div class="wrap rv">
       <h2><span data-t="prideTitle"></span></h2>
@@ -783,6 +831,36 @@
           <div class="exits" id="exitsBox"></div>
           <h3 data-t="callsTitle"></h3>
           <dl class="calls" id="calls"></dl>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="appeal">
+    <div class="wrap rv">
+      <h2><span data-t="appealTitle"></span></h2>
+      <p class="note" data-t="appealNote"></p>
+      <div class="appeal">
+        <form class="tile aform" id="appealForm" novalidate>
+          <div class="modes" id="aModes"></div>
+          <div class="frow"><label for="aName" data-t="aName"></label><input type="text" id="aName" autocomplete="name"></div>
+          <div class="frow" id="rowType"><label for="aType" data-t="aType"></label><select id="aType"></select></div>
+          <div class="frow two" id="rowVisit">
+            <div><label for="aDate" data-t="aDate"></label><input type="date" id="aDate"></div>
+            <div><label for="aTime" data-t="aTime"></label><select id="aTime"></select></div>
+          </div>
+          <div class="frow"><label for="aText" id="aTextLabel"></label><textarea id="aText" rows="4"></textarea></div>
+          <div class="frow"><label for="aContact" data-t="aContact"></label><input type="text" id="aContact" autocomplete="tel"></div>
+          <p class="ferr" id="aErr" aria-live="polite"></p>
+          <div class="btns">
+            <button type="submit" class="btn fill" data-t="aSend"></button>
+            <button type="button" class="btn" id="aCopy" data-t="aCopy"></button>
+          </div>
+        </form>
+        <div class="tile apreview">
+          <h3 data-t="aPreviewTitle"></h3>
+          <pre id="aPreview"></pre>
+          <p class="fine" data-t="aHow"></p>
         </div>
       </div>
     </div>
@@ -1111,6 +1189,21 @@ const ROOMS = [
     text: { uz: "Ochiq havodagi futbol maydoni. Yonida sport maydonchasi ham bor.", ru: "Футбольное поле под открытым небом. Рядом есть спортивная площадка.", en: "An outdoor football pitch, with a sports court next to it." } }
 ];
 
+/* MUROJAAT VA QABUL. telegram — murojaatlarni qabul qiladigan Telegram manzili (@ belgisisiz),
+   masalan "maktab358_qabul". Bo'sh bo'lsa, foydalanuvchi kimga yuborishni Telegram'da o'zi tanlaydi.
+   days — direktor qabul kunlari (1 — dushanba ... 6 — shanba), from/to — vaqt oralig'i, step — daqiqa. */
+const APPEAL = { telegram: null, days: [1, 4], from: "14:00", to: "17:00", step: 30 };
+
+/* NATIJALAR (yillar bo'yicha). Sonlar namuna: maktabning haqiqiy hisobotidan to'ldiring. */
+const RESULTS = [
+  { name: { uz: "Olimpiada va tanlov g‘oliblari", ru: "Победители олимпиад и конкурсов", en: "Olympiad and contest winners" },
+    values: [["2025–2026", 3], ["2026–2027", 7]] },
+  { name: { uz: "Til sertifikati olganlar", ru: "Получили языковой сертификат", en: "Language certificates earned" },
+    values: [["2025–2026", 4], ["2026–2027", 11]] },
+  { name: { uz: "To‘garaklarga qatnashuvchilar", ru: "Посещают кружки", en: "Students in clubs" },
+    values: [["2025–2026", 180], ["2026–2027", 260]] }
+];
+
 /* TA'TILLAR (sanoq shundan hisoblanadi). Sanalar namuna: maktabning o'quv taqvimiga qarab to'g'rilang. */
 const HOLIDAYS = [
   { name: { uz: "Kuzgi ta’til", ru: "Осенние каникулы", en: "Autumn break" }, start: "2026-11-04", end: "2026-11-10" },
@@ -1262,7 +1355,7 @@ const T = {
     wAddress: "Manzil", wPhone: "Telefon", wHours: "Qabul vaqti",
     wAddressBase: "Toshkent shahri, Bektemir tumani, Iykota mahallasi",
     mapGoogle: "Google Xaritada ochish", mapYandex: "Yandex Xaritada ochish",
-    footNote: "Namoyish versiyasi: direktor, o‘qituvchilar, sinflar soni va dars jadvali namuna ma’lumotlar. Yangiliklar va yutuqlar maktabning Telegram kanalidan olingan.",
+    footNote: "Namoyish versiyasi: direktor, o‘qituvchilar, sinflar soni, dars jadvali va natijalar namuna ma’lumotlar. Yangiliklar va yutuqlar maktabning Telegram kanalidan olingan.",
     navSchedule: "Dars jadvali", navPride: "Yutuqlar", navSafety: "Xavfsizlik",
     scheduleTitle: "Kim hozir qayerda?",
     scheduleNote: "Toshkent vaqti bo‘yicha qaysi o‘qituvchi qaysi sinfda va qaysi xonada dars o‘tayotgani ko‘rinadi. Boshqa kun yoki darsni tanlab ham ko‘rishingiz mumkin.",
@@ -1318,6 +1411,24 @@ const T = {
     cdUnits: ["kun", "soat", "daqiqa", "soniya"],
     dotsCap: "Har bir nuqta — bitta o‘quvchi. Ustiga sichqonchani olib boring.",
     fClass: "Sinf:", fSubject: "Fan:", fAll: "Hammasi", fReset: "Saralashni tozalash",
+    install: "Telefonga o‘rnatish",
+    navResults: "Natijalar", resultsTitle: "Natijalar raqamlarda",
+    resultsNote: "Maktabimiz yildan yilga qanday o‘sayotgani.",
+    delta: function (d) { return (d >= 0 ? "+" : "") + d + " o‘tgan yilga nisbatan"; },
+    navAppeal: "Murojaat", appealTitle: "Murojaat va qabul",
+    appealNote: "Taklif, savol yoki shikoyatingizni yuboring yoki direktor qabuliga yoziling.",
+    aModeMsg: "Murojaat yuborish", aModeVisit: "Qabulga yozilish",
+    aName: "Ism va familiya", aType: "Murojaat turi", aDate: "Sana", aTime: "Vaqt",
+    aTextMsg: "Murojaat matni", aTextVisit: "Qabul mavzusi", aContact: "Telefon yoki Telegram (ixtiyoriy)",
+    aTypes: ["Taklif", "Savol", "Shikoyat", "Minnatdorchilik"],
+    aSend: "Telegram orqali yuborish", aCopy: "Matnni nusxalash",
+    aPreviewTitle: "Yuboriladigan xabar",
+    aHow: "Tugmani bossangiz, Telegram tayyor xabar bilan ochiladi. U yerda “Yuborish”ni bosasiz.",
+    aErrName: "Ism va familiyangizni yozing.", aErrText: "Matnni yozing.", aErrDate: "Sanani tanlang.",
+    aErrDay: function (d) { return "Direktor qabul kunlari: " + d + ". Shu kunlardan birini tanlang."; },
+    aOkSend: "Telegram ochildi. Xabarni yuborishni unutmang.", aOkCopy: "Matn nusxalandi.",
+    aMsgHead: function (t) { return "358-maktab. Murojaat: " + t; }, aVisitHead: "358-maktab. Direktor qabuliga yozilish",
+    aFrom: "Kimdan", aWhen: "Sana va vaqt", aReach: "Aloqa", aTopic: "Mavzu",
     todo: "to‘ldiriladi"
   },
   ru: {
@@ -1366,7 +1477,7 @@ const T = {
     wAddress: "Адрес", wPhone: "Телефон", wHours: "Часы приёма",
     wAddressBase: "Город Ташкент, Бектемирский район, махалля Ийкота",
     mapGoogle: "Открыть в Google Картах", mapYandex: "Открыть в Яндекс Картах",
-    footNote: "Демо-версия: директор, учителя, число учеников и расписание заполнены примерами. Новости и достижения взяты из телеграм-канала школы.",
+    footNote: "Демо-версия: директор, учителя, число учеников, расписание и результаты заполнены примерами. Новости и достижения взяты из телеграм-канала школы.",
     navSchedule: "Расписание", navPride: "Достижения", navSafety: "Безопасность",
     scheduleTitle: "Кто сейчас где?",
     scheduleNote: "По ташкентскому времени видно, какой учитель в каком классе и кабинете ведёт урок. Можно выбрать другой день или урок.",
@@ -1422,6 +1533,24 @@ const T = {
     cdUnits: ["дней", "часов", "минут", "секунд"],
     dotsCap: "Каждая точка — один ученик. Наведите на них мышь.",
     fClass: "Класс:", fSubject: "Предмет:", fAll: "Все", fReset: "Сбросить фильтры",
+    install: "Установить на телефон",
+    navResults: "Результаты", resultsTitle: "Результаты в цифрах",
+    resultsNote: "Как наша школа растёт год от года.",
+    delta: function (d) { return (d >= 0 ? "+" : "") + d + " к прошлому году"; },
+    navAppeal: "Обращения", appealTitle: "Обращения и приём",
+    appealNote: "Отправьте предложение, вопрос или жалобу либо запишитесь на приём к директору.",
+    aModeMsg: "Отправить обращение", aModeVisit: "Записаться на приём",
+    aName: "Имя и фамилия", aType: "Тип обращения", aDate: "Дата", aTime: "Время",
+    aTextMsg: "Текст обращения", aTextVisit: "Тема приёма", aContact: "Телефон или Telegram (необязательно)",
+    aTypes: ["Предложение", "Вопрос", "Жалоба", "Благодарность"],
+    aSend: "Отправить через Telegram", aCopy: "Скопировать текст",
+    aPreviewTitle: "Сообщение, которое будет отправлено",
+    aHow: "По нажатию кнопки откроется Telegram с готовым сообщением. Останется нажать «Отправить».",
+    aErrName: "Укажите имя и фамилию.", aErrText: "Напишите текст.", aErrDate: "Выберите дату.",
+    aErrDay: function (d) { return "Дни приёма директора: " + d + ". Выберите один из них."; },
+    aOkSend: "Telegram открыт. Не забудьте отправить сообщение.", aOkCopy: "Текст скопирован.",
+    aMsgHead: function (t) { return "Школа №358. Обращение: " + t; }, aVisitHead: "Школа №358. Запись на приём к директору",
+    aFrom: "От кого", aWhen: "Дата и время", aReach: "Контакт", aTopic: "Тема",
     todo: "заполнить"
   },
   en: {
@@ -1470,7 +1599,7 @@ const T = {
     wAddress: "Address", wPhone: "Phone", wHours: "Office hours",
     wAddressBase: "Tashkent city, Bektemir district, Iykota mahalla",
     mapGoogle: "Open in Google Maps", mapYandex: "Open in Yandex Maps",
-    footNote: "Demo version: the principal, teachers, class sizes and timetable are sample data. News and achievements come from the school's Telegram channel.",
+    footNote: "Demo version: the principal, teachers, class sizes, timetable and results are sample data. News and achievements come from the school's Telegram channel.",
     navSchedule: "Timetable", navPride: "Achievements", navSafety: "Safety",
     scheduleTitle: "Who is where right now?",
     scheduleNote: "Using Tashkent time, see which teacher is teaching which class in which room. You can also pick another day or lesson.",
@@ -1526,6 +1655,24 @@ const T = {
     cdUnits: ["days", "hours", "min", "sec"],
     dotsCap: "Each dot is one student. Move the mouse over them.",
     fClass: "Class:", fSubject: "Subject:", fAll: "All", fReset: "Clear filters",
+    install: "Install on phone",
+    navResults: "Results", resultsTitle: "Results in numbers",
+    resultsNote: "How our school is growing year by year.",
+    delta: function (d) { return (d >= 0 ? "+" : "") + d + " on last year"; },
+    navAppeal: "Contact us", appealTitle: "Messages and appointments",
+    appealNote: "Send a suggestion, question or complaint, or book an appointment with the principal.",
+    aModeMsg: "Send a message", aModeVisit: "Book an appointment",
+    aName: "Full name", aType: "Type of message", aDate: "Date", aTime: "Time",
+    aTextMsg: "Your message", aTextVisit: "Topic of the meeting", aContact: "Phone or Telegram (optional)",
+    aTypes: ["Suggestion", "Question", "Complaint", "Thanks"],
+    aSend: "Send via Telegram", aCopy: "Copy the text",
+    aPreviewTitle: "The message that will be sent",
+    aHow: "The button opens Telegram with the message ready. You then press Send there.",
+    aErrName: "Please enter your full name.", aErrText: "Please write the text.", aErrDate: "Please choose a date.",
+    aErrDay: function (d) { return "The principal sees visitors on: " + d + ". Choose one of those days."; },
+    aOkSend: "Telegram is open. Remember to send the message.", aOkCopy: "Text copied.",
+    aMsgHead: function (t) { return "School 358. Message: " + t; }, aVisitHead: "School 358. Appointment with the principal",
+    aFrom: "From", aWhen: "Date and time", aReach: "Contact", aTopic: "Topic",
     todo: "to fill in"
   }
 };
@@ -1542,6 +1689,7 @@ let TCLASS = "";         /* o'qituvchilar: tanlangan sinf */
 let TSUBJ = "";          /* o'qituvchilar: tanlangan fan */
 let TQ = "";             /* qidiruv matni */
 let TOPEN = null;        /* ochiq turgan o'qituvchi raqami */
+let AMODE = "msg";        /* murojaat shakli: "msg" yoki "visit" */
 let MYCLASS = null;       /* tanlangan "mening sinfim" */
 let BELL = true;          /* qo'ng'iroq ovozi yoniqmi */
 let LASTBELL = null;
@@ -1724,6 +1872,132 @@ function tickCountdown() {
   const dl = document.getElementById("cdDigits");
   if (dl.children.length !== 4) { dl.textContent = ""; vals.forEach(function () { const d = el("div"); d.appendChild(el("dd")); d.appendChild(el("dt")); dl.appendChild(d); }); }
   vals.forEach(function (v, i) { dl.children[i].firstChild.textContent = String(v).padStart(2, "0"); dl.children[i].lastChild.textContent = L.cdUnits[i]; });
+}
+
+/* ---------- Natijalar ---------- */
+function renderResults() {
+  const L = T[LANG];
+  fill("resultsBox", RESULTS, function (r) {
+    const card = el("div", "rcard tile");
+    card.appendChild(el("h3", "", r.name[LANG]));
+    const vals = r.values, max = Math.max.apply(null, vals.map(function (v) { return v[1]; })) || 1;
+    if (vals.length > 1) card.appendChild(el("p", "delta", L.delta(vals[vals.length - 1][1] - vals[vals.length - 2][1])));
+    const dl = el("dl", "rbars");
+    vals.forEach(function (v) {
+      const row = el("div");
+      row.title = v[0] + ": " + v[1];
+      row.appendChild(el("dt", "", v[0]));
+      const dd = el("dd"); const track = el("span", "track"); track.style.display = "block";
+      const bar = el("span", "bar"); bar.style.width = Math.max(3, Math.round(v[1] / max * 100)) + "%";
+      track.appendChild(bar); dd.appendChild(track); row.appendChild(dd);
+      row.appendChild(el("span", "val", String(v[1])));
+      dl.appendChild(row);
+    });
+    card.appendChild(dl);
+    return card;
+  });
+}
+
+/* ---------- Murojaat va qabul ---------- */
+function appealText() {
+  const L = T[LANG];
+  const v = function (id) { return document.getElementById(id).value.trim(); };
+  const lines = [];
+  if (AMODE === "msg") lines.push(L.aMsgHead(v("aType")));
+  else {
+    lines.push(L.aVisitHead);
+    const d = v("aDate");
+    if (d) lines.push(L.aWhen + ": " + d.split("-").reverse().join(".") + ", " + v("aTime"));
+  }
+  if (v("aName")) lines.push(L.aFrom + ": " + v("aName"));
+  if (v("aContact")) lines.push(L.aReach + ": " + v("aContact"));
+  if (v("aText")) { lines.push(""); lines.push((AMODE === "visit" ? L.aTopic + ": " : "") + v("aText")); }
+  return lines.join("\n");
+}
+function appealError() {
+  const L = T[LANG];
+  const v = function (id) { return document.getElementById(id).value.trim(); };
+  if (!v("aName")) return L.aErrName;
+  if (AMODE === "visit") {
+    if (!v("aDate")) return L.aErrDate;
+    const day = new Date(v("aDate") + "T12:00:00").getDay();
+    if (APPEAL.days.indexOf(day) === -1) return L.aErrDay(APPEAL.days.map(function (d) { return L.daysFull[d]; }).join(", "));
+  }
+  if (!v("aText")) return L.aErrText;
+  return "";
+}
+function renderAppeal() {
+  const L = T[LANG];
+  const modes = document.getElementById("aModes");
+  modes.textContent = "";
+  [["msg", L.aModeMsg], ["visit", L.aModeVisit]].forEach(function (m) {
+    const b = el("button", "mode", m[1]);
+    b.type = "button";
+    b.setAttribute("aria-pressed", String(AMODE === m[0]));
+    b.addEventListener("click", function () { AMODE = m[0]; renderAppeal(); });
+    modes.appendChild(b);
+  });
+  document.getElementById("rowType").hidden = AMODE !== "msg";
+  document.getElementById("rowVisit").hidden = AMODE !== "visit";
+  document.getElementById("aTextLabel").textContent = AMODE === "msg" ? L.aTextMsg : L.aTextVisit;
+  const ty = document.getElementById("aType"), keepT = ty.selectedIndex;
+  ty.textContent = "";
+  L.aTypes.forEach(function (t) { ty.appendChild(el("option", "", t)); });
+  ty.selectedIndex = Math.max(0, keepT);
+  const tm = document.getElementById("aTime"), keepM = tm.value;
+  tm.textContent = "";
+  for (let m = mins(APPEAL.from); m < mins(APPEAL.to); m += APPEAL.step) {
+    tm.appendChild(el("option", "", String(Math.floor(m / 60)).padStart(2, "0") + ":" + String(m % 60).padStart(2, "0")));
+  }
+  if (keepM) tm.value = keepM;
+  const dt = document.getElementById("aDate");
+  const now = new Date();
+  dt.min = now.getFullYear() + "-" + String(now.getMonth() + 1).padStart(2, "0") + "-" + String(now.getDate()).padStart(2, "0");
+  const err = document.getElementById("aErr"); err.textContent = ""; err.className = "ferr";
+  document.getElementById("aPreview").textContent = appealText();
+}
+function setupAppeal() {
+  const form = document.getElementById("appealForm");
+  const err = document.getElementById("aErr");
+  form.addEventListener("input", function () { document.getElementById("aPreview").textContent = appealText(); });
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    const bad = appealError();
+    err.className = "ferr";
+    if (bad) { err.textContent = bad; return; }
+    const text = encodeURIComponent(appealText());
+    const a = document.createElement("a");
+    a.href = APPEAL.telegram ? "https://t.me/" + APPEAL.telegram + "?text=" + text : "https://t.me/share/url?url=" + encodeURIComponent("https://t.me/yangimaktabimiz") + "&text=" + text;
+    a.target = "_blank"; a.rel = "noopener";
+    document.body.appendChild(a); a.click(); a.remove();
+    err.textContent = T[LANG].aOkSend; err.className = "ferr ok";
+  });
+  document.getElementById("aCopy").addEventListener("click", function () {
+    const bad = appealError();
+    err.className = "ferr";
+    if (bad) { err.textContent = bad; return; }
+    const done = function () { err.textContent = T[LANG].aOkCopy; err.className = "ferr ok"; };
+    const fallback = function () {
+      const r = document.createRange(); r.selectNodeContents(document.getElementById("aPreview"));
+      const sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(r);
+      try { document.execCommand("copy"); } catch (x) {}
+      done();
+    };
+    try { navigator.clipboard.writeText(appealText()).then(done, fallback); } catch (x) { fallback(); }
+  });
+}
+
+/* ---------- Telefonga ilova kabi o'rnatish ---------- */
+function setupInstall() {
+  let top = false;
+  try { top = window.self === window.top; } catch (e) {}
+  if (!top || location.protocol !== "https:") return;
+  if ("serviceWorker" in navigator) { try { navigator.serviceWorker.register("sw.js"); } catch (e) {} }
+  let ask = null;
+  const btn = document.getElementById("installBtn");
+  window.addEventListener("beforeinstallprompt", function (e) { e.preventDefault(); ask = e; btn.hidden = false; });
+  btn.addEventListener("click", function () { if (ask) { ask.prompt(); ask = null; btn.hidden = true; } });
+  window.addEventListener("appinstalled", function () { btn.hidden = true; });
 }
 
 /* ---------- Maktab yo'li ---------- */
@@ -2354,6 +2628,8 @@ function render(lang) {
     return row;
   });
   renderMineSelect();
+  renderResults();
+  renderAppeal();
   renderPath();
   renderTour();
   renderContacts();
@@ -2504,6 +2780,8 @@ setupTabs();
 setup3D();
 buildBackground();
 setupDots();
+setupAppeal();
+setupInstall();
 setInterval(function () { tickNow(); liveCheck(); }, 1000);
 
 /* Brauzer ovozga faqat foydalanuvchi sahifaga bir marta tekkanidan keyin ruxsat beradi:
