@@ -151,6 +151,7 @@
   .myline { grid-column: 1 / -1; margin: 0; font-size: 15px; color: var(--muted); }
   .myline b { color: var(--ink); }
   .now .left.soonbell b { color: var(--b); }
+  @media (max-width: 560px) { .mine { grid-template-columns: auto 1fr; } .bellbtn { grid-column: 1 / -1; justify-self: start; } }
 
   /* Ta'tilgacha sanoq */
   .count { margin-top: 26px; display: flex; flex-wrap: wrap; gap: 16px 32px; align-items: center; justify-content: space-between; background: var(--ink); color: var(--bg); border-color: transparent; }
@@ -164,7 +165,8 @@
   @media (max-width: 560px) { .digits { gap: 6px; width: 100%; } .digits div { flex: 1; min-width: 0; } }
 
   /* 805 nuqtadan yig'iladigan "358" */
-  .dots358 { display: block; width: 100%; height: 170px; background: var(--card); border: 1px solid var(--line); border-radius: var(--r); box-shadow: var(--shadow); margin-bottom: 8px; }
+  .dots358 { display: block; width: 100%; height: clamp(120px, 25vw, 220px); margin: 0 0 8px; cursor: pointer; touch-action: pan-y; }
+  .vh { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 
   /* Maktab yo'li */
   .path { list-style: none; margin: 0; padding: 0 0 0 34px; position: relative; max-width: 760px; overflow-x: clip; }
@@ -191,7 +193,6 @@
   :root[data-sky="night"] { --skytint: rgba(8, 16, 60, .55); --bgop: .42; }
   :root[data-sky="evening"] .win i, :root[data-sky="night"] .win i { background: var(--b); box-shadow: 0 0 14px 3px var(--b); }
   .confetti { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 50; }
-  #egg { cursor: pointer; -webkit-user-select: none; user-select: none; }
 
   /* Suzib yuruvchi shisha menyu */
   .tabs { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 10px); z-index: 6; }
@@ -564,7 +565,7 @@
   <div class="wrap">
     <div>
       <p class="place" data-t="place"></p>
-      <h1><em id="egg">358</em><span data-t="h1rest"></span></h1>
+      <h1><canvas class="dots358" id="dots" height="200" role="img" aria-label="358"></canvas><span class="vh">358</span><span data-t="h1rest"></span></h1>
       <p class="lead" data-t="lead"></p>
       <div class="btns">
         <a class="btn fill" href="#tour" data-t="cta"></a>
@@ -693,8 +694,6 @@
   <section id="classes">
     <div class="wrap rv">
       <h2><span data-t="classesTitle"></span></h2>
-      <canvas class="dots358" id="dots" height="170" role="img"></canvas>
-      <p class="hint" data-t="dotsCap"></p>
       <dl class="totals" id="totals"></dl>
       <p class="hint" data-t="classHint"></p>
       <div id="grades"></div>
@@ -1734,7 +1733,6 @@ const DOTS = { pts: [], raf: 0, until: 0 };
 function setupDots() {
   const cv = document.getElementById("dots");
   const n = totals().students;
-  cv.setAttribute("aria-label", "358");
   const dpr = Math.min(2, window.devicePixelRatio || 1);
   const W = cv.clientWidth, H = cv.clientHeight;
   if (!W) return;
@@ -1742,9 +1740,9 @@ function setupDots() {
   const off = document.createElement("canvas");
   off.width = W; off.height = H;
   const o = off.getContext("2d");
-  o.fillStyle = "#000"; o.textAlign = "center"; o.textBaseline = "middle";
-  o.font = "800 " + Math.min(H * 1.05, W * 0.42) + "px Onest, system-ui, sans-serif";
-  o.fillText("358", W / 2, H / 2 + 4);
+  o.fillStyle = "#000"; o.textAlign = "left"; o.textBaseline = "middle";
+  o.font = "800 " + Math.min(H * 1.12, W * 0.52) + "px Onest, system-ui, sans-serif";
+  o.fillText("358", 2, H / 2 + 6);
   const data = o.getImageData(0, 0, W, H).data;
   const all = [];
   for (let y = 2; y < H; y += 3) for (let x = 2; x < W; x += 3) { if (data[(y * W + x) * 4 + 3] > 128) all.push([x, y]); }
@@ -1764,7 +1762,7 @@ function drawDots() {
   c.setTransform(DOTS.dpr, 0, 0, DOTS.dpr, 0, 0);
   c.clearRect(0, 0, DOTS.W, DOTS.H);
   c.fillStyle = css.getPropertyValue("--a").trim() || "#2447f9";
-  DOTS.pts.forEach(function (p) { c.beginPath(); c.arc(p.x, p.y, 1.700, 0, 6.283); c.fill(); });
+  DOTS.pts.forEach(function (p) { c.beginPath(); c.arc(p.x, p.y, Math.max(1.700, DOTS.H / 90), 0, 6.283); c.fill(); });
 }
 function runDots(ms) {
   DOTS.until = performance.now() + ms;
@@ -2508,7 +2506,7 @@ document.getElementById("bellBtn").addEventListener("click", function () {
   renderMineSelect();
   if (BELL) ring();
 });
-document.getElementById("egg").addEventListener("click", function (e) { if (e.detail === 3) confetti(); });
+document.getElementById("dots").addEventListener("click", function (e) { if (e.detail === 3) confetti(); });
 document.getElementById("dots").addEventListener("pointermove", scatterDots);
 window.addEventListener("scroll", pathProgress, { passive: true });
 window.addEventListener("resize", function () { setupDots(); pathProgress(); });
