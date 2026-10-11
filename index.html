@@ -25,6 +25,8 @@
     --shadow: 0 1px 2px rgba(10, 14, 28, .06), 0 12px 32px rgba(10, 14, 28, .08);
     --deep: 0 30px 60px rgba(10, 14, 28, .22);
     --exit: #0c7d43;
+    --roof: #b5473c;
+    --bgop: .28;
     --r: 22px;
     --font: "Onest", system-ui, -apple-system, "Segoe UI", sans-serif;
   }
@@ -61,6 +63,16 @@
   .paper, .tile { background: var(--card); border: 1px solid var(--line); border-radius: var(--r); box-shadow: var(--shadow); }
   .sample { border: 1.5px dashed var(--b); border-radius: 14px; padding: 11px 15px; margin: 0 0 22px; font-size: 14px; max-width: 74ch; background: var(--card); }
 
+  /* Orqa fon: 3D maktab maketi, ostida mahalla rasmi */
+  .bg3d { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; perspective: 1300px; opacity: var(--bgop); }
+  .bg3d::after { content: ""; position: absolute; inset: 0; background: radial-gradient(70% 60% at 50% 55%, transparent 30%, var(--bg) 100%); }
+  .bgscale { position: absolute; left: 50%; top: 60%; width: 0; height: 0; transform-style: preserve-3d; transform: scale(var(--bgs, 1)); }
+  .bgworld { position: absolute; left: 0; top: 0; width: 0; height: 0; transform-style: preserve-3d; transform: rotateX(-24deg) rotateY(-32deg); }
+  .bgground { position: absolute; display: block; width: 1400px; max-width: none; height: 930px; left: -700px; top: -465px; transform: rotateX(90deg); object-fit: cover; }
+  .util, .hero, .marquee, main, footer { position: relative; z-index: 1; }
+  footer { background: var(--bg); }
+  @media (max-width: 900px) { .bg3d { --bgs: .5; } }
+
   /* Tepadagi qator */
   .util .wrap { display: flex; align-items: center; gap: 8px 12px; flex-wrap: wrap; padding-top: 14px; padding-bottom: 6px; }
   .stamp { margin-right: auto; font-weight: 700; font-size: 12px; background: var(--b); color: var(--on-b); border-radius: 999px; padding: 4px 12px; }
@@ -82,7 +94,7 @@
   .hero .place { font-weight: 600; font-size: 15px; color: var(--a); margin: 0 0 12px; }
   .hero h1 { font-weight: 800; font-size: clamp(1.7rem, 4vw, 2.7rem); line-height: 1.05; letter-spacing: -.035em; margin: 0 0 16px; text-wrap: balance; }
   .hero h1 em { display: block; font-style: normal; font-size: clamp(5.4rem, 17vw, 11rem); line-height: .82; letter-spacing: -.07em; color: var(--a); margin: 0 0 10px -.04em; text-shadow: 0 1px 0 color-mix(in srgb, var(--a) 70%, #000), 0 2px 0 color-mix(in srgb, var(--a) 62%, #000), 0 3px 0 color-mix(in srgb, var(--a) 54%, #000), 0 4px 0 color-mix(in srgb, var(--a) 46%, #000), 0 5px 0 color-mix(in srgb, var(--a) 40%, #000), 0 6px 0 color-mix(in srgb, var(--a) 34%, #000), 0 18px 30px rgba(10, 14, 28, .28); }
-  .hero .lead { margin: 0 0 22px; max-width: 44ch; color: var(--muted); }
+  .hero .lead { margin: 0 0 22px; max-width: 44ch; color: var(--ink); }
   .btns { display: flex; flex-wrap: wrap; gap: 12px; }
   .btn { display: inline-block; font-weight: 700; font-size: 16px; text-decoration: none; padding: 12px 22px; border-radius: 999px; border: 1px solid var(--line); color: var(--ink); background: var(--card); cursor: pointer; box-shadow: 0 4px 0 var(--line); transition: transform .12s, box-shadow .12s; }
   .btn.fill { background: var(--a); color: var(--on-a); border-color: transparent; box-shadow: 0 4px 0 color-mix(in srgb, var(--a) 55%, #000); }
@@ -327,20 +339,6 @@
   .club:first-child { background: var(--ink); color: var(--bg); border-color: transparent; }
   .club:first-child span { color: inherit; opacity: .75; }
 
-  /* Nazorat ishi */
-  .quiz { max-width: 720px; padding: 26px 28px 28px; position: relative; }
-  .quiz .qno { font-weight: 700; font-size: 13px; color: var(--a); margin: 0 0 6px; }
-  .quiz .q { font-weight: 800; font-size: 1.3rem; letter-spacing: -.02em; margin: 0 0 16px; line-height: 1.25; }
-  .answers { display: grid; gap: 8px; margin-bottom: 14px; }
-  .ans { cursor: pointer; text-align: left; font-size: 16px; font-weight: 600; padding: 12px 16px; background: var(--bg); border: 1px solid var(--line); border-radius: 14px; transition: transform .15s, border-color .2s; }
-  .ans:not(:disabled):hover { transform: translateX(4px); border-color: var(--a); }
-  .ans:disabled { cursor: default; opacity: .6; }
-  .ans.right { background: var(--a); color: var(--on-a); opacity: 1; border-color: transparent; }
-  .ans.wrong { opacity: 1; text-decoration: line-through; border-color: var(--b); }
-  .quiz .say { min-height: 1.6em; margin: 0 0 14px; font-weight: 600; }
-  .mark { position: absolute; right: 26px; top: 20px; width: 88px; height: 88px; border-radius: 26px; background: var(--b); color: var(--on-b); display: grid; place-items: center; font-weight: 800; font-size: 3.2rem; letter-spacing: -.04em; transform: rotate(-10deg); box-shadow: 0 6px 0 color-mix(in srgb, var(--b) 60%, #000), var(--shadow); }
-  .quiz .result { font-weight: 800; font-size: 1.6rem; letter-spacing: -.03em; line-height: 1.15; margin: 0 110px 8px 0; }
-
   /* Faxrimiz */
   .pride { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 14px; list-style: none; margin: 0; padding: 0; }
   .pr { padding: 18px 20px 20px; min-width: 0; }
@@ -415,8 +413,6 @@
     .b3scene { padding: 60px 56px 10px 0; }
     .b3side, .b3top { width: 60px; } .b3top { width: 100%; height: 60px; }
     .room { font-size: 11.5px; padding: 6px 2px; -webkit-hyphens: auto; hyphens: auto; }
-    .quiz .result { margin-right: 0; padding-top: 100px; }
-    .mark { left: 24px; right: auto; }
   }
 
   /* Harakat: faqat "harakatni kamaytirish" yoqilmagan bo'lsa */
@@ -428,12 +424,12 @@
     .chip3.c2 { animation: bob 6s ease-in-out -2s infinite; }
     .marquee div { animation: slide 28s linear infinite; }
     .cube.spin { animation: spin 16s linear infinite; }
+    .bgworld { animation: orbit 120s linear infinite; }
     .r3scene { animation: fly .5s cubic-bezier(.2, .9, .2, 1) both; }
     .dio.sway { animation: sway 7s ease-in-out infinite; }
     .rv { transition: opacity .7s ease-out, transform .7s cubic-bezier(.2, .8, .2, 1); }
     .rv.rv-wait { opacity: .08; transform: translateY(40px) scale(.98); }
     .detail, .tmore { animation: rise .3s ease-out both; }
-    .mark { animation: pop .5s cubic-bezier(.2, 1.6, .4, 1) both; }
     .pin::after { animation: ping 1.8s ease-out infinite; }
     .steps li { animation: rise .4s ease-out both; animation-delay: calc(var(--s) * 70ms); }
     .exitsign svg { animation: nudge 1s ease-in-out infinite; }
@@ -445,6 +441,7 @@
   @keyframes fly { from { opacity: 0; transform: translateY(40px) scale(.9); } }
   @keyframes bob { 50% { margin-top: -10px; } }
   @keyframes slide { to { transform: translateX(-50%); } }
+  @keyframes orbit { from { transform: rotateX(-24deg) rotateY(-32deg); } to { transform: rotateX(-24deg) rotateY(328deg); } }
   @keyframes spin { from { transform: rotateX(-22deg) rotateY(0deg); } to { transform: rotateX(-22deg) rotateY(360deg); } }
   @keyframes sway { 0%, 100% { transform: translateY(18px) rotateX(-26deg) rotateY(-44deg); } 50% { transform: translateY(18px) rotateX(-26deg) rotateY(-20deg); } }
   @keyframes pop { from { opacity: 0; transform: rotate(-30deg) scale(2); } }
@@ -453,6 +450,8 @@
 </style>
 </head>
 <body>
+
+<div class="bg3d" aria-hidden="true"><div class="bgscale"><div class="bgworld" id="bgWorld"><img class="bgground" src="rasmlar/mahalla.jpg" alt=""></div></div></div>
 
 <div class="util">
   <div class="wrap">
@@ -478,7 +477,7 @@
       <p class="lead" data-t="lead"></p>
       <div class="btns">
         <a class="btn fill" href="#tour" data-t="cta"></a>
-        <a class="btn" href="#quiz" data-t="cta2"></a>
+        <a class="btn" href="#classes" data-t="cta2"></a>
       </div>
       <div class="now paper" id="now" aria-live="off">
         <div class="ring">
@@ -516,7 +515,6 @@
       <a href="#teachers" data-t="navTeachers"></a>
       <a href="#schedule" data-t="navSchedule"></a>
       <a href="#clubs" data-t="navClubs"></a>
-      <a href="#quiz" data-t="navQuiz"></a>
       <a href="#pride" data-t="navPride"></a>
       <a href="#news" data-t="navNews"></a>
       <a href="#safety" data-t="navSafety"></a>
@@ -631,14 +629,6 @@
       <h2><span data-t="clubsTitle"></span></h2>
       <p class="note" data-t="clubsNote"></p>
       <ul class="cards" id="clubList"></ul>
-    </div>
-  </section>
-
-  <section id="quiz">
-    <div class="wrap rv">
-      <h2><span data-t="quizTitle"></span></h2>
-      <p class="note" data-t="quizNote"></p>
-      <div class="quiz paper" id="quizBox"></div>
     </div>
   </section>
 
@@ -993,20 +983,6 @@ const ROOMS = [
     text: { uz: "Ochiq havodagi futbol maydoni. Yonida sport maydonchasi ham bor.", ru: "Футбольное поле под открытым небом. Рядом есть спортивная площадка.", en: "An outdoor football pitch, with a sports court next to it." } }
 ];
 
-/* NAZORAT ISHI. Birinchi javob — to'g'risi (saytda aralashtirib ko'rsatiladi). */
-const QUIZ = [
-  { q: { uz: "Maktabimiz qaysi yili ochilgan?", ru: "В каком году открылась наша школа?", en: "In which year did our school open?" },
-    a: [{ uz: "2025", ru: "2025", en: "2025" }, { uz: "2021", ru: "2021", en: "2021" }, { uz: "2018", ru: "2018", en: "2018" }] },
-  { q: { uz: "Maktab qaysi mahallada joylashgan?", ru: "В какой махалле находится школа?", en: "Which mahalla is the school in?" },
-    a: [{ uz: "Iykota", ru: "Ийкота", en: "Iykota" }, { uz: "Suvsoz", ru: "Сувсоз", en: "Suvsoz" }, { uz: "Oltintopgan", ru: "Олтинтопган", en: "Oltintopgan" }] },
-  { q: { uz: "Bino nechta o‘quvchiga mo‘ljallangan?", ru: "На сколько учеников рассчитано здание?", en: "How many students is the building designed for?" },
-    a: [{ uz: "Qariyb 1000", ru: "Почти 1000", en: "About 1,000" }, { uz: "Qariyb 300", ru: "Около 300", en: "About 300" }, { uz: "Qariyb 5000", ru: "Около 5000", en: "About 5,000" }] },
-  { q: { uz: "Maktabda qaysi to‘garak bor?", ru: "Какой кружок есть в школе?", en: "Which club does the school have?" },
-    a: [{ uz: "Robototexnika", ru: "Робототехника", en: "Robotics" }, { uz: "Suv osti suzish", ru: "Подводное плавание", en: "Scuba diving" }, { uz: "Ot sporti", ru: "Конный спорт", en: "Horse riding" }] },
-  { q: { uz: "Maktab Toshkentning qaysi tumanida?", ru: "В каком районе Ташкента находится школа?", en: "Which district of Tashkent is the school in?" },
-    a: [{ uz: "Bektemir", ru: "Бектемирский", en: "Bektemir" }, { uz: "Chilonzor", ru: "Чиланзарский", en: "Chilanzar" }, { uz: "Yunusobod", ru: "Юнусабадский", en: "Yunusabad" }] }
-];
-
 const NEWS = [
   { when: { uz: "20.03.2025", ru: "20.03.2025", en: "20 Mar 2025" },
     title: { uz: "Maktabimizga Prezident tashrif buyurdi", ru: "Нашу школу посетил Президент", en: "The President visited our school" },
@@ -1043,11 +1019,11 @@ const T = {
     draftTag: "Qoralama", sampleTag: "namuna",
     themeDark: "Tungi", themeLight: "Kunduzgi",
     navAbout: "Maktab", navTour: "Bino", navDirector: "Direktor", navClasses: "Sinflar", navTeachers: "Ustozlar",
-    navClubs: "To‘garaklar", navQuiz: "Nazorat ishi", navNews: "Yangiliklar", navWhere: "Manzil",
+    navClubs: "To‘garaklar", navNews: "Yangiliklar", navWhere: "Manzil",
     h1: "358-sonli umumta’lim maktabi", h1rest: "-sonli umumta’lim maktabi",
     place: "Toshkent, Bektemir tumani, Iykota mahallasi",
     lead: "2025-yilda ochilgan yangi maktab. Bu yerda laboratoriyalar, kompyuter sinflari, kutubxona va robototexnika to‘garagi bor.",
-    cta: "Binoni aylanish", cta2: "O‘zingizni sinang",
+    cta: "Binoni aylanish", cta2: "Sinflarni ko‘rish",
     nowLabel: "Hozir maktabda",
     lesson: function (n) { return n + "-dars ketyapti"; },
     brk: "Tanaffus", before: "Darslar hali boshlanmagan", after: "Bugungi darslar tugadi", dayoff: "Bugun dam olish kuni",
@@ -1083,13 +1059,6 @@ const T = {
     teachersNote: "Ism yoki familiyani yozib qidiring. O‘qituvchi ustiga bossangiz, qaysi fandan dars berishi, qaysi sinflarga kirishi va hozir qaysi xonada ekani chiqadi.",
     clubsTitle: "To‘garaklar",
     clubsNote: "To‘garaklar jadvali ma’muriyatdan olingach to‘ldiriladi.",
-    quizTitle: "Nazorat ishi",
-    quizNote: "Maktabimizni qanchalik bilasiz? Beshta savol, oxirida baho qo‘yiladi.",
-    qNo: function (i, n) { return i + "-savol, jami " + n + " ta"; },
-    yes: "To‘g‘ri!", no: function (r) { return "Noto‘g‘ri. To‘g‘ri javob: " + r; },
-    next: "Keyingi savol", finish: "Bahoni ko‘rish", again: "Qayta topshirish",
-    resultText: function (s, n) { return n + " tadan " + s + " ta to‘g‘ri"; },
-    grades: { 5: "A’lo! Siz maktabni yaxshi bilasiz.", 4: "Yaxshi! Bitta xato xolos.", 3: "Qoniqarli. Sahifani yana bir o‘qib chiqing.", 2: "Qayta tayyorlanish kerak." },
     newsTitle: "Yangiliklar", source: "Manba",
     whereTitle: "Bizni qanday topish mumkin",
     wAddress: "Manzil", wPhone: "Telefon", wHours: "Qabul vaqti",
@@ -1148,11 +1117,11 @@ const T = {
     draftTag: "Черновик", sampleTag: "образец",
     themeDark: "Тёмная", themeLight: "Светлая",
     navAbout: "Школа", navTour: "Здание", navDirector: "Директор", navClasses: "Классы", navTeachers: "Учителя",
-    navClubs: "Кружки", navQuiz: "Контрольная", navNews: "Новости", navWhere: "Адрес",
+    navClubs: "Кружки", navNews: "Новости", navWhere: "Адрес",
     h1: "Общеобразовательная школа №358", h1rest: " — общеобразовательная школа",
     place: "Ташкент, Бектемирский район, махалля Ийкота",
     lead: "Новая школа, открытая в 2025 году. Здесь есть лаборатории, компьютерные классы, библиотека и кружок робототехники.",
-    cta: "Пройтись по зданию", cta2: "Проверить себя",
+    cta: "Пройтись по зданию", cta2: "Посмотреть классы",
     nowLabel: "Сейчас в школе",
     lesson: function (n) { return "Идёт " + n + "-й урок"; },
     brk: "Перемена", before: "Уроки ещё не начались", after: "Уроки на сегодня закончились", dayoff: "Сегодня выходной",
@@ -1188,13 +1157,6 @@ const T = {
     teachersNote: "Ищите по имени или фамилии. Нажмите на учителя, чтобы увидеть его предмет, классы и кабинет, где он сейчас.",
     clubsTitle: "Кружки",
     clubsNote: "Расписание кружков будет заполнено после получения от администрации.",
-    quizTitle: "Контрольная работа",
-    quizNote: "Хорошо ли вы знаете нашу школу? Пять вопросов, в конце — оценка.",
-    qNo: function (i, n) { return "Вопрос " + i + " из " + n; },
-    yes: "Верно!", no: function (r) { return "Неверно. Правильный ответ: " + r; },
-    next: "Следующий вопрос", finish: "Узнать оценку", again: "Пересдать",
-    resultText: function (s, n) { return "Верно " + s + " из " + n; },
-    grades: { 5: "Отлично! Вы хорошо знаете школу.", 4: "Хорошо! Всего одна ошибка.", 3: "Удовлетворительно. Перечитайте страницу ещё раз.", 2: "Нужно подготовиться ещё раз." },
     newsTitle: "Новости", source: "Источник",
     whereTitle: "Как нас найти",
     wAddress: "Адрес", wPhone: "Телефон", wHours: "Часы приёма",
@@ -1253,11 +1215,11 @@ const T = {
     draftTag: "Draft", sampleTag: "sample",
     themeDark: "Dark", themeLight: "Light",
     navAbout: "School", navTour: "Building", navDirector: "Principal", navClasses: "Classes", navTeachers: "Teachers",
-    navClubs: "Clubs", navQuiz: "Quiz", navNews: "News", navWhere: "Location",
+    navClubs: "Clubs", navNews: "News", navWhere: "Location",
     h1: "General Secondary School No. 358", h1rest: " General Secondary School",
     place: "Tashkent, Bektemir district, Iykota mahalla",
     lead: "A new school that opened in 2025, with laboratories, computer rooms, a library and a robotics club.",
-    cta: "Tour the building", cta2: "Test yourself",
+    cta: "Tour the building", cta2: "See the classes",
     nowLabel: "At school right now",
     lesson: function (n) { return "Lesson " + n + " is on"; },
     brk: "Break", before: "Lessons have not started yet", after: "Lessons are over for today", dayoff: "No school today",
@@ -1293,13 +1255,6 @@ const T = {
     teachersNote: "Search by first name or surname. Select a teacher to see their subject, their classes and which room they are in right now.",
     clubsTitle: "Clubs",
     clubsNote: "The club timetable will be filled in once we get it from the administration.",
-    quizTitle: "Pop quiz",
-    quizNote: "How well do you know our school? Five questions, and you get a mark at the end.",
-    qNo: function (i, n) { return "Question " + i + " of " + n; },
-    yes: "Correct!", no: function (r) { return "Not quite. The answer is: " + r; },
-    next: "Next question", finish: "See my mark", again: "Try again",
-    resultText: function (s, n) { return s + " out of " + n + " correct"; },
-    grades: { 5: "Excellent! You know the school well.", 4: "Good! Just one mistake.", 3: "Satisfactory. Read the page once more.", 2: "Time to revise and try again." },
     newsTitle: "News", source: "Source",
     whereTitle: "How to find us",
     wAddress: "Address", wPhone: "Phone", wHours: "Office hours",
@@ -1364,7 +1319,6 @@ const CALM = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 let LANG = "uz";
 let OPEN = null;         /* ochiq turgan sinf, masalan "7-A" */
 let ROOM = null;         /* tanlangan xona raqami */
-const QZ = { i: 0, score: 0, picked: null, order: [], done: false };
 let TQ = "";             /* qidiruv matni */
 let TOPEN = null;        /* ochiq turgan o'qituvchi raqami */
 let PICK = null;         /* null — jonli vaqt; aks holda { day, lesson } */
@@ -1595,56 +1549,6 @@ function renderGrades() {
       if (opened) grades.appendChild(opened);
     });
   });
-}
-
-/* ---------- Nazorat ishi ---------- */
-function shuffle(n) {
-  const a = []; for (let i = 0; i < n; i++) a.push(i);
-  for (let i = n - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); const t = a[i]; a[i] = a[j]; a[j] = t; }
-  return a;
-}
-function startQuiz() { QZ.i = 0; QZ.score = 0; QZ.picked = null; QZ.done = false; QZ.order = QUIZ.map(function (q) { return shuffle(q.a.length); }); }
-function renderQuiz() {
-  const L = T[LANG];
-  const box = document.getElementById("quizBox");
-  box.textContent = "";
-  if (QZ.done) {
-    const mark = QZ.score === QUIZ.length ? 5 : QZ.score === QUIZ.length - 1 ? 4 : QZ.score >= Math.ceil(QUIZ.length / 2) ? 3 : 2;
-    box.appendChild(el("div", "mark", String(mark)));
-    box.appendChild(el("p", "result", L.grades[mark]));
-    box.appendChild(el("p", "say", L.resultText(QZ.score, QUIZ.length)));
-    const again = el("button", "btn fill", L.again);
-    again.type = "button";
-    again.addEventListener("click", function () { startQuiz(); renderQuiz(); });
-    box.appendChild(again);
-    return;
-  }
-  const q = QUIZ[QZ.i];
-  box.appendChild(el("p", "qno", L.qNo(QZ.i + 1, QUIZ.length)));
-  box.appendChild(el("p", "q", q.q[LANG]));
-  const list = el("div", "answers");
-  QZ.order[QZ.i].forEach(function (idx) {
-    const b = el("button", "ans", q.a[idx][LANG]);
-    b.type = "button";
-    if (QZ.picked !== null) {
-      b.disabled = true;
-      if (idx === 0) b.classList.add("right");
-      else if (idx === QZ.picked) b.classList.add("wrong");
-    }
-    b.addEventListener("click", function () { QZ.picked = idx; if (idx === 0) QZ.score += 1; renderQuiz(); });
-    list.appendChild(b);
-  });
-  box.appendChild(list);
-  const say = el("p", "say", QZ.picked === null ? "" : QZ.picked === 0 ? L.yes : L.no(q.a[0][LANG]));
-  say.setAttribute("aria-live", "polite");
-  box.appendChild(say);
-  if (QZ.picked !== null) {
-    const last = QZ.i === QUIZ.length - 1;
-    const next = el("button", "btn fill", last ? L.finish : L.next);
-    next.type = "button";
-    next.addEventListener("click", function () { if (last) QZ.done = true; else { QZ.i += 1; QZ.picked = null; } renderQuiz(); });
-    box.appendChild(next);
-  }
 }
 
 /* ---------- Dars jadvali: kim hozir qayerda ---------- */
@@ -1919,6 +1823,27 @@ function renderCube() {
   m.textContent = "";
   L.marquee.concat(L.marquee).forEach(function (w) { m.appendChild(el("span", "", w)); });
 }
+/* Orqa fondagi 3D maktab maketi (rasmdagi bino asosida, shartli) */
+function buildBackground() {
+  const w = document.getElementById("bgWorld");
+  const p = [];
+  p.push(cb(0, 0, 0, 330, 96, 76, "card"));            /* asosiy bino */
+  p.push(cb(0, 96, 0, 344, 12, 90, "roof"));           /* tom */
+  for (let f = 0; f < 3; f++) for (let i = 0; i < 10; i++) {
+    if (f === 0 && (i === 4 || i === 5)) continue;
+    p.push(cb(-144 + i * 32, 12 + f * 28, 39, 18, 16, 2, i % 3 === 1 ? "b" : "a"));
+  }
+  p.push(cb(0, 0, 41, 60, 40, 8, "a"));                /* kirish */
+  p.push(cb(0, 40, 44, 76, 6, 16, "roof"));
+  p.push(cb(230, 0, -8, 120, 66, 96, "card"));         /* sport zali */
+  p.push(cb(230, 66, -8, 130, 10, 106, "roof"));
+  p.push(cb(-300, 0, 120, 190, 3, 120, "exit"));       /* futbol maydoni */
+  p.push(cb(-290, 0, -40, 120, 3, 80, "a"));           /* sport maydonchasi */
+  p.push(cb(120, 0, 120, 3, 110, 3, "ink"));           /* bayroq ustuni */
+  p.push(cb(134, 92, 120, 26, 16, 1, "a"));
+  p.forEach(function (n) { w.appendChild(n); });
+}
+
 /* 3D kubni aylantirish */
 function setup3D() {
   const wrap = document.getElementById("cubeWrap"), cube = document.getElementById("cube");
@@ -2020,7 +1945,6 @@ function render(lang) {
     li.appendChild(el("span", "", c.info[lang]));
     return li;
   });
-  renderQuiz();
   fill("newsList", NEWS, function (item) {
     const li = el("li", "paper" + (item.todo ? " todo" : ""));
     li.appendChild(el("div", "when", item.when[lang]));
@@ -2129,7 +2053,6 @@ function setupTabs() {
   Object.keys(links).forEach(function (k) { const s = document.getElementById(k); if (s) io.observe(s); });
 }
 
-startQuiz();
 let savedLang = null;
 try { savedLang = localStorage.getItem("lang"); } catch (e) {}
 render(T[savedLang] ? savedLang : "uz");
@@ -2137,6 +2060,7 @@ setupReveal();
 setupScrollPhotos();
 setupTabs();
 setup3D();
+buildBackground();
 setInterval(function () { tickNow(); liveCheck(); }, 1000);
 
 document.getElementById("teacherSearch").addEventListener("input", function (e) { TQ = e.target.value; TOPEN = null; renderTeachers(); });

@@ -20,7 +20,6 @@ bo'limida direktor, sinflar, o'qituvchilar, to'garaklar va yangiliklar yoziladi.
 - **Hozir maktabda**: Toshkent vaqti bo'yicha nechanchi dars yoki tanaffus ekanini ko'rsatadi.
   Qo'ng'iroqlar jadvali `BELLS` da, hozircha namuna (`BELLS_SAMPLE`).
 - **Bino sxemasi**: xonalar `ROOMS` da.
-- **Nazorat ishi**: savollar `QUIZ` da, birinchi javob to'g'risi.
 - **Manzil**: `LOCATION` da. Aniq koordinata yozilgach `exact: true` qiling.
 - Aloqa (Telegram, Instagram, telefon): `CONTACTS` da.
 - Dizayn: bento kataklar, shisha menyu, 3D rasm, 3D kub va 3D bino; kunduzgi va tungi rejim.
