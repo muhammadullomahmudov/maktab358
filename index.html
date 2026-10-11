@@ -14,10 +14,12 @@
     --bg: #ffffff;
     --soft: #f3f7fb;
     --tint: #e4effa;
-    --ink: #17283a;
-    --muted: #5b6e82;
-    --line: #dce6ef;
-    --accent: #1c6fd0;
+    --ink: #0a1624;
+    --muted: #3b4c60;
+    --line: #d3dfea;
+    --accent: #0f58b8;
+    --accent2: #0b7f8c;
+    --glow: rgba(11, 127, 140, .16);
     --on-accent: #ffffff;
     --gold: #f0b400;
     --on-gold: #1d2530;
@@ -27,15 +29,17 @@
   }
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
-      --bg: #0e1621; --soft: #131e2c; --tint: #172a40; --ink: #e8eff7; --muted: #93a5b8;
-      --line: #25364a; --accent: #73b2ff; --on-accent: #0b1a2c; --gold: #f5c02a;
-      --card: #152233; --shade: rgba(0, 0, 0, .35); color-scheme: dark;
+      --bg: #090f1f; --soft: #0e1730; --tint: #16234a; --ink: #f2f6fc; --muted: #aebbd0;
+      --line: #263660; --accent: #63a9ff; --accent2: #3ee0c4; --glow: rgba(62, 224, 196, .20);
+      --on-accent: #06132a; --gold: #ffc93c;
+      --card: #111b38; --shade: rgba(0, 0, 0, .45); color-scheme: dark;
     }
   }
   :root[data-theme="dark"] {
-    --bg: #0e1621; --soft: #131e2c; --tint: #172a40; --ink: #e8eff7; --muted: #93a5b8;
-    --line: #25364a; --accent: #73b2ff; --on-accent: #0b1a2c; --gold: #f5c02a;
-    --card: #152233; --shade: rgba(0, 0, 0, .35); color-scheme: dark;
+    --bg: #090f1f; --soft: #0e1730; --tint: #16234a; --ink: #f2f6fc; --muted: #aebbd0;
+    --line: #263660; --accent: #63a9ff; --accent2: #3ee0c4; --glow: rgba(62, 224, 196, .20);
+    --on-accent: #06132a; --gold: #ffc93c;
+    --card: #111b38; --shade: rgba(0, 0, 0, .45); color-scheme: dark;
   }
   :root[data-theme="light"] { color-scheme: light; }
 
@@ -51,7 +55,7 @@
   a:focus-visible, button:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
   .wrap { max-width: 1120px; margin: 0 auto; padding: 0 20px; }
   h2 { font-weight: 700; font-size: clamp(1.45rem, 3vw, 1.9rem); line-height: 1.2; margin: 0 0 28px; text-wrap: balance; }
-  h2::after { content: ""; display: block; width: 56px; height: 4px; border-radius: 2px; background: var(--gold); margin-top: 12px; }
+  h2::after { content: ""; display: block; width: 64px; height: 4px; border-radius: 2px; background: linear-gradient(90deg, var(--gold), var(--accent2)); margin-top: 12px; }
   h3 { font-size: 1.05rem; margin: 0 0 12px; }
   .note { color: var(--muted); font-size: 15px; margin: -12px 0 24px; max-width: 60ch; }
 
@@ -95,15 +99,15 @@
   .menu a:hover, .menu a.on { color: var(--accent); border-bottom-color: var(--accent); }
 
   /* Bosh qism */
-  .hero { background: linear-gradient(var(--tint), var(--soft)); }
+  .hero { background: radial-gradient(60% 90% at 88% 0%, var(--glow), transparent 70%), linear-gradient(var(--tint), var(--soft)); }
   .hero .wrap { display: grid; grid-template-columns: 1fr 1.1fr; gap: 32px 48px; align-items: center; padding-top: 48px; padding-bottom: 88px; }
   .hero .wrap > * { min-width: 0; }
   .hero h1 { font-weight: 800; font-size: clamp(1.8rem, 4.2vw, 2.9rem); line-height: 1.12; letter-spacing: -.02em; margin: 0 0 14px; text-wrap: balance; }
   .hero .place { color: var(--accent); font-weight: 600; margin: 0 0 12px; }
-  .hero .lead { margin: 0 0 26px; max-width: 46ch; color: var(--muted); }
+  .hero .lead { margin: 0 0 26px; max-width: 46ch; }
   .btns { display: flex; flex-wrap: wrap; gap: 12px; }
   .btn { display: inline-block; font-weight: 600; text-decoration: none; padding: 12px 22px; border-radius: 8px; border: 1.5px solid var(--accent); transition: transform .2s; }
-  .btn.fill { background: var(--accent); color: var(--on-accent); }
+  .btn.fill { background: linear-gradient(135deg, var(--accent), var(--accent2)); color: var(--on-accent); border-color: transparent; }
   .btn:hover { transform: translateY(-2px); }
 
   .shot { margin: 0; position: relative; }
@@ -174,7 +178,7 @@
   /* Sinflar */
   .sample { border: 1.5px dashed var(--gold); border-radius: 8px; padding: 12px 16px; margin: 0 0 28px; font-size: 15px; max-width: 72ch; }
   .totals { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 0 0 12px; }
-  .totals div { background: var(--card); border: 1px solid var(--line); border-top: 4px solid var(--accent); border-radius: 10px; padding: 14px 18px; min-width: 0; }
+  .totals div { background: var(--card); border: 1px solid var(--line); border-top: 4px solid var(--accent2); border-radius: 10px; padding: 14px 18px; min-width: 0; }
   .totals dt { color: var(--muted); font-size: 15px; }
   .totals dd { margin: 0; font-weight: 800; font-size: clamp(1.6rem, 5vw, 2.4rem); color: var(--accent); font-variant-numeric: tabular-nums; line-height: 1.15; }
   .hint { font-size: 15px; color: var(--muted); margin: 0 0 8px; }
@@ -189,12 +193,12 @@
     transition: transform .2s, border-color .2s, background-color .2s;
   }
   .chip:hover { border-color: var(--accent); }
-  .chip[aria-expanded="true"] { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+  .chip[aria-expanded="true"] { background: linear-gradient(135deg, var(--accent), var(--accent2)); border-color: transparent; color: var(--on-accent); }
   .chip b { display: block; font-size: 15px; }
   .chip span { font-size: 14px; opacity: .75; font-variant-numeric: tabular-nums; }
   .chip .bar { display: block; height: 4px; border-radius: 2px; background: var(--line); margin-top: 6px; overflow: hidden; opacity: 1; }
-  .chip i { display: block; height: 100%; background: var(--accent); border-radius: 2px; transform-origin: left; }
-  .chip[aria-expanded="true"] i { background: var(--gold); }
+  .chip i { display: block; height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent2)); border-radius: 2px; transform-origin: left; }
+  .chip[aria-expanded="true"] i { background: var(--on-accent); }
   .grade .sum { font-size: 15px; color: var(--muted); text-align: right; font-variant-numeric: tabular-nums; }
   .detail { background: var(--tint); border-radius: 10px; padding: 18px 20px; margin: 0 0 14px; }
   .detail .head { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
@@ -240,7 +244,7 @@
   .news li.todo h3, .news li.todo p { color: var(--muted); font-style: italic; }
   @media (max-width: 600px) { .news li { grid-template-columns: 1fr; } }
 
-  footer { background: var(--soft); border-top: 4px solid var(--accent); padding: 44px 0 30px; }
+  footer { background: var(--soft); border-top: 4px solid var(--accent2); padding: 44px 0 30px; }
   footer .cols { display: grid; grid-template-columns: 1.3fr 1fr 1fr; gap: 28px; }
   footer .cols > * { min-width: 0; }
   footer h2 { font-size: 1.1rem; margin-bottom: 14px; }
