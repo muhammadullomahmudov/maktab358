@@ -715,14 +715,8 @@
 
   <section id="schedule">
     <div class="wrap rv">
-      <h2><span data-t="scheduleTitle"></span></h2>
-      <p class="note" data-t="scheduleNote"></p>
-      <div class="pick" id="pick"></div>
-      <p class="slot" id="slotLine"></p>
-      <p class="slothint" id="slotHint"></p>
-      <ul class="board" id="board"></ul>
-      <p class="sub2" data-t="ttTitle"></p>
-      <p class="slothint" data-t="ttNote"></p>
+      <h2><span data-t="ttTitle"></span></h2>
+      <p class="note" data-t="ttNote"></p>
       <div class="pick" id="ttPick"></div>
       <div class="ttwrap" id="ttBox"></div>
     </div>
@@ -1267,7 +1261,7 @@ const T = {
     inClass: function (c) { return c + " sinf"; },
     roomIs: function (r) { return r + "-xona"; },
     free: "Bo‘sh, darsi yo‘q",
-    ttTitle: "Sinf jadvali", ttNote: "Sinfni tanlang: qaysi fandan qaysi o‘qituvchi kirishi chiqadi.",
+    ttTitle: "Dars jadvali", ttNote: "Sinf va kunni tanlang: qaysi fandan qaysi o‘qituvchi kirishi va qaysi xonada bo‘lishi chiqadi.",
     thNo: "№", thTime: "Vaqt", thSubject: "Fan", thTeacher: "O‘qituvchi", thRoom: "Xona",
     ttEmpty: "Bu kunga jadval kiritilmagan.",
     prideTitle: "Faxrimiz",
@@ -1370,7 +1364,7 @@ const T = {
     inClass: function (c) { return "Класс " + c; },
     roomIs: function (r) { return "каб. " + r; },
     free: "Свободен, урока нет",
-    ttTitle: "Расписание класса", ttNote: "Выберите класс: будет видно, какой учитель ведёт какой предмет.",
+    ttTitle: "Расписание уроков", ttNote: "Выберите класс и день: будет видно, какой учитель ведёт какой предмет и в каком кабинете.",
     thNo: "№", thTime: "Время", thSubject: "Предмет", thTeacher: "Учитель", thRoom: "Кабинет",
     ttEmpty: "На этот день расписание не внесено.",
     prideTitle: "Наша гордость",
@@ -1473,7 +1467,7 @@ const T = {
     inClass: function (c) { return "Class " + c; },
     roomIs: function (r) { return "room " + r; },
     free: "Free, no lesson",
-    ttTitle: "Class timetable", ttNote: "Pick a class to see which teacher takes which subject.",
+    ttTitle: "Timetable", ttNote: "Pick a class and a day to see which teacher takes which subject, and in which room.",
     thNo: "No.", thTime: "Time", thSubject: "Subject", thTeacher: "Teacher", thRoom: "Room",
     ttEmpty: "No timetable entered for this day.",
     prideTitle: "Our pride",
@@ -1994,52 +1988,20 @@ function pk(label, pressed, onClick, extra) {
 }
 function renderSchedule() {
   const L = T[LANG];
-  const s = slot();
-  LASTSLOT = s.day + ":" + s.idx;
-  const schoolDay = SCHOOL_DAYS.indexOf(s.day) !== -1 ? s.day : SCHOOL_DAYS[0];
-
-  const pick = document.getElementById("pick");
-  pick.textContent = "";
-  const g0 = el("div", "grp");
-  g0.appendChild(pk(L.pkLive, PICK === null, function () { PICK = null; renderSchedule(); }, "live"));
-  pick.appendChild(g0);
-  const g1 = el("div", "grp");
-  g1.appendChild(el("span", "cap", L.pkDay));
-  SCHOOL_DAYS.forEach(function (d) {
-    g1.appendChild(pk(L.daysShort[d], PICK !== null && PICK.day === d, function () { PICK = { day: d, lesson: PICK ? PICK.lesson : Math.max(0, s.idx) }; renderSchedule(); }));
-  });
-  pick.appendChild(g1);
-  const g2 = el("div", "grp");
-  g2.appendChild(el("span", "cap", L.pkLesson));
-  BELLS.forEach(function (b, i) {
-    g2.appendChild(pk(String(i + 1), PICK !== null && PICK.lesson === i, function () { PICK = { day: PICK ? PICK.day : schoolDay, lesson: i }; renderSchedule(); }));
-  });
-  pick.appendChild(g2);
-
-  const on = s.idx >= 0 && SCHOOL_DAYS.indexOf(s.day) !== -1;
-  document.getElementById("slotLine").textContent = on ? L.slotText(L.daysFull[s.day], s.idx + 1, BELLS[s.idx][0], BELLS[s.idx][1]) : L.noNow;
-  document.getElementById("slotHint").textContent = on ? "" : L.noNowHint;
-
-  fill("board", TEACHERS, function (t) {
-    let cls = null;
-    if (on) Object.keys(SCHEDULE).forEach(function (c) { const day = SCHEDULE[c][s.day]; if (day && day[s.idx] === t.subject) cls = c; });
-    const li = el("li", "tl paper " + (cls ? "busy" : "free"));
-    li.appendChild(el("span", "subj", SUBJECTS[t.subject][LANG]));
-    const nm = el("strong", "", teacherName(t));
-    if (!t.name) nm.appendChild(tag());
-    li.appendChild(nm);
-    if (cls) { li.appendChild(el("span", "cl", L.inClass(cls))); li.appendChild(el("span", "st", roomText(t.room))); }
-    else li.appendChild(el("span", "st", L.free));
-    return li;
-  });
+  const live = liveSlot();
+  LASTSLOT = live.day + ":" + live.idx;
+  const schoolDay = PICK ? PICK.day : (SCHOOL_DAYS.indexOf(live.day) !== -1 ? live.day : SCHOOL_DAYS[0]);
 
   const ttPick = document.getElementById("ttPick");
   ttPick.textContent = "";
-  const g3 = el("div", "grp");
-  g3.appendChild(el("span", "cap", L.pkClass));
-  Object.keys(SCHEDULE).forEach(function (c) { g3.appendChild(pk(c, TTCLASS === c, function () { TTCLASS = c; renderSchedule(); })); });
-  ttPick.appendChild(g3);
-  ttPick.appendChild(el("span", "cap", L.daysFull[schoolDay]));
+  const g1 = el("div", "grp");
+  g1.appendChild(el("span", "cap", L.pkClass));
+  Object.keys(SCHEDULE).forEach(function (c) { g1.appendChild(pk(c, TTCLASS === c, function () { TTCLASS = c; renderSchedule(); })); });
+  ttPick.appendChild(g1);
+  const g2 = el("div", "grp");
+  g2.appendChild(el("span", "cap", L.pkDay));
+  SCHOOL_DAYS.forEach(function (d) { g2.appendChild(pk(L.daysShort[d], schoolDay === d, function () { PICK = { day: d, lesson: -1 }; renderSchedule(); })); });
+  ttPick.appendChild(g2);
 
   const box = document.getElementById("ttBox");
   box.textContent = "";
@@ -2052,19 +2014,18 @@ function renderSchedule() {
   const tb = el("tbody");
   lessons.forEach(function (key, i) {
     const t = teacherBySubject(key);
-    const tr = el("tr", on && s.day === schoolDay && s.idx === i ? "cur" : "");
+    const tr = el("tr", live.day === schoolDay && live.idx === i ? "cur" : "");
     tr.appendChild(el("td", "", String(i + 1)));
     tr.appendChild(el("td", "", BELLS[i] ? BELLS[i][0] + "–" + BELLS[i][1] : ""));
     tr.appendChild(el("td", "", SUBJECTS[key][LANG]));
-    tr.appendChild(el("td", "", t ? teacherName(t) : L.soon));
-    tr.appendChild(el("td", "", t ? roomText(t.room) : L.soon));
+    tr.appendChild(el("td", "", t ? teacherName(t) : ""));
+    tr.appendChild(el("td", "", t ? roomText(t.room) : ""));
     tb.appendChild(tr);
   });
   table.appendChild(tb);
   box.appendChild(table);
 }
 function liveCheck() {
-  if (PICK) return;
   const s = liveSlot();
   if (s.day + ":" + s.idx !== LASTSLOT) { renderSchedule(); if (TOPEN !== null) renderTeachers(); }
 }
