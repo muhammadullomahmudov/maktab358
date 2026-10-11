@@ -6,277 +6,328 @@
 <title>358-maktab</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Golos+Text:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-  /* Tartib: rasmiy muassasa sayti kabi. Tepada xizmat qatori, nishon va nom,
-     yopishib turadigan menyu, so'ng rasm bilan bosh qism va bo'limlar. */
+  /* G'oya: kunduzi katak daftar, tunda sinf doskasi.
+     Rasmlar skotch bilan yopishtirilgan, sarlavhalar qo'lda yozilgan, eslatmalar yopishqoq qog'ozda. */
   :root {
-    --bg: #ffffff;
-    --soft: #f3f7fb;
-    --tint: #e4effa;
-    --ink: #0a1624;
-    --muted: #3b4c60;
-    --line: #d3dfea;
-    --accent: #0f58b8;
-    --accent2: #0b7f8c;
-    --glow: rgba(11, 127, 140, .16);
-    --on-accent: #ffffff;
-    --gold: #f0b400;
-    --on-gold: #1d2530;
+    --bg: #fdfeff;            /* daftar qog'ozi */
+    --rule: #d6e4f3;          /* kataklar */
+    --margin: #e2504c;        /* daftar hoshiyasi */
+    --ink: #0c142b;           /* to'q siyoh */
+    --muted: #38425c;
+    --pen: #1438a6;           /* ko'k ruchka */
+    --on-pen: #ffffff;
+    --red: #cf2e27;           /* o'qituvchining qizil ruchkasi */
+    --hl: #ffe45c;            /* marker */
     --card: #ffffff;
-    --shade: rgba(23, 40, 58, .10);
+    --line: #c3d2e4;
+    --note1: #fff3a6; --note2: #d3ebff; --note3: #ffd9e0; --note4: #d9f5d6;
+    --note-ink: #141b2e;
+    --tape: rgba(255, 221, 87, .78);
+    --lit: #ffd84a;           /* yoniq deraza */
+    --wall: #eef3fa;
+    --grass: #7fcf8a;
+    --shade: rgba(12, 20, 43, .14);
+    --hand: "Caveat", "Segoe Script", "Comic Sans MS", cursive;
     --font: "Golos Text", system-ui, -apple-system, "Segoe UI", sans-serif;
   }
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
-      --bg: #090f1f; --soft: #0e1730; --tint: #16234a; --ink: #f2f6fc; --muted: #aebbd0;
-      --line: #263660; --accent: #63a9ff; --accent2: #3ee0c4; --glow: rgba(62, 224, 196, .20);
-      --on-accent: #06132a; --gold: #ffc93c;
-      --card: #111b38; --shade: rgba(0, 0, 0, .45); color-scheme: dark;
+      --bg: #13231c; --rule: rgba(255, 255, 255, .055); --margin: #ff8f85; --ink: #f6f5ea; --muted: #c2cfc4;
+      --pen: #8ad4ff; --on-pen: #0d1f18; --red: #ff9c93; --hl: rgba(255, 224, 102, .30);
+      --card: #1b3027; --line: #3a584a;
+      --note1: #3a3a1c; --note2: #1c3443; --note3: #40262f; --note4: #1f3d2a; --note-ink: #f6f5ea;
+      --tape: rgba(255, 224, 102, .40); --lit: #ffe066; --wall: #223a2f; --grass: #3f8f55;
+      --shade: rgba(0, 0, 0, .40); color-scheme: dark;
     }
   }
   :root[data-theme="dark"] {
-    --bg: #090f1f; --soft: #0e1730; --tint: #16234a; --ink: #f2f6fc; --muted: #aebbd0;
-    --line: #263660; --accent: #63a9ff; --accent2: #3ee0c4; --glow: rgba(62, 224, 196, .20);
-    --on-accent: #06132a; --gold: #ffc93c;
-    --card: #111b38; --shade: rgba(0, 0, 0, .45); color-scheme: dark;
+    --bg: #13231c; --rule: rgba(255, 255, 255, .055); --margin: #ff8f85; --ink: #f6f5ea; --muted: #c2cfc4;
+    --pen: #8ad4ff; --on-pen: #0d1f18; --red: #ff9c93; --hl: rgba(255, 224, 102, .30);
+    --card: #1b3027; --line: #3a584a;
+    --note1: #3a3a1c; --note2: #1c3443; --note3: #40262f; --note4: #1f3d2a; --note-ink: #f6f5ea;
+    --tape: rgba(255, 224, 102, .40); --lit: #ffe066; --wall: #223a2f; --grass: #3f8f55;
+    --shade: rgba(0, 0, 0, .40); color-scheme: dark;
   }
   :root[data-theme="light"] { color-scheme: light; }
 
   * { box-sizing: border-box; }
-  html { scroll-behavior: smooth; scroll-padding-top: 70px; }
+  html { scroll-behavior: smooth; scroll-padding-top: 64px; }
   body {
-    margin: 0; background: var(--bg); color: var(--ink);
-    font-family: var(--font); font-size: 17px; line-height: 1.6;
-    transition: background-color .3s, color .3s;
+    margin: 0; color: var(--ink); font-family: var(--font); font-size: 17px; line-height: 1.6;
+    background-color: var(--bg);
+    background-image: linear-gradient(var(--rule) 1px, transparent 1px), linear-gradient(90deg, var(--rule) 1px, transparent 1px);
+    background-size: 26px 26px;
+    transition: background-color .35s, color .35s;
   }
-  a { color: var(--accent); }
-  button { font-family: inherit; }
-  a:focus-visible, button:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
-  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 20px; }
-  h2 { font-weight: 700; font-size: clamp(1.45rem, 3vw, 1.9rem); line-height: 1.2; margin: 0 0 28px; text-wrap: balance; }
-  h2::after { content: ""; display: block; width: 64px; height: 4px; border-radius: 2px; background: linear-gradient(90deg, var(--gold), var(--accent2)); margin-top: 12px; }
-  h3 { font-size: 1.05rem; margin: 0 0 12px; }
-  .note { color: var(--muted); font-size: 15px; margin: -12px 0 24px; max-width: 60ch; }
+  /* daftarning qizil hoshiya chizig'i */
+  body::before { content: ""; position: fixed; top: 0; bottom: 0; left: max(8px, calc(50% - 590px)); width: 2px; background: var(--margin); opacity: .55; pointer-events: none; z-index: 0; }
+  a { color: var(--pen); }
+  button { font-family: inherit; color: inherit; }
+  a:focus-visible, button:focus-visible { outline: 3px solid var(--red); outline-offset: 2px; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 22px; position: relative; }
+  section { padding: 56px 0; position: relative; }
 
-  /* Xizmat qatori */
-  .util { background: var(--soft); border-bottom: 1px solid var(--line); font-size: 14px; }
-  .util .wrap { display: flex; align-items: center; gap: 8px 16px; flex-wrap: wrap; padding-top: 7px; padding-bottom: 7px; }
-  .util .state { margin-right: auto; color: var(--muted); min-width: 0; }
-  .util .state b { background: var(--gold); color: var(--on-gold); font-weight: 600; border-radius: 3px; padding: 1px 7px; margin-right: 6px; }
-  .langs { display: flex; border: 1px solid var(--line); border-radius: 999px; overflow: hidden; background: var(--card); }
-  .langs button { font-weight: 500; font-size: 13px; padding: 5px 11px; border: 0; background: transparent; color: var(--ink); cursor: pointer; }
-  .langs button[aria-pressed="true"] { background: var(--accent); color: var(--on-accent); }
-  .theme {
-    display: inline-flex; align-items: center; gap: 7px; cursor: pointer;
-    border: 1px solid var(--line); border-radius: 999px; background: var(--card); color: var(--ink);
-    font-size: 13px; font-weight: 500; padding: 5px 12px 5px 9px;
-  }
+  h2 { font-family: var(--hand); font-weight: 700; font-size: clamp(2.2rem, 6vw, 3.2rem); line-height: 1.05; margin: 0 0 26px; text-wrap: balance; }
+  h2 span { background: linear-gradient(transparent 58%, var(--hl) 58%, var(--hl) 92%, transparent 92%); padding: 0 6px; margin: 0 -6px; }
+  h3 { font-size: 1.05rem; margin: 0 0 12px; }
+  .hand { font-family: var(--hand); font-weight: 600; font-size: 1.35rem; line-height: 1.2; }
+  .note { color: var(--muted); font-size: 15px; margin: -10px 0 22px; max-width: 62ch; }
+  .tag { display: inline-block; background: var(--hl); color: var(--ink); font: 600 12px var(--font); border-radius: 3px; padding: 1px 7px; margin-left: 6px; vertical-align: middle; }
+  .paper { background: var(--card); border: 1px solid var(--line); border-radius: 6px; box-shadow: 3px 4px 0 var(--shade); }
+
+  /* Tepadagi qator */
+  .util .wrap { display: flex; align-items: center; gap: 8px 14px; flex-wrap: wrap; padding-top: 10px; padding-bottom: 10px; }
+  .stamp { margin-right: auto; font-family: var(--hand); font-weight: 700; font-size: 1.15rem; color: var(--red); border: 2px solid var(--red); border-radius: 6px; padding: 0 10px; transform: rotate(-3deg); }
+  .langs { display: flex; border: 1.5px solid var(--ink); border-radius: 999px; overflow: hidden; background: var(--card); }
+  .langs button { font-weight: 600; font-size: 13px; padding: 5px 11px; border: 0; background: transparent; cursor: pointer; }
+  .langs button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+  .theme { display: inline-flex; align-items: center; gap: 7px; cursor: pointer; border: 1.5px solid var(--ink); border-radius: 999px; background: var(--card); font-size: 13px; font-weight: 600; padding: 5px 12px 5px 9px; }
   .theme svg { width: 16px; height: 16px; display: block; }
   .theme .moon { display: none; }
   :root[data-mode="dark"] .theme .sun { display: none; }
   :root[data-mode="dark"] .theme .moon { display: block; }
 
-  /* Nishon va nom */
-  .mast .wrap { display: flex; align-items: center; gap: 16px; padding-top: 18px; padding-bottom: 18px; }
-  .seal {
-    flex: none; width: 62px; height: 62px; border-radius: 50%;
-    border: 2px solid var(--accent); outline: 1px solid var(--line); outline-offset: 3px;
-    display: grid; place-items: center; color: var(--accent); font-weight: 800; font-size: 20px; letter-spacing: -.02em;
-    text-decoration: none; background: var(--card);
-  }
-  .mast .names { min-width: 0; }
-  .mast .over { font-size: 14px; color: var(--muted); margin: 0; }
-  .mast .title { font-weight: 700; font-size: clamp(1.05rem, 2.4vw, 1.35rem); line-height: 1.25; margin: 0; }
-
-  /* Menyu */
-  .menu { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 6; background: var(--bg); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
-  .menu nav { display: flex; gap: 4px; overflow-x: auto; white-space: nowrap; scrollbar-width: none; }
-  .menu a {
-    color: var(--ink); text-decoration: none; font-weight: 500; font-size: 15px;
-    padding: 13px 14px; border-bottom: 3px solid transparent; transition: color .2s, border-color .2s;
-  }
-  .menu a:hover, .menu a.on { color: var(--accent); border-bottom-color: var(--accent); }
-
   /* Bosh qism */
-  .hero { background: radial-gradient(60% 90% at 88% 0%, var(--glow), transparent 70%), linear-gradient(var(--tint), var(--soft)); }
-  .hero .wrap { display: grid; grid-template-columns: 1fr 1.1fr; gap: 32px 48px; align-items: center; padding-top: 48px; padding-bottom: 88px; }
+  .hero .wrap { display: grid; grid-template-columns: 1.05fr 1fr; gap: 28px 52px; align-items: center; padding-top: 26px; padding-bottom: 40px; }
   .hero .wrap > * { min-width: 0; }
-  .hero h1 { font-weight: 800; font-size: clamp(1.8rem, 4.2vw, 2.9rem); line-height: 1.12; letter-spacing: -.02em; margin: 0 0 14px; text-wrap: balance; }
-  .hero .place { color: var(--accent); font-weight: 600; margin: 0 0 12px; }
-  .hero .lead { margin: 0 0 26px; max-width: 46ch; }
+  .hero .place { font-family: var(--hand); font-weight: 600; font-size: 1.5rem; color: var(--pen); margin: 0 0 4px; }
+  .hero h1 { font-weight: 800; font-size: clamp(2rem, 5vw, 3.4rem); line-height: 1.05; letter-spacing: -.025em; margin: 0 0 16px; text-wrap: balance; }
+  .hero h1 em { font-style: normal; font-family: var(--hand); font-weight: 700; font-size: 1.5em; color: var(--red); letter-spacing: 0; display: inline-block; transform: rotate(-4deg); margin-right: .12em; line-height: .8; }
+  .hero .lead { margin: 0 0 22px; max-width: 46ch; }
   .btns { display: flex; flex-wrap: wrap; gap: 12px; }
-  .btn { display: inline-block; font-weight: 600; text-decoration: none; padding: 12px 22px; border-radius: 8px; border: 1.5px solid var(--accent); transition: transform .2s; }
-  .btn.fill { background: linear-gradient(135deg, var(--accent), var(--accent2)); color: var(--on-accent); border-color: transparent; }
-  .btn:hover { transform: translateY(-2px); }
+  .btn { display: inline-block; font-weight: 700; text-decoration: none; padding: 11px 20px; border-radius: 8px; border: 2px solid var(--ink); color: var(--ink); background: var(--card); box-shadow: 3px 3px 0 var(--ink); transition: transform .15s, box-shadow .15s; }
+  .btn.fill { background: var(--pen); color: var(--on-pen); }
+  .btn:hover { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--ink); }
 
-  .shot { margin: 0; position: relative; }
-  .shot .frame { border-radius: 14px; overflow: hidden; background: var(--tint); box-shadow: 0 18px 40px var(--shade); max-width: 100%; }
-  .shot img { display: block; width: 100%; height: 100%; object-fit: cover; will-change: transform; }
-  .shot figcaption { font-size: 13px; color: var(--muted); margin-top: 8px; }
-  .hero .frame { aspect-ratio: 3 / 2; }
+  /* Skotch bilan yopishtirilgan rasm */
+  .snap { margin: 0; position: relative; background: var(--card); padding: 10px 10px 8px; border: 1px solid var(--line); box-shadow: 4px 6px 0 var(--shade); }
+  .snap::before { content: ""; position: absolute; top: -13px; left: 50%; width: 110px; height: 26px; margin-left: -55px; background: var(--tape); transform: rotate(-3deg); z-index: 2; }
+  .snap .frame { overflow: hidden; background: var(--wall); max-width: 100%; position: relative; }
+  .snap img { display: block; width: 100%; height: 100%; object-fit: cover; will-change: transform; }
+  .snap figcaption { font-family: var(--hand); font-weight: 600; font-size: 1.2rem; line-height: 1.2; padding-top: 6px; }
+  .hero .snap { transform: rotate(2deg); }
+  .hero .snap .frame { aspect-ratio: 3 / 2; }
 
-  /* Raqamlar qatori */
-  .strip { margin-top: -44px; position: relative; z-index: 1; }
-  .strip dl {
-    margin: 0; background: var(--card); border: 1px solid var(--line); border-radius: 12px;
-    box-shadow: 0 10px 30px var(--shade);
-    display: grid; grid-template-columns: repeat(4, 1fr);
-  }
-  .strip dl div { padding: 18px 22px; min-width: 0; }
-  .strip dl div + div { border-left: 1px solid var(--line); }
-  .strip dt { font-size: 14px; color: var(--muted); }
-  .strip dd { margin: 0; font-weight: 700; font-size: 1.2rem; }
-  @media (max-width: 760px) {
-    .strip dl { grid-template-columns: 1fr 1fr; }
-    .strip dl div:nth-child(3) { border-left: 0; }
-    .strip dl div:nth-child(n+3) { border-top: 1px solid var(--line); }
-  }
+  /* Hozir maktabda */
+  .now { margin-top: 26px; display: flex; gap: 18px; align-items: center; padding: 14px 18px; max-width: 470px; }
+  .ring { flex: none; width: 74px; height: 74px; position: relative; }
+  .ring svg { width: 100%; height: 100%; transform: rotate(-90deg); display: block; }
+  .ring .track { fill: none; stroke: var(--line); stroke-width: 7; }
+  .ring .prog { fill: none; stroke: var(--red); stroke-width: 7; stroke-linecap: round; transition: stroke-dashoffset 1s linear; }
+  .ring b { position: absolute; inset: 0; display: grid; place-items: center; font-family: var(--hand); font-weight: 700; font-size: 1.9rem; }
+  .now div { min-width: 0; }
+  .now .lbl { font-size: 13px; font-weight: 600; color: var(--muted); margin: 0; }
+  .now .what { font-weight: 800; font-size: 1.15rem; margin: 0; line-height: 1.25; }
+  .now .left { margin: 0; font-size: 15px; font-variant-numeric: tabular-nums; }
+  .now .left b { color: var(--red); }
 
-  /* Tezkor havolalar */
-  .quick { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; padding-top: 28px; }
-  .quick a {
-    display: flex; align-items: center; gap: 12px; min-width: 0;
-    background: var(--soft); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px;
-    color: var(--ink); text-decoration: none; font-weight: 600; transition: transform .2s, border-color .2s;
-  }
-  .quick a:hover { transform: translateY(-3px); border-color: var(--accent); }
-  .quick svg { flex: none; width: 26px; height: 26px; color: var(--accent); }
-  @media (max-width: 760px) { .quick { grid-template-columns: 1fr 1fr; } }
-
-  section { padding: 64px 0; }
-  section.alt { background: var(--soft); }
+  /* Yopishib turadigan bo'limlar ro'yxati */
+  .tabs { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 6; background: var(--bg); border-top: 2px solid var(--ink); border-bottom: 2px solid var(--ink); }
+  .tabs nav { display: flex; gap: 2px; overflow-x: auto; white-space: nowrap; scrollbar-width: none; }
+  .tabs a { color: var(--ink); text-decoration: none; font-weight: 600; font-size: 15px; padding: 11px 13px; transition: background-color .2s; }
+  .tabs a:hover, .tabs a.on { background: var(--hl); }
 
   /* Maktab haqida */
-  .about { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+  .about { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
   .about > * { min-width: 0; }
-  .about p { margin: 0 0 24px; max-width: 58ch; }
-  .has { list-style: none; margin: 0; padding: 0; columns: 2; column-gap: 24px; }
-  .has li { padding: 6px 0 6px 22px; position: relative; break-inside: avoid; }
-  .has li::before { content: ""; position: absolute; left: 0; top: 15px; width: 10px; height: 10px; border-radius: 50%; border: 2.5px solid var(--accent); }
-  .collage { position: relative; padding: 0 0 70px 0; }
-  .collage .a .frame { aspect-ratio: 3 / 2; width: 84%; }
-  .collage .b { position: absolute; right: 0; bottom: 0; width: 52%; }
-  .collage .b .frame { aspect-ratio: 3 / 2; border: 5px solid var(--bg); }
-  .collage .b figcaption { text-align: right; }
-  .credit { font-size: 13px; color: var(--muted); margin: 14px 0 0; }
-  @media (max-width: 800px) { .hero .wrap, .about { grid-template-columns: 1fr; } .has { columns: 1; } }
+  .about p { margin: 0 0 22px; max-width: 58ch; }
+  .stickies { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 0; }
+  .stickies div { color: var(--note-ink); padding: 14px 16px 16px; box-shadow: 3px 4px 0 var(--shade); min-width: 0; }
+  .stickies div:nth-child(1) { background: var(--note1); transform: rotate(-2deg); }
+  .stickies div:nth-child(2) { background: var(--note2); transform: rotate(1.5deg); }
+  .stickies div:nth-child(3) { background: var(--note3); transform: rotate(1deg); }
+  .stickies div:nth-child(4) { background: var(--note4); transform: rotate(-1.5deg); }
+  .stickies dt { font-size: 14px; font-weight: 600; opacity: .8; }
+  .stickies dd { margin: 0; font-family: var(--hand); font-weight: 700; font-size: 2rem; line-height: 1.1; }
+  .collage { position: relative; padding: 6px 0 90px; }
+  .collage .a { width: 84%; transform: rotate(-2deg); }
+  .collage .a .frame, .collage .b .frame { aspect-ratio: 3 / 2; }
+  .collage .b { position: absolute; right: 0; bottom: 0; width: 54%; transform: rotate(3deg); }
+  .credit { font-size: 13px; color: var(--muted); margin: 16px 0 0; }
+
+  /* Bino sxemasi */
+  .tour { display: grid; grid-template-columns: 1.25fr 1fr; gap: 36px; align-items: center; }
+  .tour > * { min-width: 0; }
+  .bld { display: grid; grid-template-columns: 3fr 1.1fr; gap: 0 10px; align-items: end; }
+  .bld > *, .bld .floors > * { min-width: 0; }
+  .bld .roof { grid-column: 1; height: 16px; background: var(--red); border-radius: 6px 6px 0 0; margin: 0 -8px; }
+  .bld .floors { grid-column: 1; grid-row: 2; display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; background: var(--wall); border: 2px solid var(--ink); padding: 10px; }
+  .bld .wing { grid-column: 2; grid-row: 2; }
+  .bld .ground { grid-column: 1 / -1; height: 8px; background: var(--ink); border-radius: 0 0 4px 4px; }
+  .bld .pitch { grid-column: 1 / -1; margin-top: 14px; }
+  .room {
+    cursor: pointer; text-align: center; font-weight: 600; font-size: 14px; line-height: 1.2;
+    min-height: 62px; padding: 8px 6px; border: 2px solid var(--ink); border-radius: 4px;
+    background: var(--card); transition: background-color .25s, transform .15s; width: 100%;
+  }
+  .room:hover { transform: translateY(-2px); }
+  .room[aria-pressed="true"] { background: var(--lit); color: #1b1b12; box-shadow: 0 0 22px var(--lit); }
+  .door { border: 2px solid var(--ink); border-bottom: 0; border-radius: 30px 30px 0 0; background: var(--pen); min-height: 62px; }
+  .wing .room { min-height: 96px; border-radius: 4px 14px 0 0; }
+  .pitch .room { background: var(--grass); color: #10231a; min-height: 48px; border-radius: 30px; }
+  .pitch .room[aria-pressed="true"] { background: var(--lit); }
+  .roominfo { padding: 22px 24px; min-height: 180px; }
+  .roominfo h3 { font-family: var(--hand); font-weight: 700; font-size: 2rem; line-height: 1.1; margin: 0 0 8px; }
+  .roominfo p { margin: 0; }
+  .fine { font-size: 13px; color: var(--muted); margin: 14px 0 0; }
 
   /* Direktor */
-  .director { display: grid; grid-template-columns: 210px 1fr; gap: 36px; align-items: start; background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 26px; }
+  .director { display: grid; grid-template-columns: 200px 1fr; gap: 32px; align-items: start; padding: 26px; position: relative; }
   .director > * { min-width: 0; }
-  .portrait { aspect-ratio: 4 / 5; border-radius: 10px; overflow: hidden; background: var(--tint); display: grid; place-items: center; font-weight: 800; font-size: 3rem; color: var(--accent); max-width: 100%; }
+  .director::before { content: ""; position: absolute; top: -14px; left: 40px; width: 18px; height: 46px; border: 3px solid var(--muted); border-radius: 10px; border-bottom-color: transparent; }
+  .portrait { aspect-ratio: 4 / 5; overflow: hidden; background: var(--note2); color: var(--note-ink); display: grid; place-items: center; font-family: var(--hand); font-weight: 700; font-size: 4rem; max-width: 100%; border: 1px solid var(--line); }
   .portrait img { width: 100%; height: 100%; object-fit: cover; display: block; }
-  .director .role { color: var(--accent); font-weight: 600; margin: 0 0 4px; }
-  .director .name { font-weight: 700; font-size: 1.4rem; margin: 0 0 12px; }
-  .director .bio { margin: 0 0 20px; max-width: 60ch; }
+  .director .role { color: var(--pen); font-weight: 700; margin: 0 0 2px; }
+  .director .name { font-weight: 800; font-size: 1.45rem; margin: 0 0 12px; }
+  .director .bio { margin: 0 0 18px; max-width: 60ch; }
   .dfacts { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px 28px; margin: 0; }
   .dfacts dt { font-size: 14px; color: var(--muted); }
-  .dfacts dd { margin: 0; font-weight: 600; }
-  @media (max-width: 640px) { .director { grid-template-columns: 1fr; } .portrait { max-width: 190px; } }
+  .dfacts dd { margin: 0; font-weight: 700; }
+  .todo .name, .todo .bio { color: var(--muted); }
+  .todo .bio { font-style: italic; }
 
-  /* Sinflar */
-  .sample { border: 1.5px dashed var(--gold); border-radius: 8px; padding: 12px 16px; margin: 0 0 28px; font-size: 15px; max-width: 72ch; }
-  .totals { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 0 0 12px; }
-  .totals div { background: var(--card); border: 1px solid var(--line); border-top: 4px solid var(--accent2); border-radius: 10px; padding: 14px 18px; min-width: 0; }
-  .totals dt { color: var(--muted); font-size: 15px; }
-  .totals dd { margin: 0; font-weight: 800; font-size: clamp(1.6rem, 5vw, 2.4rem); color: var(--accent); font-variant-numeric: tabular-nums; line-height: 1.15; }
+  /* Sinflar: har bir nuqta bitta o'quvchi */
+  .sample { border: 2px dashed var(--red); border-radius: 8px; padding: 12px 16px; margin: 0 0 26px; font-size: 15px; max-width: 72ch; background: var(--card); }
+  .totals { display: flex; flex-wrap: wrap; gap: 14px 40px; margin: 0 0 18px; }
+  .totals dt { color: var(--muted); font-size: 15px; font-weight: 600; }
+  .totals dd { margin: 0; font-family: var(--hand); font-weight: 700; font-size: clamp(2.6rem, 8vw, 3.8rem); color: var(--pen); line-height: .95; font-variant-numeric: tabular-nums; }
   .hint { font-size: 15px; color: var(--muted); margin: 0 0 8px; }
-  .stage { font-size: 15px; font-weight: 700; color: var(--accent); margin: 28px 0 6px; }
-  .grade { display: grid; grid-template-columns: 96px 1fr auto; gap: 10px 20px; align-items: center; padding: 14px 0; border-top: 1px solid var(--line); }
+  .stage { font-family: var(--hand); font-weight: 700; font-size: 1.6rem; color: var(--red); margin: 26px 0 4px; }
+  .grade { display: grid; grid-template-columns: 92px 1fr auto; gap: 10px 18px; align-items: start; padding: 14px 0; border-top: 2px solid var(--line); }
   .grade > * { min-width: 0; }
-  .grade .g { font-weight: 700; font-size: 1.05rem; }
-  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
-  .chip {
-    text-align: left; cursor: pointer; color: var(--ink);
-    background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 7px 12px 9px; min-width: 84px;
-    transition: transform .2s, border-color .2s, background-color .2s;
-  }
-  .chip:hover { border-color: var(--accent); }
-  .chip[aria-expanded="true"] { background: linear-gradient(135deg, var(--accent), var(--accent2)); border-color: transparent; color: var(--on-accent); }
-  .chip b { display: block; font-size: 15px; }
-  .chip span { font-size: 14px; opacity: .75; font-variant-numeric: tabular-nums; }
-  .chip .bar { display: block; height: 4px; border-radius: 2px; background: var(--line); margin-top: 6px; overflow: hidden; opacity: 1; }
-  .chip i { display: block; height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent2)); border-radius: 2px; transform-origin: left; }
-  .chip[aria-expanded="true"] i { background: var(--on-accent); }
-  .grade .sum { font-size: 15px; color: var(--muted); text-align: right; font-variant-numeric: tabular-nums; }
-  .detail { background: var(--tint); border-radius: 10px; padding: 18px 20px; margin: 0 0 14px; }
-  .detail .head { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
-  .detail h4 { margin: 0 auto 0 0; font-size: 1.15rem; }
-  .detail .x { border: 1px solid var(--line); background: var(--card); color: var(--ink); border-radius: 6px; padding: 4px 12px; font-size: 14px; cursor: pointer; }
+  .grade .g { font-weight: 800; font-size: 1.1rem; padding-top: 6px; }
+  .rooms { display: flex; flex-wrap: wrap; gap: 10px; }
+  .cls { cursor: pointer; text-align: left; width: 112px; padding: 8px 10px 10px; background: var(--card); border: 2px solid var(--ink); border-radius: 6px; transition: transform .15s, box-shadow .15s, background-color .2s; box-shadow: 3px 3px 0 var(--shade); }
+  .cls:hover { transform: translate(-1px, -2px); box-shadow: 5px 6px 0 var(--shade); }
+  .cls[aria-expanded="true"] { background: var(--note1); color: var(--note-ink); }
+  .cls b { font-size: 15px; }
+  .cls small { float: right; font-size: 13px; font-weight: 600; opacity: .8; font-variant-numeric: tabular-nums; padding-top: 2px; }
+  .dots { display: flex; flex-wrap: wrap; gap: 3px; margin-top: 7px; clear: both; }
+  .dots i { width: 8px; height: 8px; border-radius: 50%; background: var(--pen); }
+  .cls[aria-expanded="true"] .dots i { background: var(--red); }
+  .grade .sum { font-size: 15px; color: var(--muted); text-align: right; padding-top: 8px; font-variant-numeric: tabular-nums; }
+  .detail { background: var(--note1); color: var(--note-ink); padding: 18px 20px; margin: 0 0 16px; box-shadow: 3px 4px 0 var(--shade); }
+  .detail .head { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+  .detail h4 { margin: 0 auto 0 0; font-family: var(--hand); font-weight: 700; font-size: 1.9rem; line-height: 1; }
+  .detail .x { border: 2px solid currentColor; background: transparent; border-radius: 6px; padding: 3px 12px; font-size: 14px; font-weight: 600; cursor: pointer; }
   .detail dl { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px 24px; margin: 0 0 12px; }
-  .detail dt { font-size: 14px; color: var(--muted); }
-  .detail dd { margin: 0; font-weight: 600; }
-  .detail dd.soon { font-weight: 400; font-style: italic; color: var(--muted); }
-  .detail p { margin: 0; font-size: 14px; color: var(--muted); max-width: 70ch; }
-  @media (max-width: 640px) {
-    .grade { grid-template-columns: 1fr auto; }
-    .grade .chips { grid-column: 1 / -1; order: 3; }
-    .totals { grid-template-columns: 1fr; }
-  }
+  .detail dt { font-size: 14px; opacity: .8; }
+  .detail dd { margin: 0; font-weight: 700; }
+  .detail dd.soon { font-weight: 400; font-style: italic; opacity: .8; }
+  .detail p { margin: 0; font-size: 14px; opacity: .85; max-width: 70ch; }
 
   /* O'qituvchilar va to'garaklar */
-  .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 16px; list-style: none; margin: 0; padding: 0; }
-  .tcard { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 18px; display: flex; gap: 14px; align-items: center; min-width: 0; }
-  .avatar { flex: none; width: 56px; height: 56px; border-radius: 50%; overflow: hidden; background: var(--tint); color: var(--accent); display: grid; place-items: center; font-weight: 700; font-size: 16px; }
+  .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 18px; list-style: none; margin: 0; padding: 0; }
+  .tcard { padding: 16px; display: flex; gap: 14px; align-items: center; min-width: 0; }
+  .tcard:nth-child(odd) { transform: rotate(-.8deg); }
+  .tcard:nth-child(even) { transform: rotate(.8deg); }
+  .avatar { flex: none; width: 56px; height: 56px; border-radius: 50%; overflow: hidden; background: var(--note2); color: var(--note-ink); display: grid; place-items: center; font-family: var(--hand); font-weight: 700; font-size: 1.5rem; }
   .avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
   .tcard div { min-width: 0; }
   .tcard strong { display: block; line-height: 1.3; }
-  .tcard .sub { color: var(--accent); font-size: 15px; font-weight: 500; }
+  .tcard .sub { color: var(--pen); font-size: 15px; font-weight: 600; }
   .tcard .exp { color: var(--muted); font-size: 14px; display: block; }
-  .club { background: var(--card); border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 8px; padding: 14px 16px; }
-  .club strong { display: block; }
-  .club span { color: var(--muted); font-size: 15px; }
+  .tcard.todo, .club.todo { border-style: dashed; }
+  .tcard.todo strong, .club.todo strong { color: var(--muted); }
+  .club { color: var(--note-ink); padding: 16px 18px; box-shadow: 3px 4px 0 var(--shade); }
+  .club:nth-child(3n+1) { background: var(--note4); transform: rotate(-1deg); }
+  .club:nth-child(3n+2) { background: var(--note2); transform: rotate(1deg); }
+  .club:nth-child(3n) { background: var(--note3); transform: rotate(-.5deg); }
+  .club strong { display: block; font-family: var(--hand); font-weight: 700; font-size: 1.6rem; line-height: 1.1; }
+  .club span { font-size: 15px; }
 
-  .todo { border-style: dashed; border-color: var(--muted); }
-  .todo strong, .todo .name, .todo .bio { color: var(--muted); }
-  .todo .bio { font-style: italic; }
-  .tag { display: inline-block; background: var(--gold); color: var(--on-gold); font: 500 12px var(--font); border-radius: 3px; padding: 1px 7px; margin-left: 6px; vertical-align: middle; }
+  /* Nazorat ishi */
+  .quiz { max-width: 720px; padding: 26px 28px 28px; position: relative; }
+  .quiz .qno { font-family: var(--hand); font-weight: 700; font-size: 1.4rem; color: var(--pen); margin: 0 0 4px; }
+  .quiz .q { font-weight: 800; font-size: 1.25rem; margin: 0 0 16px; line-height: 1.3; }
+  .answers { display: grid; gap: 10px; margin-bottom: 16px; }
+  .ans { cursor: pointer; text-align: left; font-size: 16px; font-weight: 600; padding: 11px 14px; background: var(--card); border: 2px solid var(--ink); border-radius: 8px; transition: transform .15s; }
+  .ans:not(:disabled):hover { transform: translateX(4px); }
+  .ans:disabled { cursor: default; opacity: .65; }
+  .ans.right { background: var(--note4); color: var(--note-ink); opacity: 1; border-color: currentColor; }
+  .ans.wrong { background: var(--note3); color: var(--note-ink); opacity: 1; text-decoration: line-through; }
+  .quiz .say { min-height: 1.6em; margin: 0 0 14px; font-weight: 600; }
+  .mark { position: absolute; right: 26px; top: 18px; width: 92px; height: 92px; border: 4px solid var(--red); border-radius: 50%; display: grid; place-items: center; font-family: var(--hand); font-weight: 700; font-size: 4rem; color: var(--red); transform: rotate(-12deg); }
+  .quiz .result { font-family: var(--hand); font-weight: 700; font-size: 2.2rem; line-height: 1.1; margin: 0 110px 8px 0; }
 
   /* Yangiliklar */
-  .news { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
-  .news li { display: grid; grid-template-columns: 120px 1fr; gap: 6px 24px; background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 20px 22px; }
+  .news { list-style: none; margin: 0; padding: 0; display: grid; gap: 18px; }
+  .news li { display: grid; grid-template-columns: 120px 1fr; gap: 6px 24px; padding: 20px 22px; }
   .news li > * { min-width: 0; }
-  .news .when { font-weight: 700; font-size: 14px; color: var(--accent); padding-top: 3px; }
-  .news h3 { margin-bottom: 6px; font-size: 1.12rem; }
+  .news .when { font-family: var(--hand); font-weight: 700; font-size: 1.5rem; color: var(--red); line-height: 1.2; }
+  .news h3 { margin-bottom: 6px; font-size: 1.15rem; }
   .news p { margin: 0; max-width: 64ch; }
   .news .src { font-size: 14px; display: inline-block; margin-top: 6px; }
+  .news li.todo { border-style: dashed; }
   .news li.todo h3, .news li.todo p { color: var(--muted); font-style: italic; }
-  @media (max-width: 600px) { .news li { grid-template-columns: 1fr; } }
 
-  footer { background: var(--soft); border-top: 4px solid var(--accent2); padding: 44px 0 30px; }
-  footer .cols { display: grid; grid-template-columns: 1.3fr 1fr 1fr; gap: 28px; }
-  footer .cols > * { min-width: 0; }
-  footer h2 { font-size: 1.1rem; margin-bottom: 14px; }
-  footer h2::after { display: none; }
+  /* Manzil */
+  .where { display: grid; grid-template-columns: 1.15fr 1fr; gap: 40px; align-items: start; }
+  .where > * { min-width: 0; }
+  .where .snap .frame { aspect-ratio: 3 / 2; }
+  .pin { position: absolute; left: 74%; top: 66%; width: 22px; height: 22px; margin: -11px 0 0 -11px; border-radius: 50%; background: var(--red); border: 3px solid #fff; z-index: 1; }
+  .pin::after { content: ""; position: absolute; inset: -3px; border-radius: 50%; border: 3px solid var(--red); }
+  .where dl { margin: 0 0 20px; display: grid; gap: 12px; }
+  .where dt { font-size: 14px; color: var(--muted); font-weight: 600; }
+  .where dd { margin: 0; font-weight: 700; }
+  .where dd.soon { font-weight: 400; font-style: italic; color: var(--muted); }
+  .mapbox { margin-top: 22px; border: 2px solid var(--ink); border-radius: 6px; overflow: hidden; }
+  .mapbox iframe { display: block; width: 100%; height: 320px; border: 0; }
+
+  footer { border-top: 2px solid var(--ink); padding: 26px 0 34px; background: var(--bg); position: relative; }
   footer p { margin: 0 0 6px; font-size: 15px; }
-  footer .small { font-size: 14px; color: var(--muted); border-top: 1px solid var(--line); margin-top: 26px; padding-top: 16px; }
-  @media (max-width: 700px) { footer .cols { grid-template-columns: 1fr; } }
+  footer .small { font-size: 14px; color: var(--muted); }
+
+  @media (max-width: 820px) {
+    .hero .wrap, .about, .tour, .where { grid-template-columns: 1fr; }
+    .news li { grid-template-columns: 1fr; }
+    .director { grid-template-columns: 1fr; } .portrait { max-width: 180px; }
+    .grade { grid-template-columns: 1fr auto; }
+    .grade .rooms { grid-column: 1 / -1; order: 3; }
+    .cls { width: calc(50% - 5px); }
+    .bld { grid-template-columns: 1fr; }
+    .bld .wing { grid-column: 1; grid-row: auto; margin-top: 8px; }
+    .bld .ground { grid-row: 3; }
+    .wing .room { min-height: 54px; border-radius: 4px; }
+    .room { font-size: 13px; padding: 6px 3px; overflow-wrap: anywhere; }
+    .quiz .result { margin-right: 0; padding-top: 96px; }
+    .mark { left: 22px; right: auto; }
+  }
 
   /* Harakat: faqat "harakatni kamaytirish" yoqilmagan bo'lsa */
   @media (prefers-reduced-motion: no-preference) {
-    .hero h1, .hero .place, .hero .lead, .btns { animation: rise .7s ease-out both; }
-    .hero h1 { animation-delay: .1s; } .hero .lead { animation-delay: .2s; } .btns { animation-delay: .3s; }
-    .hero .shot { animation: unveil 1s cubic-bezier(.2, .8, .2, 1) .15s both; }
+    .hero h1, .hero .place, .hero .lead, .btns, .now { animation: rise .7s ease-out both; }
+    .hero h1 { animation-delay: .08s; } .hero .lead { animation-delay: .16s; } .btns { animation-delay: .24s; } .now { animation-delay: .34s; }
+    .hero h1 em { animation: scrawl .6s cubic-bezier(.2, 1.4, .4, 1) .3s both; }
+    .hero .snap { animation: stick .9s cubic-bezier(.2, 1.2, .3, 1) .15s both; }
+    .stamp { animation: thump .5s cubic-bezier(.2, 1.6, .4, 1) .7s both; }
     .rv { transition: opacity .7s ease-out, transform .7s ease-out; }
-    .rv.rv-wait { opacity: .12; transform: translateY(34px); }
-    .chip i { transition: transform .9s cubic-bezier(.2, .8, .2, 1); transition-delay: calc(var(--n) * 35ms); }
-    .rv-wait .chip i { transform: scaleX(0); }
-    .chip:hover, .tcard:hover, .club:hover { transform: translateY(-3px); }
+    .rv.rv-wait { opacity: .1; transform: translateY(36px); }
+    .dots i { transition: transform .4s cubic-bezier(.2, 1.6, .4, 1); transition-delay: calc(var(--k) * 6ms); }
+    .rv-wait .dots i { transform: scale(0); }
+    .detail { animation: rise .35s ease-out both; }
+    .mark { animation: thump .5s cubic-bezier(.2, 1.6, .4, 1) both; }
+    .pin::after { animation: ping 1.8s ease-out infinite; }
+    .room[aria-pressed="true"] { animation: flick .5s steps(2, end) 1; }
     .tcard, .club { transition: transform .2s; }
-    .detail { animation: open .35s ease-out both; }
+    .tcard:hover, .club:hover { transform: rotate(0) translateY(-4px); }
   }
   @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
   @keyframes rise { from { opacity: 0; transform: translateY(18px); } }
-  @keyframes unveil { from { opacity: 0; transform: translateX(40px) scale(.96); } }
-  @keyframes open { from { opacity: 0; transform: translateY(-8px); } }
+  @keyframes scrawl { from { opacity: 0; transform: rotate(-20deg) scale(.4); } }
+  @keyframes stick { from { opacity: 0; transform: rotate(14deg) translate(60px, -30px); } }
+  @keyframes thump { from { opacity: 0; transform: rotate(-12deg) scale(2.2); } }
+  @keyframes ping { from { transform: scale(1); opacity: .9; } to { transform: scale(3.2); opacity: 0; } }
+  @keyframes flick { 0% { opacity: .5; } 50% { opacity: 1; } 75% { opacity: .6; } 100% { opacity: 1; } }
 </style>
 </head>
 <body>
 
 <div class="util">
   <div class="wrap">
-    <span class="state"><b data-t="draftTag"></b><span data-t="draft"></span></span>
+    <span class="stamp" data-t="draftTag"></span>
     <div class="langs" role="group" aria-label="Til / Язык / Language">
       <button type="button" data-lang="uz">O‘zb</button>
       <button type="button" data-lang="ru">Рус</button>
@@ -290,73 +341,66 @@
   </div>
 </div>
 
-<header class="mast" id="top">
+<header class="hero" id="top">
   <div class="wrap">
-    <a class="seal" href="#top" aria-hidden="true" tabindex="-1">358</a>
-    <div class="names">
-      <p class="over" data-t="over"></p>
-      <p class="title" data-t="h1"></p>
+    <div>
+      <p class="place" data-t="place"></p>
+      <h1><em>358</em><span data-t="h1rest"></span></h1>
+      <p class="lead" data-t="lead"></p>
+      <div class="btns">
+        <a class="btn fill" href="#tour" data-t="cta"></a>
+        <a class="btn" href="#quiz" data-t="cta2"></a>
+      </div>
+      <div class="now paper" id="now" aria-live="off">
+        <div class="ring">
+          <svg viewBox="0 0 80 80" aria-hidden="true"><circle class="track" cx="40" cy="40" r="34"/><circle class="prog" id="nowRing" cx="40" cy="40" r="34" stroke-dasharray="213.6" stroke-dashoffset="213.6"/></svg>
+          <b id="nowNum"></b>
+        </div>
+        <div>
+          <p class="lbl"><span data-t="nowLabel"></span><span class="tag" id="bellTag" data-t="sampleTag"></span></p>
+          <p class="what" id="nowWhat"></p>
+          <p class="left" id="nowLeft"></p>
+        </div>
+      </div>
     </div>
+    <figure class="snap">
+      <div class="frame"><img src="rasmlar/maktab.jpg" data-par="1" width="764" height="526" alt="" data-alt="altSchool"></div>
+      <figcaption data-t="capSchool"></figcaption>
+    </figure>
   </div>
 </header>
 
-<div class="menu">
+<div class="tabs">
   <div class="wrap">
     <nav aria-label="Bo'limlar">
       <a href="#about" data-t="navAbout"></a>
+      <a href="#tour" data-t="navTour"></a>
       <a href="#director" data-t="navDirector"></a>
       <a href="#classes" data-t="navClasses"></a>
       <a href="#teachers" data-t="navTeachers"></a>
       <a href="#clubs" data-t="navClubs"></a>
+      <a href="#quiz" data-t="navQuiz"></a>
       <a href="#news" data-t="navNews"></a>
-      <a href="#contact" data-t="navContact"></a>
+      <a href="#where" data-t="navWhere"></a>
     </nav>
   </div>
 </div>
 
 <main>
-  <div class="hero">
-    <div class="wrap">
-      <div>
-        <p class="place" data-t="place"></p>
-        <h1 data-t="h1"></h1>
-        <p class="lead" data-t="lead"></p>
-        <div class="btns">
-          <a class="btn fill" href="#classes" data-t="cta"></a>
-          <a class="btn" href="#contact" data-t="navContact"></a>
-        </div>
-      </div>
-      <figure class="shot">
-        <div class="frame"><img src="rasmlar/maktab.jpg" data-par="1" width="764" height="526" alt="" data-alt="altSchool"></div>
-        <figcaption data-t="capSchool"></figcaption>
-      </figure>
-    </div>
-  </div>
-
-  <div class="wrap strip rv"><dl id="facts"></dl></div>
-
-  <div class="wrap quick rv">
-    <a href="#director"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg><span data-t="navDirector"></span></a>
-    <a href="#classes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7.5" height="7.5" rx="1.5"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="1.5"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="1.5"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="1.5"/></svg><span data-t="navClasses"></span></a>
-    <a href="#teachers"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11.5V16c0 1.5 2.7 3 6 3s6-1.500 6-3v-4.500"/></svg><span data-t="navTeachers"></span></a>
-    <a href="#clubs"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l2.700 5.600 6.100.800-4.500 4.300 1.100 6.100L12 16.900 6.600 19.800l1.100-6.100L3.200 9.400l6.100-.800z"/></svg><span data-t="navClubs"></span></a>
-  </div>
-
   <section id="about">
     <div class="wrap about rv">
       <div>
-        <h2 data-t="aboutTitle"></h2>
+        <h2><span data-t="aboutTitle"></span></h2>
         <p data-t="aboutText"></p>
-        <h3 data-t="hasTitle"></h3>
-        <ul class="has" id="has"></ul>
+        <dl class="stickies" id="facts"></dl>
       </div>
       <div>
         <div class="collage">
-          <figure class="shot a" data-float="-1">
+          <figure class="snap a" data-float="-1">
             <div class="frame"><img src="rasmlar/mahalla.jpg" data-par="1" width="752" height="500" alt="" data-alt="altMahalla" loading="lazy"></div>
             <figcaption data-t="capMahalla"></figcaption>
           </figure>
-          <figure class="shot b" data-float="1">
+          <figure class="snap b" data-float="1">
             <div class="frame"><img src="rasmlar/it-xona.jpg" data-par="1" width="764" height="508" alt="" data-alt="altIT" loading="lazy"></div>
             <figcaption data-t="capIT"></figcaption>
           </figure>
@@ -366,16 +410,36 @@
     </div>
   </section>
 
-  <section id="director" class="alt">
+  <section id="tour">
     <div class="wrap rv">
-      <h2 data-t="directorTitle"></h2>
-      <div class="director" id="directorBox"></div>
+      <h2><span data-t="tourTitle"></span></h2>
+      <p class="note" data-t="tourNote"></p>
+      <div class="tour">
+        <div>
+          <div class="bld">
+            <div class="roof"></div>
+            <div class="floors" id="floors"></div>
+            <div class="wing" id="wing"></div>
+            <div class="ground"></div>
+            <div class="pitch" id="pitch"></div>
+          </div>
+          <p class="fine" data-t="tourFine"></p>
+        </div>
+        <div class="roominfo paper" id="roomInfo" aria-live="polite"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="director">
+    <div class="wrap rv">
+      <h2><span data-t="directorTitle"></span></h2>
+      <div class="director paper" id="directorBox"></div>
     </div>
   </section>
 
   <section id="classes">
     <div class="wrap rv">
-      <h2 data-t="classesTitle"></h2>
+      <h2><span data-t="classesTitle"></span></h2>
       <p class="sample" id="sampleNote" data-t="sampleNote"></p>
       <dl class="totals" id="totals"></dl>
       <p class="hint" data-t="classHint"></p>
@@ -383,9 +447,9 @@
     </div>
   </section>
 
-  <section id="teachers" class="alt">
+  <section id="teachers">
     <div class="wrap rv">
-      <h2 data-t="teachersTitle"></h2>
+      <h2><span data-t="teachersTitle"></span></h2>
       <p class="note" data-t="teachersNote"></p>
       <ul class="cards" id="teacherList"></ul>
     </div>
@@ -393,39 +457,53 @@
 
   <section id="clubs">
     <div class="wrap rv">
-      <h2 data-t="clubsTitle"></h2>
+      <h2><span data-t="clubsTitle"></span></h2>
       <p class="note" data-t="clubsNote"></p>
       <ul class="cards" id="clubList"></ul>
     </div>
   </section>
 
-  <section id="news" class="alt">
+  <section id="quiz">
     <div class="wrap rv">
-      <h2 data-t="newsTitle"></h2>
+      <h2><span data-t="quizTitle"></span></h2>
+      <p class="note" data-t="quizNote"></p>
+      <div class="quiz paper" id="quizBox"></div>
+    </div>
+  </section>
+
+  <section id="news">
+    <div class="wrap rv">
+      <h2><span data-t="newsTitle"></span></h2>
       <ul class="news" id="newsList"></ul>
+    </div>
+  </section>
+
+  <section id="where">
+    <div class="wrap rv">
+      <h2><span data-t="whereTitle"></span></h2>
+      <div class="where">
+        <figure class="snap">
+          <div class="frame"><img src="rasmlar/mahalla.jpg" width="752" height="500" alt="" data-alt="altMahalla" loading="lazy"><span class="pin" aria-hidden="true"></span></div>
+          <figcaption data-t="capPin"></figcaption>
+        </figure>
+        <div>
+          <dl id="whereFacts"></dl>
+          <div class="btns">
+            <a class="btn fill" id="mapG" target="_blank" rel="noopener" data-t="mapGoogle"></a>
+            <a class="btn" id="mapY" target="_blank" rel="noopener" data-t="mapYandex"></a>
+          </div>
+          <p class="fine" id="whereFine"></p>
+        </div>
+      </div>
+      <div class="mapbox" id="mapBox" hidden></div>
     </div>
   </section>
 </main>
 
-<footer id="contact">
+<footer>
   <div class="wrap">
-    <div class="cols">
-      <div>
-        <h2 data-t="h1"></h2>
-        <p data-t="place"></p>
-      </div>
-      <div>
-        <h2 data-t="contactTitle"></h2>
-        <p data-t="contactAddress"></p>
-        <p data-t="contactPhone"></p>
-        <p data-t="contactHours"></p>
-      </div>
-      <div>
-        <h2 data-t="linksTitle"></h2>
-        <p><a href="https://president.uz/oz/lists/view/7959" target="_blank" rel="noopener" data-t="linkVisit"></a></p>
-        <p><a href="https://gov.uz/oz/bektemir" target="_blank" rel="noopener" data-t="linkHokim"></a></p>
-      </div>
-    </div>
+    <p><b data-t="h1"></b></p>
+    <p data-t="place"></p>
     <p class="small" data-t="footNote"></p>
   </div>
 </footer>
@@ -436,8 +514,26 @@
    Ma'lumot qo'shish yoki o'zgartirish uchun faqat shu qismga teging.
    Matnlar uch tilda yoziladi: uz, ru, en.
    "todo: true" — hali to'ldirilmagan joy (saytda sariq belgi chiqadi).
-   To'ldirgach, shu qatorni o'chirib tashlang.
    ===================================================================== */
+
+/* MANZIL. Hozir aniq nuqta emas, Iykota mahallasi (Iyk ota ziyoratgohi atrofi) ko'rsatilgan.
+   Maktabning aniq koordinatasini Google Xaritadan olib yozing va exact ni true qiling. */
+const LOCATION = {
+  lat: 41.2121, lng: 69.3783, exact: false,
+  address: null,   /* masalan: { uz: "Iykota mahallasi, ... ko'chasi, 5-uy", ru: "...", en: "..." } */
+  phone: null,     /* masalan: "+998 71 000 00 00" */
+  hours: null      /* masalan: { uz: "Dushanba–shanba, 8:00–17:00", ru: "...", en: "..." } */
+};
+
+/* QO'NG'IROQLAR JADVALI ("Hozir maktabda" oynasi shundan hisoblaydi).
+   DIQQAT: bu NAMUNA. Maktabning haqiqiy jadvalini yozgach, BELLS_SAMPLE ni false qiling.
+   SCHOOL_DAYS: 1 — dushanba ... 6 — shanba, 0 — yakshanba. */
+const BELLS_SAMPLE = true;
+const SCHOOL_DAYS = [1, 2, 3, 4, 5, 6];
+const BELLS = [
+  ["08:00", "08:45"], ["08:50", "09:35"], ["09:40", "10:25"],
+  ["10:45", "11:30"], ["11:35", "12:20"], ["12:25", "13:10"]
+];
 
 const DIRECTOR = {
   todo: true,
@@ -473,8 +569,7 @@ const CLASSES = [
   { grade: 11, groups: { A: 21, B: 20 } }
 ];
 
-/* SINF HAQIDA QO'SHIMCHA MA'LUMOT (sinf ustiga bosilganda chiqadi).
-   Yozilmagan joylarda "qo'shiladi" deb ko'rinadi. Namuna:
+/* SINF HAQIDA QO'SHIMCHA MA'LUMOT (sinf ustiga bosilganda chiqadi). Namuna:
    "7-A": { teacher: "Ism Familiya", room: "204", shift: 1, boys: 15, girls: 13 },
    O'quvchilarning ism-familiyasini bu yerga YOZMANG: bu shaxsiy ma'lumot. */
 const CLASS_INFO = {
@@ -499,26 +594,51 @@ const CLUBS = [
 ];
 
 const FACTS = [
-  { label: { uz: "Ochilgan yili", ru: "Год открытия", en: "Opened" },
-    value: { uz: "2025", ru: "2025", en: "2025" } },
-  { label: { uz: "O‘quvchi o‘rni", ru: "Ученических мест", en: "Student places" },
-    value: { uz: "qariyb 1000", ru: "почти 1000", en: "about 1,000" } },
-  { label: { uz: "Mahalla", ru: "Махалля", en: "Mahalla" },
-    value: { uz: "Iykota", ru: "Ийкота", en: "Iykota" } },
-  { label: { uz: "Ta’lim tili", ru: "Язык обучения", en: "Language of instruction" },
-    value: { uz: "qo‘shiladi", ru: "уточняется", en: "to be added" } }
+  { label: { uz: "Ochilgan yili", ru: "Год открытия", en: "Opened" }, value: { uz: "2025", ru: "2025", en: "2025" } },
+  { label: { uz: "O‘quvchi o‘rni", ru: "Ученических мест", en: "Student places" }, value: { uz: "≈ 1000", ru: "≈ 1000", en: "≈ 1,000" } },
+  { label: { uz: "Mahalla", ru: "Махалля", en: "Mahalla" }, value: { uz: "Iykota", ru: "Ийкота", en: "Iykota" } },
+  { label: { uz: "Sinflar", ru: "Классы", en: "Grades" }, value: { uz: "1–11", ru: "1–11", en: "1–11" } }
 ];
 
-const HAS = [
-  { uz: "Fan xonalari", ru: "Предметные кабинеты", en: "Subject classrooms" },
-  { uz: "Laboratoriyalar", ru: "Лаборатории", en: "Laboratories" },
-  { uz: "Kompyuter sinflari", ru: "Компьютерные классы", en: "Computer rooms" },
-  { uz: "Chet tillari markazi", ru: "Центр иностранных языков", en: "Foreign language centre" },
-  { uz: "Kutubxona", ru: "Библиотека", en: "Library" },
-  { uz: "Robototexnika to‘garagi", ru: "Кружок робототехники", en: "Robotics club" },
-  { uz: "Sport zali", ru: "Спортивный зал", en: "Sports hall" },
-  { uz: "Futbol maydoni", ru: "Футбольное поле", en: "Football pitch" },
-  { uz: "Oshxona", ru: "Столовая", en: "Canteen" }
+/* BINO SXEMASI. where: f — qavatlardagi xona, w — yon bino, p — maydon. */
+const ROOMS = [
+  { where: "f", name: { uz: "Kutubxona", ru: "Библиотека", en: "Library" },
+    text: { uz: "Darsliklar va badiiy kitoblar saqlanadigan, o‘qish uchun joy.", ru: "Учебники и художественные книги, место для чтения.", en: "Textbooks and fiction, with a place to read." } },
+  { where: "f", name: { uz: "Chet tillari markazi", ru: "Центр иностранных языков", en: "Foreign language centre" },
+    text: { uz: "Chet tillarini o‘rganish uchun alohida markaz.", ru: "Отдельный центр для изучения иностранных языков.", en: "A separate centre for learning foreign languages." } },
+  { where: "f", name: { uz: "Kompyuter sinflari", ru: "Компьютерные классы", en: "Computer rooms" },
+    text: { uz: "Informatika darslari va IT mashg‘ulotlari shu yerda o‘tadi.", ru: "Здесь проходят уроки информатики и занятия по IT.", en: "Computer science lessons and IT classes take place here." } },
+  { where: "f", name: { uz: "Fan xonalari", ru: "Предметные кабинеты", en: "Subject classrooms" },
+    text: { uz: "Har xil fanlar uchun zamonaviy jihozlangan xonalar.", ru: "Современные кабинеты по разным предметам.", en: "Modern classrooms equipped for different subjects." } },
+  { where: "f", name: { uz: "Laboratoriyalar", ru: "Лаборатории", en: "Laboratories" },
+    text: { uz: "Tajriba va amaliy mashg‘ulotlar o‘tkaziladigan xonalar.", ru: "Кабинеты для опытов и практических занятий.", en: "Rooms for experiments and practical work." } },
+  { where: "f", name: { uz: "Robototexnika", ru: "Робототехника", en: "Robotics" },
+    text: { uz: "Robototexnika to‘garagi. Toshkent axborot texnologiyalari universiteti shu yerda tuman o‘quvchilari uchun kurs ochishni rejalashtirgan.",
+            ru: "Кружок робототехники. Ташкентский университет информационных технологий планирует открыть здесь курс для учеников района.",
+            en: "The robotics club. Tashkent University of Information Technologies plans to run a course here for students of the district." } },
+  { where: "f", name: { uz: "Oshxona", ru: "Столовая", en: "Canteen" },
+    text: { uz: "O‘quvchilar ovqatlanadigan keng oshxona.", ru: "Просторная столовая для учеников.", en: "A spacious canteen for students." } },
+  { where: "f", door: true },
+  { where: "f", name: { uz: "Boshlang‘ich sinflar", ru: "Начальные классы", en: "Primary classes" },
+    text: { uz: "1–4-sinf o‘quvchilari o‘qiydigan xonalar.", ru: "Кабинеты, где учатся ученики 1–4 классов.", en: "Rooms where grades 1–4 study." } },
+  { where: "w", name: { uz: "Sport zali", ru: "Спортзал", en: "Sports hall" },
+    text: { uz: "Jismoniy tarbiya darslari va sport mashg‘ulotlari uchun zal.", ru: "Зал для уроков физкультуры и спортивных занятий.", en: "A hall for PE lessons and sports." } },
+  { where: "p", name: { uz: "Futbol maydoni", ru: "Футбольное поле", en: "Football pitch" },
+    text: { uz: "Ochiq havodagi futbol maydoni. Yonida sport maydonchasi ham bor.", ru: "Футбольное поле под открытым небом. Рядом есть спортивная площадка.", en: "An outdoor football pitch, with a sports court next to it." } }
+];
+
+/* NAZORAT ISHI. Birinchi javob — to'g'risi (saytda aralashtirib ko'rsatiladi). */
+const QUIZ = [
+  { q: { uz: "Maktabimiz qaysi yili ochilgan?", ru: "В каком году открылась наша школа?", en: "In which year did our school open?" },
+    a: [{ uz: "2025", ru: "2025", en: "2025" }, { uz: "2021", ru: "2021", en: "2021" }, { uz: "2018", ru: "2018", en: "2018" }] },
+  { q: { uz: "Maktab qaysi mahallada joylashgan?", ru: "В какой махалле находится школа?", en: "Which mahalla is the school in?" },
+    a: [{ uz: "Iykota", ru: "Ийкота", en: "Iykota" }, { uz: "Suvsoz", ru: "Сувсоз", en: "Suvsoz" }, { uz: "Oltintopgan", ru: "Олтинтопган", en: "Oltintopgan" }] },
+  { q: { uz: "Bino nechta o‘quvchiga mo‘ljallangan?", ru: "На сколько учеников рассчитано здание?", en: "How many students is the building designed for?" },
+    a: [{ uz: "Qariyb 1000", ru: "Почти 1000", en: "About 1,000" }, { uz: "Qariyb 300", ru: "Около 300", en: "About 300" }, { uz: "Qariyb 5000", ru: "Около 5000", en: "About 5,000" }] },
+  { q: { uz: "Maktabda qaysi to‘garak bor?", ru: "Какой кружок есть в школе?", en: "Which club does the school have?" },
+    a: [{ uz: "Robototexnika", ru: "Робототехника", en: "Robotics" }, { uz: "Suv osti suzish", ru: "Подводное плавание", en: "Scuba diving" }, { uz: "Ot sporti", ru: "Конный спорт", en: "Horse riding" }] },
+  { q: { uz: "Maktab Toshkentning qaysi tumanida?", ru: "В каком районе Ташкента находится школа?", en: "Which district of Tashkent is the school in?" },
+    a: [{ uz: "Bektemir", ru: "Бектемирский", en: "Bektemir" }, { uz: "Chilonzor", ru: "Чиланзарский", en: "Chilanzar" }, { uz: "Yunusobod", ru: "Юнусабадский", en: "Yunusabad" }] }
 ];
 
 const NEWS = [
@@ -535,7 +655,7 @@ const NEWS = [
             en: "A working group from Tashkent University of Information Technologies plans to set up a robotics course at our school for students from the whole district." },
     src: "https://tuit.uz/en/post/23312132123" },
   { todo: true,
-    when: { uz: "kun.oy.yil", ru: "дд.мм.гггг", en: "date" },
+    when: { uz: "kun.oy", ru: "дд.мм", en: "date" },
     title: { uz: "Yangi e’lon sarlavhasi", ru: "Заголовок нового объявления", en: "New announcement title" },
     text: { uz: "E’lon matni shu yerga yoziladi: nima bo‘ladi, qachon va qayerda.",
             ru: "Здесь пишется текст объявления: что будет, когда и где.",
@@ -547,147 +667,200 @@ const NEWS = [
    ===================================================================== */
 
 const STAGES = [
-  { from: 1, to: 4,   name: { uz: "Boshlang‘ich sinflar (1–4)", ru: "Начальные классы (1–4)", en: "Primary school (grades 1–4)" } },
-  { from: 5, to: 9,   name: { uz: "Tayanch o‘rta ta’lim (5–9)", ru: "Базовое среднее образование (5–9)", en: "Lower secondary (grades 5–9)" } },
-  { from: 10, to: 11, name: { uz: "O‘rta ta’lim (10–11)", ru: "Среднее образование (10–11)", en: "Upper secondary (grades 10–11)" } }
+  { from: 1, to: 4,   name: { uz: "Boshlang‘ich sinflar", ru: "Начальные классы", en: "Primary school" } },
+  { from: 5, to: 9,   name: { uz: "Tayanch o‘rta ta’lim", ru: "Базовое среднее образование", en: "Lower secondary" } },
+  { from: 10, to: 11, name: { uz: "O‘rta ta’lim", ru: "Среднее образование", en: "Upper secondary" } }
 ];
 
 const T = {
   uz: {
-    draftTag: "Qoralama", draft: "Sayt maktab ma’muriyati tasdiqlaganidan keyin e’lon qilinadi.",
-    themeDark: "Tungi rejim", themeLight: "Kunduzgi rejim",
-    over: "Toshkent shahri, Bektemir tumani",
-    navAbout: "Maktab haqida", navDirector: "Direktor", navClasses: "Sinflar", navTeachers: "O‘qituvchilar",
-    navClubs: "To‘garaklar", navNews: "Yangiliklar", navContact: "Aloqa",
-    h1: "358-sonli umumta’lim maktabi",
-    place: "Toshkent shahri, Bektemir tumani, Iykota mahallasi",
+    draftTag: "Qoralama", sampleTag: "namuna",
+    themeDark: "Doska", themeLight: "Daftar",
+    navAbout: "Maktab", navTour: "Bino", navDirector: "Direktor", navClasses: "Sinflar", navTeachers: "Ustozlar",
+    navClubs: "To‘garaklar", navQuiz: "Nazorat ishi", navNews: "Yangiliklar", navWhere: "Manzil",
+    h1: "358-sonli umumta’lim maktabi", h1rest: "-sonli umumta’lim maktabi",
+    place: "Toshkent, Bektemir tumani, Iykota mahallasi",
     lead: "2025-yilda ochilgan yangi maktab. Bu yerda laboratoriyalar, kompyuter sinflari, kutubxona va robototexnika to‘garagi bor.",
-    cta: "Sinflarni ko‘rish",
-    capSchool: "Maktab binosi va sport maydonlari, 2025-yil. Foto: president.uz",
-    capMahalla: "Iykota mahallasi", capIT: "Robototexnika va IT xonasi",
+    cta: "Binoni aylanish", cta2: "O‘zingizni sinang",
+    nowLabel: "Hozir maktabda",
+    lesson: function (n) { return n + "-dars ketyapti"; },
+    brk: "Tanaffus", before: "Darslar hali boshlanmagan", after: "Bugungi darslar tugadi", dayoff: "Bugun dam olish kuni",
+    toBell: function (t) { return ["Qo‘ng‘iroqqacha ", t]; },
+    toLesson: function (n, t) { return [n + "-darsgacha ", t]; },
+    toStart: function (t) { return ["Birinchi qo‘ng‘iroqqacha ", t]; },
+    seeYou: "Ertaga ko‘rishguncha!", rest: "Yaxshi dam oling!",
+    capSchool: "Maktabimiz tepadan. Foto: president.uz",
+    capMahalla: "Iykota mahallasi", capIT: "Robototexnika va IT xonasi", capPin: "Qizil nuqta — maktabimiz",
     altSchool: "358-maktab binosi tepadan ko‘rinishi", altMahalla: "Iykota mahallasi tepadan ko‘rinishi", altIT: "Maktabdagi robototexnika va IT xonasi",
     photoCredit: "Rasmlar manbasi:",
     aboutTitle: "Maktab haqida",
-    aboutText: "Maktabimiz davlat budjeti hisobidan qurilib, 2025-yilda Bektemir tumanining Iykota mahallasida foydalanishga topshirilgan. Bino qariyb 1000 o‘quvchiga mo‘ljallangan.",
-    hasTitle: "Maktabda nimalar bor",
+    aboutText: "Maktabimiz davlat budjeti hisobidan qurilib, 2025-yilda Bektemir tumanining Iykota mahallasida foydalanishga topshirilgan. Bino qariyb 1000 o‘quvchiga mo‘ljallangan. O‘sha yili maktabga Prezident tashrif buyurgan.",
+    tourTitle: "Binoni aylaning",
+    tourNote: "Xonani bosing — chirog‘i yonadi va u yerda nima borligi chiqadi.",
+    tourFine: "Sxema shartli: xonalarning haqiqiy joylashuvi boshqacha bo‘lishi mumkin.",
+    tourEmpty: "Biror xonani tanlang", tourEmptyText: "Chapdagi binodan istalgan xonani bosing.",
     directorTitle: "Maktab direktori", directorRole: "Direktor",
     classesTitle: "Sinflar va o‘quvchilar",
     sampleNote: "Namuna. Quyidagi sonlar sahifa qanday ko‘rinishini ko‘rsatish uchun qo‘yilgan, haqiqiy emas. Maktabdan aniq ro‘yxat olingach almashtiriladi.",
-    classHint: "Sinf haqida ma’lumot ko‘rish uchun uning ustiga bosing.",
-    totStudents: "Jami o‘quvchi", totClasses: "Jami sinf", totAvg: "Bir sinfda o‘rtacha",
+    classHint: "Har bir nuqta — bitta o‘quvchi. Sinf haqida ko‘proq bilish uchun uning ustiga bosing.",
+    totStudents: "o‘quvchi", totClasses: "sinf", totAvg: "bir sinfda o‘rtacha",
     gradeName: function (g) { return g + "-sinf"; },
     gradeSum: function (c, s) { return c + " ta sinf, " + s + " o‘quvchi"; },
-    pupils: function (n) { return n + " o‘quvchi"; },
     detailTitle: function (id) { return id + " sinf"; },
     dCount: "O‘quvchilar soni", dBoys: "O‘g‘il bolalar", dGirls: "Qiz bolalar",
     dTeacher: "Sinf rahbari", dRoom: "Xona", dShift: "Smena", soon: "qo‘shiladi",
     shiftName: function (n) { return n + "-smena"; },
     privacy: "O‘quvchilarning ism-familiyalari shaxsiy ma’lumot bo‘lgani uchun saytda e’lon qilinmaydi.",
     close: "Yopish",
-    teachersTitle: "O‘qituvchilar",
+    teachersTitle: "Ustozlarimiz",
     teachersNote: "Ro‘yxat ma’muriyat bilan kelishilgach qo‘shiladi. Ism va rasmlar faqat o‘qituvchining roziligi bilan joylanadi.",
     clubsTitle: "To‘garaklar",
     clubsNote: "To‘garaklar jadvali ma’muriyatdan olingach to‘ldiriladi.",
-    newsTitle: "Yangiliklar va tadbirlar", source: "Manba",
-    contactTitle: "Aloqa",
-    contactAddress: "Manzil: qo‘shiladi", contactPhone: "Telefon: qo‘shiladi", contactHours: "Qabul vaqti: qo‘shiladi",
-    linksTitle: "Foydali havolalar", linkVisit: "Prezident tashrifi haqida", linkHokim: "Bektemir tumani hokimligi",
-    footNote: "Sayt qoralamasini maktab o‘quvchisi tayyorlagan.",
+    quizTitle: "Nazorat ishi",
+    quizNote: "Maktabimizni qanchalik bilasiz? Beshta savol, oxirida baho qo‘yiladi.",
+    qNo: function (i, n) { return i + "-savol, jami " + n + " ta"; },
+    yes: "To‘g‘ri!", no: function (r) { return "Noto‘g‘ri. To‘g‘ri javob: " + r; },
+    next: "Keyingi savol", finish: "Bahoni ko‘rish", again: "Qayta topshirish",
+    resultText: function (s, n) { return n + " tadan " + s + " ta to‘g‘ri"; },
+    grades: { 5: "A’lo! Siz maktabni yaxshi bilasiz.", 4: "Yaxshi! Bitta xato xolos.", 3: "Qoniqarli. Sahifani yana bir o‘qib chiqing.", 2: "Qayta tayyorlanish kerak." },
+    newsTitle: "Yangiliklar", source: "Manba",
+    whereTitle: "Bizni qanday topish mumkin",
+    wAddress: "Manzil", wPhone: "Telefon", wHours: "Qabul vaqti",
+    wAddressBase: "Toshkent shahri, Bektemir tumani, Iykota mahallasi",
+    mapGoogle: "Google Xaritada ochish", mapYandex: "Yandex Xaritada ochish",
+    whereApprox: "Xaritada hozircha Iykota mahallasi ko‘rsatilgan. Maktabning aniq nuqtasi keyin qo‘shiladi.",
+    footNote: "Sayt qoralamasini maktab o‘quvchisi tayyorlagan. Maktab ma’muriyati tasdiqlaganidan keyin e’lon qilinadi.",
     todo: "to‘ldiriladi"
   },
   ru: {
-    draftTag: "Черновик", draft: "Сайт будет опубликован после утверждения администрацией школы.",
-    themeDark: "Тёмная тема", themeLight: "Светлая тема",
-    over: "Город Ташкент, Бектемирский район",
-    navAbout: "О школе", navDirector: "Директор", navClasses: "Классы", navTeachers: "Учителя",
-    navClubs: "Кружки", navNews: "Новости", navContact: "Контакты",
-    h1: "Общеобразовательная школа №358",
-    place: "Город Ташкент, Бектемирский район, махалля Ийкота",
+    draftTag: "Черновик", sampleTag: "образец",
+    themeDark: "Доска", themeLight: "Тетрадь",
+    navAbout: "Школа", navTour: "Здание", navDirector: "Директор", navClasses: "Классы", navTeachers: "Учителя",
+    navClubs: "Кружки", navQuiz: "Контрольная", navNews: "Новости", navWhere: "Адрес",
+    h1: "Общеобразовательная школа №358", h1rest: " — общеобразовательная школа",
+    place: "Ташкент, Бектемирский район, махалля Ийкота",
     lead: "Новая школа, открытая в 2025 году. Здесь есть лаборатории, компьютерные классы, библиотека и кружок робототехники.",
-    cta: "Посмотреть классы",
-    capSchool: "Здание школы и спортивные площадки, 2025 год. Фото: president.uz",
-    capMahalla: "Махалля Ийкота", capIT: "Кабинет робототехники и IT",
+    cta: "Пройтись по зданию", cta2: "Проверить себя",
+    nowLabel: "Сейчас в школе",
+    lesson: function (n) { return "Идёт " + n + "-й урок"; },
+    brk: "Перемена", before: "Уроки ещё не начались", after: "Уроки на сегодня закончились", dayoff: "Сегодня выходной",
+    toBell: function (t) { return ["До звонка ", t]; },
+    toLesson: function (n, t) { return ["До " + n + "-го урока ", t]; },
+    toStart: function (t) { return ["До первого звонка ", t]; },
+    seeYou: "До завтра!", rest: "Хорошего отдыха!",
+    capSchool: "Наша школа сверху. Фото: president.uz",
+    capMahalla: "Махалля Ийкота", capIT: "Кабинет робототехники и IT", capPin: "Красная точка — наша школа",
     altSchool: "Здание школы №358, вид сверху", altMahalla: "Махалля Ийкота, вид сверху", altIT: "Кабинет робототехники и IT в школе",
     photoCredit: "Источник фотографий:",
     aboutTitle: "О школе",
-    aboutText: "Школа построена на средства государственного бюджета и сдана в эксплуатацию в 2025 году в махалле Ийкота Бектемирского района. Здание рассчитано почти на 1000 учеников.",
-    hasTitle: "Что есть в школе",
+    aboutText: "Школа построена на средства государственного бюджета и сдана в эксплуатацию в 2025 году в махалле Ийкота Бектемирского района. Здание рассчитано почти на 1000 учеников. В том же году школу посетил Президент.",
+    tourTitle: "Пройдитесь по зданию",
+    tourNote: "Нажмите на кабинет — в нём загорится свет и появится описание.",
+    tourFine: "Схема условная: настоящее расположение кабинетов может быть другим.",
+    tourEmpty: "Выберите кабинет", tourEmptyText: "Нажмите на любой кабинет в здании слева.",
     directorTitle: "Директор школы", directorRole: "Директор",
     classesTitle: "Классы и ученики",
     sampleNote: "Образец. Числа ниже показывают, как будет выглядеть страница, они не настоящие. Их заменят, когда школа даст точный список.",
-    classHint: "Нажмите на класс, чтобы увидеть информацию о нём.",
-    totStudents: "Всего учеников", totClasses: "Всего классов", totAvg: "В среднем в классе",
+    classHint: "Каждая точка — один ученик. Нажмите на класс, чтобы узнать о нём больше.",
+    totStudents: "учеников", totClasses: "классов", totAvg: "в среднем в классе",
     gradeName: function (g) { return g + " класс"; },
     gradeSum: function (c, s) { return "Классов: " + c + ", учеников: " + s; },
-    pupils: function (n) { return "учеников: " + n; },
     detailTitle: function (id) { return "Класс " + id; },
     dCount: "Число учеников", dBoys: "Мальчики", dGirls: "Девочки",
     dTeacher: "Классный руководитель", dRoom: "Кабинет", dShift: "Смена", soon: "будет добавлено",
     shiftName: function (n) { return n + "-я смена"; },
     privacy: "Имена и фамилии учеников — личные данные, поэтому на сайте они не публикуются.",
     close: "Закрыть",
-    teachersTitle: "Учителя",
+    teachersTitle: "Наши учителя",
     teachersNote: "Список появится после согласования с администрацией. Имена и фотографии размещаются только с согласия учителя.",
     clubsTitle: "Кружки",
     clubsNote: "Расписание кружков будет заполнено после получения от администрации.",
-    newsTitle: "Новости и события", source: "Источник",
-    contactTitle: "Контакты",
-    contactAddress: "Адрес: будет добавлен", contactPhone: "Телефон: будет добавлен", contactHours: "Часы приёма: будут добавлены",
-    linksTitle: "Полезные ссылки", linkVisit: "О визите Президента", linkHokim: "Хокимият Бектемирского района",
-    footNote: "Черновик сайта подготовил ученик школы.",
+    quizTitle: "Контрольная работа",
+    quizNote: "Хорошо ли вы знаете нашу школу? Пять вопросов, в конце — оценка.",
+    qNo: function (i, n) { return "Вопрос " + i + " из " + n; },
+    yes: "Верно!", no: function (r) { return "Неверно. Правильный ответ: " + r; },
+    next: "Следующий вопрос", finish: "Узнать оценку", again: "Пересдать",
+    resultText: function (s, n) { return "Верно " + s + " из " + n; },
+    grades: { 5: "Отлично! Вы хорошо знаете школу.", 4: "Хорошо! Всего одна ошибка.", 3: "Удовлетворительно. Перечитайте страницу ещё раз.", 2: "Нужно подготовиться ещё раз." },
+    newsTitle: "Новости", source: "Источник",
+    whereTitle: "Как нас найти",
+    wAddress: "Адрес", wPhone: "Телефон", wHours: "Часы приёма",
+    wAddressBase: "Город Ташкент, Бектемирский район, махалля Ийкота",
+    mapGoogle: "Открыть в Google Картах", mapYandex: "Открыть в Яндекс Картах",
+    whereApprox: "На карте пока показана махалля Ийкота. Точное место школы будет добавлено позже.",
+    footNote: "Черновик сайта подготовил ученик школы. Сайт будет опубликован после утверждения администрацией.",
     todo: "заполнить"
   },
   en: {
-    draftTag: "Draft", draft: "The site will go live once the school administration approves it.",
-    themeDark: "Dark mode", themeLight: "Light mode",
-    over: "Tashkent city, Bektemir district",
-    navAbout: "About", navDirector: "Principal", navClasses: "Classes", navTeachers: "Teachers",
-    navClubs: "Clubs", navNews: "News", navContact: "Contact",
-    h1: "General Secondary School No. 358",
-    place: "Tashkent city, Bektemir district, Iykota mahalla",
+    draftTag: "Draft", sampleTag: "sample",
+    themeDark: "Blackboard", themeLight: "Notebook",
+    navAbout: "School", navTour: "Building", navDirector: "Principal", navClasses: "Classes", navTeachers: "Teachers",
+    navClubs: "Clubs", navQuiz: "Quiz", navNews: "News", navWhere: "Location",
+    h1: "General Secondary School No. 358", h1rest: " General Secondary School",
+    place: "Tashkent, Bektemir district, Iykota mahalla",
     lead: "A new school that opened in 2025, with laboratories, computer rooms, a library and a robotics club.",
-    cta: "See the classes",
-    capSchool: "The school building and sports grounds, 2025. Photo: president.uz",
-    capMahalla: "Iykota mahalla", capIT: "Robotics and IT room",
+    cta: "Tour the building", cta2: "Test yourself",
+    nowLabel: "At school right now",
+    lesson: function (n) { return "Lesson " + n + " is on"; },
+    brk: "Break", before: "Lessons have not started yet", after: "Lessons are over for today", dayoff: "No school today",
+    toBell: function (t) { return ["Bell rings in ", t]; },
+    toLesson: function (n, t) { return ["Lesson " + n + " starts in ", t]; },
+    toStart: function (t) { return ["First bell in ", t]; },
+    seeYou: "See you tomorrow!", rest: "Enjoy the day off!",
+    capSchool: "Our school from above. Photo: president.uz",
+    capMahalla: "Iykota mahalla", capIT: "Robotics and IT room", capPin: "The red dot is our school",
     altSchool: "School 358 building seen from above", altMahalla: "Iykota mahalla seen from above", altIT: "The robotics and IT room at the school",
     photoCredit: "Photo source:",
     aboutTitle: "About the school",
-    aboutText: "Our school was built with state budget funds and opened in 2025 in Iykota mahalla, Bektemir district. The building is designed for about 1,000 students.",
-    hasTitle: "What the school has",
+    aboutText: "Our school was built with state budget funds and opened in 2025 in Iykota mahalla, Bektemir district. The building is designed for about 1,000 students. The President visited the school that same year.",
+    tourTitle: "Tour the building",
+    tourNote: "Select a room: its light comes on and you see what is inside.",
+    tourFine: "The plan is illustrative: the real layout of the rooms may differ.",
+    tourEmpty: "Pick a room", tourEmptyText: "Select any room in the building on the left.",
     directorTitle: "School principal", directorRole: "Principal",
     classesTitle: "Classes and students",
     sampleNote: "Sample. The numbers below show how the page will look and are not real. They will be replaced once the school provides the exact list.",
-    classHint: "Select a class to see details about it.",
-    totStudents: "Students in total", totClasses: "Classes in total", totAvg: "Average per class",
+    classHint: "Each dot is one student. Select a class to learn more about it.",
+    totStudents: "students", totClasses: "classes", totAvg: "average per class",
     gradeName: function (g) { return "Grade " + g; },
     gradeSum: function (c, s) { return c + " classes, " + s + " students"; },
-    pupils: function (n) { return n + " students"; },
     detailTitle: function (id) { return "Class " + id; },
     dCount: "Students", dBoys: "Boys", dGirls: "Girls",
     dTeacher: "Class teacher", dRoom: "Room", dShift: "Shift", soon: "to be added",
     shiftName: function (n) { return "Shift " + n; },
     privacy: "Students' names are personal data, so they are not published on the site.",
     close: "Close",
-    teachersTitle: "Teachers",
+    teachersTitle: "Our teachers",
     teachersNote: "The list will be added once the administration agrees. Names and photos are posted only with the teacher's consent.",
     clubsTitle: "Clubs",
     clubsNote: "The club timetable will be filled in once we get it from the administration.",
-    newsTitle: "News and events", source: "Source",
-    contactTitle: "Contact",
-    contactAddress: "Address: to be added", contactPhone: "Phone: to be added", contactHours: "Office hours: to be added",
-    linksTitle: "Useful links", linkVisit: "About the President's visit", linkHokim: "Bektemir district administration",
-    footNote: "This draft was prepared by a student of the school.",
+    quizTitle: "Pop quiz",
+    quizNote: "How well do you know our school? Five questions, and you get a mark at the end.",
+    qNo: function (i, n) { return "Question " + i + " of " + n; },
+    yes: "Correct!", no: function (r) { return "Not quite. The answer is: " + r; },
+    next: "Next question", finish: "See my mark", again: "Try again",
+    resultText: function (s, n) { return s + " out of " + n + " correct"; },
+    grades: { 5: "Excellent! You know the school well.", 4: "Good! Just one mistake.", 3: "Satisfactory. Read the page once more.", 2: "Time to revise and try again." },
+    newsTitle: "News", source: "Source",
+    whereTitle: "How to find us",
+    wAddress: "Address", wPhone: "Phone", wHours: "Office hours",
+    wAddressBase: "Tashkent city, Bektemir district, Iykota mahalla",
+    mapGoogle: "Open in Google Maps", mapYandex: "Open in Yandex Maps",
+    whereApprox: "For now the map shows Iykota mahalla. The school's exact spot will be added later.",
+    footNote: "This draft was prepared by a student of the school. It will go live once the administration approves it.",
     todo: "to fill in"
   }
 };
 
 /* =====================================================================
-   3-QISM. SAHIFANI CHIZISH VA ANIMATSIYALAR (bu yerga tegish shart emas)
+   3-QISM. SAHIFANI CHIZISH VA FUNKSIYALAR (bu yerga tegish shart emas)
    ===================================================================== */
 
 const CALM = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 let LANG = "uz";
-let OPEN = null;   /* ochiq turgan sinf, masalan "7-A" */
+let OPEN = null;         /* ochiq turgan sinf, masalan "7-A" */
+let ROOM = null;         /* tanlangan xona raqami */
+const QZ = { i: 0, score: 0, picked: null, order: [], done: false };
 
 function el(tag, cls, text) {
   const node = document.createElement(tag);
@@ -698,7 +871,7 @@ function el(tag, cls, text) {
 function fill(id, items, build) {
   const box = document.getElementById(id);
   box.textContent = "";
-  items.forEach(function (item, i) { box.appendChild(build(item, i)); });
+  items.forEach(function (item, i) { const n = build(item, i); if (n) box.appendChild(n); });
   return box;
 }
 function tag() { return el("span", "tag", T[LANG].todo); }
@@ -719,17 +892,73 @@ function pair(dl, label, value, soon) {
   dl.appendChild(row);
 }
 
-function totals() {
-  let students = 0, classes = 0, max = 0;
-  CLASSES.forEach(function (c) {
-    Object.keys(c.groups).forEach(function (k) {
-      students += c.groups[k]; classes += 1; max = Math.max(max, c.groups[k]);
-    });
-  });
-  return { students: students, classes: classes, avg: classes ? Math.round(students / classes) : 0, max: max };
+/* ---------- Hozir maktabda ---------- */
+function mins(hhmm) { const p = hhmm.split(":"); return Number(p[0]) * 60 + Number(p[1]); }
+function tashkentNow() {
+  const parts = new Intl.DateTimeFormat("en-GB", { timeZone: "Asia/Tashkent", weekday: "short", hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false }).formatToParts(new Date());
+  const o = {};
+  parts.forEach(function (p) { o[p.type] = p.value; });
+  const days = { Sun: 0, Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 };
+  return { day: days[o.weekday], sec: (Number(o.hour) % 24) * 3600 + Number(o.minute) * 60 + Number(o.second) };
+}
+function clock(sec) {
+  const h = Math.floor(sec / 3600), m = Math.floor(sec % 3600 / 60), s = sec % 60;
+  const mm = (h ? String(m).padStart(2, "0") : String(m)), ss = String(s).padStart(2, "0");
+  return (h ? h + ":" : "") + mm + ":" + ss;
+}
+function tickNow() {
+  const L = T[LANG];
+  const now = tashkentNow();
+  const C = 213.6;
+  let num = "", what = "", left = null, frac = 0;
+  if (SCHOOL_DAYS.indexOf(now.day) === -1) { num = "☼"; what = L.dayoff; left = [L.rest, ""]; }
+  else {
+    const first = mins(BELLS[0][0]) * 60, last = mins(BELLS[BELLS.length - 1][1]) * 60;
+    if (now.sec < first) { num = "1"; what = L.before; left = L.toStart(clock(first - now.sec)); }
+    else if (now.sec >= last) { num = "✓"; what = L.after; left = [L.seeYou, ""]; frac = 1; }
+    else {
+      for (let i = 0; i < BELLS.length; i++) {
+        const a = mins(BELLS[i][0]) * 60, b = mins(BELLS[i][1]) * 60;
+        if (now.sec >= a && now.sec < b) { num = String(i + 1); what = L.lesson(i + 1); left = L.toBell(clock(b - now.sec)); frac = (now.sec - a) / (b - a); break; }
+        const nx = BELLS[i + 1] ? mins(BELLS[i + 1][0]) * 60 : null;
+        if (nx !== null && now.sec >= b && now.sec < nx) { num = "♪"; what = L.brk; left = L.toLesson(i + 2, clock(nx - now.sec)); frac = (now.sec - b) / (nx - b); break; }
+      }
+    }
+  }
+  document.getElementById("nowNum").textContent = num;
+  document.getElementById("nowWhat").textContent = what;
+  const lf = document.getElementById("nowLeft");
+  lf.textContent = left ? left[0] : "";
+  if (left && left[1]) lf.appendChild(el("b", "", left[1]));
+  document.getElementById("nowRing").setAttribute("stroke-dashoffset", String(C * (1 - frac)));
+  document.getElementById("bellTag").hidden = !BELLS_SAMPLE;
 }
 
-/* Sinf ustiga bosilganda chiqadigan oyna */
+/* ---------- Bino sxemasi ---------- */
+function renderTour() {
+  const L = T[LANG];
+  const boxes = { f: document.getElementById("floors"), w: document.getElementById("wing"), p: document.getElementById("pitch") };
+  Object.keys(boxes).forEach(function (k) { boxes[k].textContent = ""; });
+  ROOMS.forEach(function (r, i) {
+    if (r.door) { boxes[r.where].appendChild(el("div", "door")); return; }
+    const b = el("button", "room", r.name[LANG]);
+    b.type = "button";
+    b.setAttribute("aria-pressed", String(ROOM === i));
+    b.addEventListener("click", function () { ROOM = i; renderTour(); });
+    boxes[r.where].appendChild(b);
+  });
+  const info = document.getElementById("roomInfo");
+  info.textContent = "";
+  if (ROOM === null) { info.appendChild(el("h3", "", L.tourEmpty)); info.appendChild(el("p", "", L.tourEmptyText)); }
+  else { info.appendChild(el("h3", "", ROOMS[ROOM].name[LANG])); info.appendChild(el("p", "", ROOMS[ROOM].text[LANG])); }
+}
+
+/* ---------- Sinflar ---------- */
+function totals() {
+  let students = 0, classes = 0;
+  CLASSES.forEach(function (c) { Object.keys(c.groups).forEach(function (k) { students += c.groups[k]; classes += 1; }); });
+  return { students: students, classes: classes, avg: classes ? Math.round(students / classes) : 0 };
+}
 function detailBox(id, count) {
   const L = T[LANG];
   const info = CLASS_INFO[id] || {};
@@ -753,13 +982,10 @@ function detailBox(id, count) {
   box.appendChild(el("p", "", L.privacy));
   return box;
 }
-
 function renderGrades() {
   const L = T[LANG];
-  const tot = totals();
   const grades = document.getElementById("grades");
   grades.textContent = "";
-  let n = 0;
   STAGES.forEach(function (stage) {
     const rows = CLASSES.filter(function (c) { return c.grade >= stage.from && c.grade <= stage.to; });
     if (!rows.length) return;
@@ -767,34 +993,110 @@ function renderGrades() {
     rows.forEach(function (c) {
       const row = el("div", "grade");
       row.appendChild(el("div", "g", L.gradeName(c.grade)));
-      const chips = el("div", "chips");
+      const rooms = el("div", "rooms");
       let sum = 0, opened = null;
       const keys = Object.keys(c.groups);
       keys.forEach(function (k) {
         const count = c.groups[k];
         const id = c.grade + "-" + k;
         sum += count;
-        const chip = el("button", "chip");
-        chip.type = "button";
-        chip.style.setProperty("--n", n++);
-        chip.setAttribute("aria-expanded", String(OPEN === id));
-        chip.appendChild(el("b", "", id));
-        chip.appendChild(el("span", "", L.pupils(count)));
-        const bar = el("span", "bar");
-        const inner = el("i");
-        inner.style.width = Math.round(count / tot.max * 100) + "%";
-        bar.appendChild(inner);
-        chip.appendChild(bar);
-        chip.addEventListener("click", function () { OPEN = OPEN === id ? null : id; renderGrades(); });
-        chips.appendChild(chip);
+        const b = el("button", "cls");
+        b.type = "button";
+        b.setAttribute("aria-expanded", String(OPEN === id));
+        b.appendChild(el("b", "", id));
+        b.appendChild(el("small", "", String(count)));
+        const dots = el("span", "dots");
+        dots.setAttribute("aria-hidden", "true");
+        for (let d = 0; d < count; d++) { const dot = el("i"); dot.style.setProperty("--k", d); dots.appendChild(dot); }
+        b.appendChild(dots);
+        b.addEventListener("click", function () { OPEN = OPEN === id ? null : id; renderGrades(); });
+        rooms.appendChild(b);
         if (OPEN === id) opened = detailBox(id, count);
       });
-      row.appendChild(chips);
+      row.appendChild(rooms);
       row.appendChild(el("div", "sum", L.gradeSum(keys.length, sum)));
       grades.appendChild(row);
       if (opened) grades.appendChild(opened);
     });
   });
+}
+
+/* ---------- Nazorat ishi ---------- */
+function shuffle(n) {
+  const a = []; for (let i = 0; i < n; i++) a.push(i);
+  for (let i = n - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); const t = a[i]; a[i] = a[j]; a[j] = t; }
+  return a;
+}
+function startQuiz() { QZ.i = 0; QZ.score = 0; QZ.picked = null; QZ.done = false; QZ.order = QUIZ.map(function (q) { return shuffle(q.a.length); }); }
+function renderQuiz() {
+  const L = T[LANG];
+  const box = document.getElementById("quizBox");
+  box.textContent = "";
+  if (QZ.done) {
+    const mark = QZ.score === QUIZ.length ? 5 : QZ.score === QUIZ.length - 1 ? 4 : QZ.score >= Math.ceil(QUIZ.length / 2) ? 3 : 2;
+    box.appendChild(el("div", "mark", String(mark)));
+    box.appendChild(el("p", "result", L.grades[mark]));
+    box.appendChild(el("p", "say", L.resultText(QZ.score, QUIZ.length)));
+    const again = el("button", "btn fill", L.again);
+    again.type = "button";
+    again.addEventListener("click", function () { startQuiz(); renderQuiz(); });
+    box.appendChild(again);
+    return;
+  }
+  const q = QUIZ[QZ.i];
+  box.appendChild(el("p", "qno", L.qNo(QZ.i + 1, QUIZ.length)));
+  box.appendChild(el("p", "q", q.q[LANG]));
+  const list = el("div", "answers");
+  QZ.order[QZ.i].forEach(function (idx) {
+    const b = el("button", "ans", q.a[idx][LANG]);
+    b.type = "button";
+    if (QZ.picked !== null) {
+      b.disabled = true;
+      if (idx === 0) b.classList.add("right");
+      else if (idx === QZ.picked) b.classList.add("wrong");
+    }
+    b.addEventListener("click", function () { QZ.picked = idx; if (idx === 0) QZ.score += 1; renderQuiz(); });
+    list.appendChild(b);
+  });
+  box.appendChild(list);
+  const say = el("p", "say", QZ.picked === null ? "" : QZ.picked === 0 ? L.yes : L.no(q.a[0][LANG]));
+  say.setAttribute("aria-live", "polite");
+  box.appendChild(say);
+  if (QZ.picked !== null) {
+    const last = QZ.i === QUIZ.length - 1;
+    const next = el("button", "btn fill", last ? L.finish : L.next);
+    next.type = "button";
+    next.addEventListener("click", function () { if (last) QZ.done = true; else { QZ.i += 1; QZ.picked = null; } renderQuiz(); });
+    box.appendChild(next);
+  }
+}
+
+/* ---------- Manzil ---------- */
+function renderWhere() {
+  const L = T[LANG];
+  const dl = document.getElementById("whereFacts");
+  dl.textContent = "";
+  pair(dl, L.wAddress, LOCATION.address ? LOCATION.address[LANG] : L.wAddressBase);
+  pair(dl, L.wPhone, LOCATION.phone || L.soon, !LOCATION.phone);
+  pair(dl, L.wHours, LOCATION.hours ? LOCATION.hours[LANG] : L.soon, !LOCATION.hours);
+  const ll = LOCATION.lat + "," + LOCATION.lng;
+  document.getElementById("mapG").href = "https://www.google.com/maps/search/?api=1&query=" + ll;
+  document.getElementById("mapY").href = "https://yandex.uz/maps/?pt=" + LOCATION.lng + "," + LOCATION.lat + "&z=15&l=map";
+  document.getElementById("whereFine").textContent = LOCATION.exact ? "" : L.whereApprox;
+}
+/* Jonli xarita faqat sayt o'z manzilida ochilganda qo'shiladi */
+function setupMap() {
+  let top = false;
+  try { top = window.self === window.top; } catch (e) {}
+  if (!top || location.protocol === "file:") return;
+  const d = 0.012;
+  const f = document.createElement("iframe");
+  f.title = "Xarita";
+  f.loading = "lazy";
+  f.src = "https://www.openstreetmap.org/export/embed.html?bbox=" + (LOCATION.lng - d) + "," + (LOCATION.lat - d * 0.6) + "," + (LOCATION.lng + d) + "," + (LOCATION.lat + d * 0.6) + "&layer=mapnik&marker=" + LOCATION.lat + "," + LOCATION.lng;
+  const box = document.getElementById("mapBox");
+  box.appendChild(f);
+  box.hidden = false;
 }
 
 function setThemeLabel() {
@@ -808,10 +1110,9 @@ function render(lang) {
   document.documentElement.lang = lang;
   document.querySelectorAll("[data-t]").forEach(function (node) { node.textContent = L[node.dataset.t]; });
   document.querySelectorAll("[data-alt]").forEach(function (node) { node.alt = L[node.dataset.alt]; });
-  document.querySelectorAll("[data-lang]").forEach(function (btn) {
-    btn.setAttribute("aria-pressed", String(btn.dataset.lang === lang));
-  });
+  document.querySelectorAll("[data-lang]").forEach(function (btn) { btn.setAttribute("aria-pressed", String(btn.dataset.lang === lang)); });
   setThemeLabel();
+  tickNow();
 
   fill("facts", FACTS, function (f) {
     const row = el("div");
@@ -819,7 +1120,7 @@ function render(lang) {
     row.appendChild(el("dd", "", f.value[lang]));
     return row;
   });
-  fill("has", HAS, function (h) { return el("li", "", h[lang]); });
+  renderTour();
 
   const dbox = document.getElementById("directorBox");
   dbox.textContent = "";
@@ -842,16 +1143,16 @@ function render(lang) {
   document.getElementById("sampleNote").hidden = !CLASSES_SAMPLE;
   fill("totals", [[L.totStudents, tot.students], [L.totClasses, tot.classes], [L.totAvg, tot.avg]], function (p) {
     const row = el("div");
-    row.appendChild(el("dt", "", p[0]));
     const dd = el("dd", "", String(p[1]));
     dd.dataset.count = p[1];
     row.appendChild(dd);
+    row.appendChild(el("dt", "", p[0]));
     return row;
   });
   renderGrades();
 
   fill("teacherList", TEACHERS, function (t) {
-    const li = el("li", "tcard" + (t.todo ? " todo" : ""));
+    const li = el("li", "tcard paper" + (t.todo ? " todo" : ""));
     const av = el("span", "avatar", t.todo ? "?" : initials(t.name[lang]));
     photoInto(av, t.photo, t.name[lang]);
     li.appendChild(av);
@@ -864,18 +1165,17 @@ function render(lang) {
     li.appendChild(body);
     return li;
   });
-
   fill("clubList", CLUBS, function (c) {
-    const li = el("li", "club" + (c.todo ? " todo" : ""));
+    const li = el("li", "club");
     const name = el("strong", "", c.name[lang]);
     if (c.todo) name.appendChild(tag());
     li.appendChild(name);
     li.appendChild(el("span", "", c.info[lang]));
     return li;
   });
-
+  renderQuiz();
   fill("newsList", NEWS, function (item) {
-    const li = el("li", item.todo ? "todo" : "");
+    const li = el("li", "paper" + (item.todo ? " todo" : ""));
     li.appendChild(el("div", "when", item.when[lang]));
     const body = el("div");
     const h = el("h3", "", item.title[lang]);
@@ -890,9 +1190,10 @@ function render(lang) {
     li.appendChild(body);
     return li;
   });
+  renderWhere();
 }
 
-/* Tungi va kunduzgi rejim */
+/* Daftar (kunduzgi) va doska (tungi) rejimi */
 (function () {
   const root = document.documentElement;
   const sys = window.matchMedia("(prefers-color-scheme: dark)");
@@ -912,7 +1213,6 @@ function render(lang) {
   new MutationObserver(sync).observe(root, { attributes: true, attributeFilter: ["data-theme"] });
 })();
 
-/* Sonlarni noldan sanab chiqish */
 function countUp(scope) {
   if (CALM) return;
   scope.querySelectorAll("[data-count]").forEach(function (node) {
@@ -926,8 +1226,6 @@ function countUp(scope) {
     requestAnimationFrame(step);
   });
 }
-
-/* Bo'limlar ekranga kirganda ko'tarilib chiqadi */
 function setupReveal() {
   if (CALM || !("IntersectionObserver" in window)) return;
   const io = new IntersectionObserver(function (entries) {
@@ -939,18 +1237,15 @@ function setupReveal() {
     });
   }, { rootMargin: "0px 0px -10% 0px" });
   document.querySelectorAll(".rv").forEach(function (node) {
-    if (node.getBoundingClientRect().top > window.innerHeight * 0.9) {
-      node.classList.add("rv-wait");
-      io.observe(node);
-    }
+    if (node.getBoundingClientRect().top > window.innerHeight * 0.9) { node.classList.add("rv-wait"); io.observe(node); }
   });
 }
-
 /* Pastga aylantirilganda rasmlar siljiydi va kattalashadi */
 function setupScrollPhotos() {
   if (CALM) return;
   const imgs = Array.prototype.slice.call(document.querySelectorAll("[data-par]"));
   const floats = Array.prototype.slice.call(document.querySelectorAll("[data-float]"));
+  floats.forEach(function (f) { f.dataset.rot = getComputedStyle(f).transform; });
   let queued = false;
   function place() {
     queued = false;
@@ -959,13 +1254,14 @@ function setupScrollPhotos() {
       const r = img.parentElement.getBoundingClientRect();
       if (r.bottom < -100 || r.top > vh + 100) return;
       const p = Math.max(-1, Math.min(1, (r.top + r.height / 2 - vh / 2) / vh));
-      img.style.transform = "translate3d(0," + (p * -26).toFixed(1) + "px,0) scale(" + (1.16 - p * 0.08).toFixed(3) + ")";
+      img.style.transform = "translate3d(0," + (p * -24).toFixed(1) + "px,0) scale(" + (1.16 - p * 0.08).toFixed(3) + ")";
     });
     floats.forEach(function (fig) {
       const r = fig.getBoundingClientRect();
       if (r.bottom < -100 || r.top > vh + 100) return;
       const p = Math.max(-1, Math.min(1, (r.top + r.height / 2 - vh / 2) / vh));
-      fig.style.transform = "translate3d(0," + (p * 28 * Number(fig.dataset.float)).toFixed(1) + "px,0)";
+      const base = fig.dataset.rot && fig.dataset.rot !== "none" ? fig.dataset.rot + " " : "";
+      fig.style.transform = "translateY(" + (p * 26 * Number(fig.dataset.float)).toFixed(1) + "px) " + base;
     });
   }
   function ask() { if (!queued) { queued = true; requestAnimationFrame(place); } }
@@ -973,12 +1269,10 @@ function setupScrollPhotos() {
   window.addEventListener("resize", ask);
   place();
 }
-
-/* Menyuda qaysi bo'lim ochiqligini belgilash */
-function setupMenu() {
+function setupTabs() {
   if (!("IntersectionObserver" in window)) return;
   const links = {};
-  document.querySelectorAll(".menu a").forEach(function (a) { links[a.getAttribute("href").slice(1)] = a; });
+  document.querySelectorAll(".tabs a").forEach(function (a) { links[a.getAttribute("href").slice(1)] = a; });
   const io = new IntersectionObserver(function (entries) {
     entries.forEach(function (e) {
       if (!e.isIntersecting) return;
@@ -988,12 +1282,15 @@ function setupMenu() {
   Object.keys(links).forEach(function (k) { const s = document.getElementById(k); if (s) io.observe(s); });
 }
 
+startQuiz();
 let savedLang = null;
 try { savedLang = localStorage.getItem("lang"); } catch (e) {}
 render(T[savedLang] ? savedLang : "uz");
 setupReveal();
 setupScrollPhotos();
-setupMenu();
+setupTabs();
+setupMap();
+setInterval(tickNow, 1000);
 
 document.querySelectorAll("[data-lang]").forEach(function (btn) {
   btn.addEventListener("click", function () {

@@ -14,3 +14,12 @@ bo'limida direktor, sinflar, o'qituvchilar, to'garaklar va yangiliklar yoziladi.
 - Sinflardagi o'quvchilar soni hozircha **namuna**. Haqiqiy sonlarni yozgach,
   `CLASSES_SAMPLE` ni `false` qiling.
 - Rasmlar `rasmlar` papkasiga qo'yiladi (ichidagi README ga qarang).
+
+## Qiziqarli funksiyalar
+
+- **Hozir maktabda**: Toshkent vaqti bo'yicha nechanchi dars yoki tanaffus ekanini ko'rsatadi.
+  Qo'ng'iroqlar jadvali `BELLS` da, hozircha namuna (`BELLS_SAMPLE`).
+- **Bino sxemasi**: xonalar `ROOMS` da.
+- **Nazorat ishi**: savollar `QUIZ` da, birinchi javob to'g'risi.
+- **Manzil**: `LOCATION` da. Aniq koordinata yozilgach `exact: true` qiling.
+- Kunduzgi rejim katak daftar, tungi rejim doska ko'rinishida.
