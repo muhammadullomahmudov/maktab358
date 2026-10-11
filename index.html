@@ -359,6 +359,8 @@
   .news .src { font-size: 14px; display: inline-block; margin-top: 6px; }
   .news li.todo h3, .news li.todo p { font-style: italic; }
 
+  .morebtn { margin-top: 18px; }
+
   /* Favqulodda holat */
   .hz { border: 1px solid var(--line); border-radius: var(--r); background: var(--card); overflow: hidden; box-shadow: var(--shadow); }
   .hz::before { content: ""; display: block; height: 14px; background: repeating-linear-gradient(-45deg, var(--b) 0 16px, #12141c 16px 32px); }
@@ -642,6 +644,7 @@
     <div class="wrap rv">
       <h2><span data-t="newsTitle"></span></h2>
       <ul class="news" id="newsList"></ul>
+      <button type="button" class="btn morebtn" id="newsMore" hidden></button>
     </div>
   </section>
 
@@ -1143,6 +1146,7 @@ const T = {
     usSite: "Maktab hayoti bir joyda bo‘lishi uchun: sinflar, ustozlar, dars jadvali, yangiliklar, yutuqlar va xavfsizlik qoidalari.",
     usMadeTitle: "Saytni kim qildi",
     usMade: "Saytni maktab o‘quvchisi tayyorlagan. Xato yoki taklif bo‘lsa, maktab ma’muriyatiga murojaat qiling.",
+    newsMore: function (n) { return "Ko‘proq (yana " + n + " ta)"; }, newsLess: "Yopish",
     todo: "to‘ldiriladi"
   },
   ru: {
@@ -1235,6 +1239,7 @@ const T = {
     usSite: "Чтобы школьная жизнь была в одном месте: классы, учителя, расписание, новости, достижения и правила безопасности.",
     usMadeTitle: "Кто сделал сайт",
     usMade: "Сайт подготовил ученик школы. Если нашли ошибку или есть предложение, обратитесь в администрацию школы.",
+    newsMore: function (n) { return "Показать ещё (" + n + ")"; }, newsLess: "Свернуть",
     todo: "заполнить"
   },
   en: {
@@ -1327,6 +1332,7 @@ const T = {
     usSite: "To keep school life in one place: classes, teachers, the timetable, news, achievements and safety rules.",
     usMadeTitle: "Who made the site",
     usMade: "The site was prepared by a student of the school. If you spot a mistake or have a suggestion, please contact the school administration.",
+    newsMore: function (n) { return "Show more (" + n + ")"; }, newsLess: "Close",
     todo: "to fill in"
   }
 };
@@ -1341,6 +1347,7 @@ let OPEN = null;         /* ochiq turgan sinf, masalan "7-A" */
 let ROOM = null;         /* tanlangan xona raqami */
 let TQ = "";             /* qidiruv matni */
 let TOPEN = null;        /* ochiq turgan o'qituvchi raqami */
+let NEWSALL = false;     /* hamma yangiliklar ochiqmi */
 let PICK = null;         /* null — jonli vaqt; aks holda { day, lesson } */
 let TTCLASS = Object.keys(SCHEDULE)[0] || null;
 let ACHF = "all";
@@ -1883,6 +1890,34 @@ function setup3D() {
   wrap.addEventListener("pointercancel", end);
 }
 
+/* ---------- Yangiliklar: avval 10 tasi, qolgani "Ko'proq" tugmasi bilan ---------- */
+const NEWS_LIMIT = 10;
+function renderNews() {
+  const L = T[LANG];
+  const lang = LANG;
+  const list = NEWSALL ? NEWS : NEWS.slice(0, NEWS_LIMIT);
+  fill("newsList", list, function (item) {
+    const li = el("li", "paper" + (item.todo ? " todo" : ""));
+    li.appendChild(el("div", "when", item.when[lang]));
+    const body = el("div");
+    const h = el("h3", "", item.title[lang]);
+    if (item.todo) h.appendChild(tag());
+    body.appendChild(h);
+    body.appendChild(el("p", "", item.text[lang]));
+    if (item.src) {
+      const a = el("a", "src", L.source + ": " + new URL(item.src).hostname);
+      a.href = item.src; a.target = "_blank"; a.rel = "noopener";
+      body.appendChild(a);
+    }
+    li.appendChild(body);
+    return li;
+  });
+  const more = document.getElementById("newsMore");
+  more.hidden = NEWS.length <= NEWS_LIMIT;
+  more.textContent = NEWSALL ? L.newsLess : L.newsMore(NEWS.length - NEWS_LIMIT);
+  more.setAttribute("aria-expanded", String(NEWSALL));
+}
+
 /* ---------- Manzil ---------- */
 function renderWhere() {
   const L = T[LANG];
@@ -1962,22 +1997,7 @@ function render(lang) {
     li.appendChild(el("span", "", c.info[lang]));
     return li;
   });
-  fill("newsList", NEWS, function (item) {
-    const li = el("li", "paper" + (item.todo ? " todo" : ""));
-    li.appendChild(el("div", "when", item.when[lang]));
-    const body = el("div");
-    const h = el("h3", "", item.title[lang]);
-    if (item.todo) h.appendChild(tag());
-    body.appendChild(h);
-    body.appendChild(el("p", "", item.text[lang]));
-    if (item.src) {
-      const a = el("a", "src", L.source + ": " + new URL(item.src).hostname);
-      a.href = item.src; a.target = "_blank"; a.rel = "noopener";
-      body.appendChild(a);
-    }
-    li.appendChild(body);
-    return li;
-  });
+  renderNews();
   renderWhere();
 }
 
@@ -2080,6 +2100,11 @@ setup3D();
 buildBackground();
 setInterval(function () { tickNow(); liveCheck(); }, 1000);
 
+document.getElementById("newsMore").addEventListener("click", function () {
+  NEWSALL = !NEWSALL;
+  renderNews();
+  if (!NEWSALL) document.getElementById("news").scrollIntoView({ block: "start" });
+});
 document.getElementById("teacherSearch").addEventListener("input", function (e) { TQ = e.target.value; TOPEN = null; renderTeachers(); });
 
 document.querySelectorAll("[data-lang]").forEach(function (btn) {
