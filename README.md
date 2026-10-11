@@ -1,29 +1,35 @@
 # 358-maktab sayti
 
-Toshkent shahri, Bektemir tumanidagi 358-sonli umumta'lim maktabi saytining qoralamasi.
-Sayt uch tilda ishlaydi: o'zbek, rus va ingliz.
+Toshkent shahri, Bektemir tumanidagi 358-sonli umumta'lim maktabi sayti.
+Uch tilda ishlaydi: o'zbek, rus va ingliz. Kunduzgi va tungi rejim bor.
 
-Holati: qoralama. Maktab ma'muriyati tasdiqlaganidan keyin e'lon qilinadi.
+## Holati: namoyish versiyasi
+
+- **Haqiqiy ma'lumotlar:** yangiliklar va yutuqlar (maktabning Telegram kanalidan), Telegram va Instagram
+  havolalari, maktab haqidagi faktlar va rasmlar (president.uz).
+- **Namuna ma'lumotlar:** direktor, o'qituvchilar ismi, sinflardagi o'quvchilar soni, sinf rahbarlari,
+  dars jadvali, qo'ng'iroqlar va to'garaklar jadvali.
+
+Haqiqiy ma'lumotlar kiritilgach, `index.html` dagi `DEMO` ni `false` qiling: "Namoyish" belgisi yo'qoladi.
 
 ## Ma'lumotlarni o'zgartirish
 
-Hamma narsa bitta `index.html` faylida. Fayl ichidagi "1-QISM. SAYT MA'LUMOTLARI"
-bo'limida direktor, sinflar, o'qituvchilar, to'garaklar va yangiliklar yoziladi.
+Hamma narsa bitta `index.html` faylida, "1-QISM. SAYT MA'LUMOTLARI" bo'limida:
 
-- `todo: true` deb belgilangan joylar hali to'ldirilmagan.
-- Sinflardagi o'quvchilar soni hozircha **namuna**. Haqiqiy sonlarni yozgach,
-  `CLASSES_SAMPLE` ni `false` qiling.
-- Rasmlar `rasmlar` papkasiga qo'yiladi (ichidagi README ga qarang).
+| Nima | Qayerda |
+| --- | --- |
+| Aloqa (Telegram, Instagram, telefon) | `CONTACTS`, `LOCATION` |
+| Direktor | `DIRECTOR` |
+| Sinflar va o'quvchilar soni | `CLASSES`, `CLASS_INFO` |
+| O'qituvchilar | `TEACHERS`, fanlar `SUBJECTS` |
+| Dars jadvali va qo'ng'iroqlar | `SCHEDULE`, `BELLS` |
+| To'garaklar | `CLUBS` |
+| Yutuqlar | `ACHIEVEMENTS` |
+| Yangiliklar | `NEWS` |
+| Bino xonalari | `ROOMS` |
+| Favqulodda holat | `SAFETY`, `EXITS`, `ASSEMBLY`, `CALLS` |
 
-## Qiziqarli funksiyalar
+Rasmlar `rasmlar` papkasida (ichidagi README ga qarang).
 
-- **Hozir maktabda**: Toshkent vaqti bo'yicha nechanchi dars yoki tanaffus ekanini ko'rsatadi.
-  Qo'ng'iroqlar jadvali `BELLS` da, hozircha namuna (`BELLS_SAMPLE`).
-- **Bino sxemasi**: xonalar `ROOMS` da.
-- **Manzil**: `LOCATION` da. Aniq koordinata yozilgach `exact: true` qiling.
-- Aloqa (Telegram, Instagram, telefon): `CONTACTS` da.
-- Dizayn: bento kataklar, shisha menyu, 3D rasm, 3D kub va 3D bino; kunduzgi va tungi rejim.
-- **Kim hozir qayerda**: o'qituvchilar `TEACHERS` da, dars jadvali `SCHEDULE` da (hozircha namuna, `SCHEDULE_SAMPLE`).
-- **Faxrimiz**: bitiruvchi va o'quvchilar yutuqlari `ACHIEVEMENTS` da. Faqat rozilik bilan qo'shing.
-- **Favqulodda holat**: qoidalar `SAFETY` da. Chiqish yo'llari (`EXITS`) va yig'ilish joyi (`ASSEMBLY`)
-  faqat maktabning rasmiy evakuatsiya rejasidan yoziladi.
+O'quvchilarning ism-familiyasi va rasmi faqat o'zi va ota-onasining roziligi bilan qo'yiladi.
+Chiqish yo'llari (`EXITS`) faqat maktabning rasmiy evakuatsiya rejasidan yoziladi.

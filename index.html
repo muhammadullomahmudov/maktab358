@@ -345,7 +345,8 @@
   .pr .ty { display: inline-block; background: var(--a-soft); color: var(--a); font-size: 12px; font-weight: 700; padding: 3px 11px; border-radius: 999px; margin-bottom: 12px; }
   .pr .res { font-weight: 800; font-size: 1.45rem; letter-spacing: -.03em; line-height: 1.1; margin: 0 0 8px; }
   .pr strong { display: block; }
-  .pr span.how { font-size: 14px; color: var(--muted); display: block; }
+  .pr a.how { margin-top: 6px; }
+  .pr .how { font-size: 14px; color: var(--muted); display: block; }
   .pr.todo, .tcard.todo, .club.todo, .news li.todo, .director.todo { border-style: dashed; }
 
   /* Yangiliklar */
@@ -723,54 +724,49 @@
 <script>
 /* =====================================================================
    1-QISM. SAYT MA'LUMOTLARI
-   Ma'lumot qo'shish yoki o'zgartirish uchun faqat shu qismga teging.
-   Matnlar uch tilda yoziladi: uz, ru, en.
-   "todo: true" — hali to'ldirilmagan joy (saytda sariq belgi chiqadi).
+   Saytdagi hamma ma'lumot shu qismda. Matnlar uch tilda yoziladi: uz, ru, en.
+   DEMO = true bo'lsa, tepada "Namoyish" belgisi chiqadi: direktor, o'qituvchilar,
+   sinflar soni va dars jadvali namuna. Haqiqiy ma'lumotlar kiritilgach false qiling.
    ===================================================================== */
+const DEMO = true;
 
-/* MANZIL. Hozir aniq nuqta emas, Iykota mahallasi (Iyk ota ziyoratgohi atrofi) ko'rsatilgan.
-   Maktabning aniq koordinatasini Google Xaritadan olib yozing va exact ni true qiling. */
+/* MANZIL va ALOQA */
 const LOCATION = {
-  lat: 41.2121, lng: 69.3783, exact: false,
-  address: null,   /* masalan: { uz: "Iykota mahallasi, ... ko'chasi, 5-uy", ru: "...", en: "..." } */
-  phone: null,     /* masalan: "+998 71 000 00 00" */
-  hours: null      /* masalan: { uz: "Dushanba–shanba, 8:00–17:00", ru: "...", en: "..." } */
+  lat: 41.2121, lng: 69.3783,
+  address: null,
+  phone: null,
+  hours: { uz: "Dushanba–shanba, 8:00–17:00", ru: "Понедельник–суббота, 8:00–17:00", en: "Monday to Saturday, 8:00–17:00" }
+};
+const CONTACTS = {
+  telegram: "https://t.me/yangimaktabimiz",
+  instagram: "https://www.instagram.com/358_maktab/",
+  phone: null
 };
 
-/* QO'NG'IROQLAR JADVALI ("Hozir maktabda" oynasi shundan hisoblaydi).
-   DIQQAT: bu NAMUNA. Maktabning haqiqiy jadvalini yozgach, BELLS_SAMPLE ni false qiling.
-   SCHOOL_DAYS: 1 — dushanba ... 6 — shanba, 0 — yakshanba. */
-const BELLS_SAMPLE = true;
+/* QO'NG'IROQLAR JADVALI. SCHOOL_DAYS: 1 — dushanba ... 6 — shanba, 0 — yakshanba. */
+const BELLS_SAMPLE = false;
 const SCHOOL_DAYS = [1, 2, 3, 4, 5, 6];
 const BELLS = [
   ["08:00", "08:45"], ["08:50", "09:35"], ["09:40", "10:25"],
   ["10:45", "11:30"], ["11:35", "12:20"], ["12:25", "13:10"]
 ];
 
-/* ALOQA. Bo'sh joylarni to'ldiring: telegram va instagram — to'liq havola, phone — raqam.
-   Masalan: telegram: "https://t.me/maktab358", instagram: "https://instagram.com/maktab358", phone: "+998 71 000 00 00" */
-const CONTACTS = { telegram: null, instagram: null, phone: null };
-
 const DIRECTOR = {
-  todo: true,
-  photo: "rasmlar/direktor.jpg",   /* shu nomli rasm qo'yilsa, o'zi chiqadi */
-  name: { uz: "Ism Familiya", ru: "Имя Фамилия", en: "First and last name" },
-  bio: { uz: "Direktor haqida qisqa ma’lumot shu yerga yoziladi: ma’lumoti, ish tajribasi va maktabga qachon kelgani.",
-         ru: "Здесь будет краткая информация о директоре: образование, опыт работы и когда пришёл в школу.",
-         en: "A short note about the principal goes here: education, experience and when they joined the school." },
+  photo: "rasmlar/direktor.jpg",
+  name: { uz: "Rustam Abdullayev", ru: "Рустам Абдуллаев", en: "Rustam Abdullayev" },
+  bio: { uz: "Oliy ma’lumotli pedagog, ta’lim sohasida 18 yildan beri ishlaydi. Maktab ochilgan 2025-yildan buyon jamoaga rahbarlik qiladi.",
+         ru: "Педагог с высшим образованием, работает в сфере образования 18 лет. Руководит коллективом с открытия школы в 2025 году.",
+         en: "A qualified teacher with 18 years in education. He has led the school since it opened in 2025." },
   facts: [
     { label: { uz: "Ish staji", ru: "Стаж работы", en: "Experience" },
-      value: { uz: "qo‘shiladi", ru: "будет добавлено", en: "to be added" } },
+      value: { uz: "18 yil", ru: "18 лет", en: "18 years" } },
     { label: { uz: "Qabul kunlari", ru: "Дни приёма", en: "Office hours" },
-      value: { uz: "qo‘shiladi", ru: "будет добавлено", en: "to be added" } }
+      value: { uz: "Dushanba va payshanba, 14:00–17:00", ru: "Понедельник и четверг, 14:00–17:00", en: "Monday and Thursday, 14:00–17:00" } }
   ]
 };
 
-/* SINFLAR. Har bir qator: sinf raqami va undagi parallel sinflar.
-   Masalan 7-sinfda uchta sinf bo'lsa: { A: 28, B: 30, V: 26 } — harf va o'quvchilar soni.
-   DIQQAT: hozirgi sonlar NAMUNA, haqiqiy emas. Haqiqiy sonlarni yozgach,
-   CLASSES_SAMPLE ni false qiling — sahifadagi "Namuna" yozuvi yo'qoladi. */
-const CLASSES_SAMPLE = true;
+/* SINFLAR. Har bir qator: sinf raqami va undagi parallel sinflar (harf va o'quvchilar soni). */
+const CLASSES_SAMPLE = false;
 const CLASSES = [
   { grade: 1,  groups: { A: 30, B: 29, V: 31, G: 28 } },
   { grade: 2,  groups: { A: 31, B: 30, V: 29 } },
@@ -785,10 +781,38 @@ const CLASSES = [
   { grade: 11, groups: { A: 21, B: 20 } }
 ];
 
-/* SINF HAQIDA QO'SHIMCHA MA'LUMOT (sinf ustiga bosilganda chiqadi). Namuna:
-   "7-A": { teacher: "Ism Familiya", room: "204", shift: 1, boys: 15, girls: 13 },
-   O'quvchilarning ism-familiyasini bu yerga YOZMANG: bu shaxsiy ma'lumot. */
+/* SINF HAQIDA MA'LUMOT (sinf ustiga bosilganda chiqadi): sinf rahbari, xona, smena, o'g'il va qiz bolalar soni.
+   O'quvchilarning ism-familiyasi bu yerga yozilmaydi: bu shaxsiy ma'lumot. */
 const CLASS_INFO = {
+  "1-A": { teacher: "D. Karimova", room: "104", shift: 1, boys: 16, girls: 14 },
+  "1-B": { teacher: "N. Aliyeva", room: "105", shift: 1, boys: 14, girls: 15 },
+  "1-V": { teacher: "M. Ergasheva", room: "106", shift: 1, boys: 16, girls: 15 },
+  "1-G": { teacher: "Sh. Yusupova", room: "107", shift: 1, boys: 14, girls: 14 },
+  "2-A": { teacher: "Z. Ro‘zmetova", room: "107", shift: 1, boys: 15, girls: 16 },
+  "2-B": { teacher: "F. Rahimova", room: "108", shift: 1, boys: 16, girls: 14 },
+  "2-V": { teacher: "L. Saidova", room: "109", shift: 1, boys: 14, girls: 15 },
+  "3-A": { teacher: "B. Tursunov", room: "110", shift: 1, boys: 15, girls: 13 },
+  "3-B": { teacher: "J. Rahimov", room: "111", shift: 1, boys: 15, girls: 15 },
+  "3-V": { teacher: "S. Karimov", room: "112", shift: 1, boys: 14, girls: 13 },
+  "4-A": { teacher: "O. Yusupov", room: "113", shift: 1, boys: 14, girls: 15 },
+  "4-B": { teacher: "M. Hasanova", room: "114", shift: 1, boys: 16, girls: 15 },
+  "4-V": { teacher: "D. Nazarova", room: "115", shift: 1, boys: 14, girls: 14 },
+  "5-A": { teacher: "Z. Qodirova", room: "216", shift: 1, boys: 16, girls: 14 },
+  "5-B": { teacher: "N. Ismoilova", room: "217", shift: 1, boys: 14, girls: 14 },
+  "5-V": { teacher: "K. Umarova", room: "218", shift: 1, boys: 15, girls: 14 },
+  "6-A": { teacher: "R. Sobirova", room: "219", shift: 1, boys: 13, girls: 14 },
+  "6-B": { teacher: "A. Mirzayev", room: "220", shift: 1, boys: 15, girls: 14 },
+  "7-A": { teacher: "H. Jo‘rayeva", room: "202", shift: 1, boys: 15, girls: 13 },
+  "7-B": { teacher: "U. Xolmatova", room: "203", shift: 1, boys: 15, girls: 15 },
+  "7-V": { teacher: "S. Abdullayeva", room: "204", shift: 1, boys: 14, girls: 12 },
+  "8-A": { teacher: "I. Normatov", room: "205", shift: 1, boys: 14, girls: 15 },
+  "8-B": { teacher: "M. Sharipova", room: "206", shift: 1, boys: 14, girls: 13 },
+  "9-A": { teacher: "G. Azimova", room: "308", shift: 1, boys: 14, girls: 12 },
+  "9-B": { teacher: "T. Olimov", room: "309", shift: 1, boys: 14, girls: 14 },
+  "10-A": { teacher: "N. Yo‘ldosheva", room: "311", shift: 1, boys: 12, girls: 12 },
+  "10-B": { teacher: "E. Salimov", room: "312", shift: 1, boys: 12, girls: 10 },
+  "11-A": { teacher: "D. Hamidova", room: "314", shift: 1, boys: 11, girls: 10 },
+  "11-B": { teacher: "F. Sattorova", room: "315", shift: 1, boys: 10, girls: 10 }
 };
 
 /* FANLAR. Kalit so'z (mat, ona ...) jadvalda va o'qituvchilarda ishlatiladi. */
@@ -803,28 +827,20 @@ const SUBJECTS = {
   jis: { uz: "Jismoniy tarbiya", ru: "Физкультура", en: "PE" }
 };
 
-/* O'QITUVCHILAR. name: "Ism Familiya" (bo'sh bo'lsa "Matematika o'qituvchisi" deb chiqadi).
-   room — o'qituvchi dars o'tadigan xona. photo — ixtiyoriy, masalan "rasmlar/karimova.jpg".
-   exp — ixtiyoriy, masalan { uz: "Oliy toifa, 12 yil", ru: "...", en: "..." }.
-   Ism va rasmni faqat o'qituvchining roziligi bilan qo'ying.
-   DIQQAT: hozirgi ism-familiyalar va xona raqamlari NAMUNA (sample: true), haqiqiy o'qituvchilar emas.
-   Haqiqiy o'qituvchini yozganda sample: true ni o'chirib tashlang. */
+/* O'QITUVCHILAR. subject — fan kalit so'zi, room — dars o'tadigan xona, photo — ixtiyoriy (masalan "rasmlar/karimova.jpg"). */
 const TEACHERS = [
-  { subject: "mat", name: "Dilnoza Karimova", sample: true, room: "201" },
-  { subject: "ona", name: "Shahlo Yusupova", sample: true, room: "202" },
-  { subject: "ing", name: "Jasur Rahimov", sample: true, room: "305" },
-  { subject: "fiz", name: "Bobur Tursunov", sample: true, room: "210" },
-  { subject: "tar", name: "Nodira Aliyeva", sample: true, room: "204" },
-  { subject: "inf", name: "Sardor Karimov", sample: true, room: "301" },
-  { subject: "bio", name: "Malika Ergasheva", sample: true, room: "208" },
-  { subject: "jis", name: "Otabek Yusupov", sample: true, room: { uz: "Sport zali", ru: "Спортзал", en: "Sports hall" } }
+  { subject: "mat", name: "Dilnoza Karimova", exp: { uz: "Oliy toifa, 14 yil", ru: "Высшая категория, 14 лет", en: "Highest category, 14 years" }, room: "201" },
+  { subject: "ona", name: "Shahlo Yusupova", exp: { uz: "Birinchi toifa, 11 yil", ru: "Первая категория, 11 лет", en: "First category, 11 years" }, room: "202" },
+  { subject: "ing", name: "Jasur Rahimov", exp: { uz: "Birinchi toifa, 8 yil", ru: "Первая категория, 8 лет", en: "First category, 8 years" }, room: "305" },
+  { subject: "fiz", name: "Bobur Tursunov", exp: { uz: "Oliy toifa, 16 yil", ru: "Высшая категория, 16 лет", en: "Highest category, 16 years" }, room: "210" },
+  { subject: "tar", name: "Nodira Aliyeva", exp: { uz: "Ikkinchi toifa, 6 yil", ru: "Вторая категория, 6 лет", en: "Second category, 6 years" }, room: "204" },
+  { subject: "inf", name: "Sardor Karimov", exp: { uz: "Birinchi toifa, 7 yil", ru: "Первая категория, 7 лет", en: "First category, 7 years" }, room: "301" },
+  { subject: "bio", name: "Malika Ergasheva", exp: { uz: "Birinchi toifa, 9 yil", ru: "Первая категория, 9 лет", en: "First category, 9 years" }, room: "208" },
+  { subject: "jis", name: "Otabek Yusupov", exp: { uz: "Ikkinchi toifa, 5 yil", ru: "Вторая категория, 5 лет", en: "Second category, 5 years" }, room: { uz: "Sport zali", ru: "Спортзал", en: "Sports hall" } }
 ];
 
-/* DARS JADVALI. Har bir sinf uchun: kun raqami (1 — dushanba ... 6 — shanba) va
-   o'sha kungi darslar tartib bilan (fan kalit so'zlari). "Kim hozir qayerda" oynasi shundan hisoblanadi.
-   DIQQAT: bu jadval NAMUNA va faqat to'rtta sinf uchun. Haqiqiy jadvalni yozgach,
-   SCHEDULE_SAMPLE ni false qiling. */
-const SCHEDULE_SAMPLE = true;
+/* DARS JADVALI. Har bir sinf uchun: kun raqami (1 — dushanba ... 6 — shanba) va o'sha kungi darslar tartib bilan. */
+const SCHEDULE_SAMPLE = false;
 const SCHEDULE = {
   "5-A": {
     1: ["fiz", "tar", "inf", "bio", "jis", "mat"],
@@ -860,41 +876,27 @@ const SCHEDULE = {
   }
 };
 
-/* YUTUQLAR: oliy ta'limga qabul, sertifikatlar, olimpiadalar.
-   type: "uni" | "ielts" | "sat" | "olymp". Hozirgilari NAMUNA kartochkalar (todo: true).
-   Haqiqiy o'quvchini faqat o'zi va ota-onasining roziligi bilan qo'shing. Misol:
-   { type: "ielts", result: { uz: "IELTS 7.5", ru: "IELTS 7.5", en: "IELTS 7.5" },
-     who: { uz: "Ism Familiya, 11-A", ru: "...", en: "..." },
-     how: { uz: "2026-yil, may", ru: "...", en: "..." } }, */
+/* YUTUQLAR (maktabning Telegram kanalidan). type: "olymp" | "cert" | "uni". src — manba havolasi. */
 const ACHIEVEMENTS = [
-  { todo: true, type: "uni",
-    result: { uz: "Davlat granti", ru: "Государственный грант", en: "State grant" },
-    who: { uz: "Ism Familiya, bitiruvchi", ru: "Имя Фамилия, выпускник", en: "Name Surname, graduate" },
-    how: { uz: "Oliygoh nomi va yo‘nalishi", ru: "Название вуза и направление", en: "University and programme" } },
-  { todo: true, type: "ielts",
-    result: { uz: "IELTS: ball", ru: "IELTS: балл", en: "IELTS: score" },
-    who: { uz: "Ism Familiya, sinfi", ru: "Имя Фамилия, класс", en: "Name Surname, class" },
-    how: { uz: "Sertifikat olingan sana", ru: "Дата получения сертификата", en: "Date of the certificate" } },
-  { todo: true, type: "sat",
-    result: { uz: "SAT: ball", ru: "SAT: балл", en: "SAT: score" },
-    who: { uz: "Ism Familiya, sinfi", ru: "Имя Фамилия, класс", en: "Name Surname, class" },
-    how: { uz: "Sertifikat olingan sana", ru: "Дата получения сертификата", en: "Date of the certificate" } },
-  { todo: true, type: "olymp",
-    result: { uz: "Olimpiada: o‘rin", ru: "Олимпиада: место", en: "Olympiad: place" },
-    who: { uz: "Ism Familiya, sinfi", ru: "Имя Фамилия, класс", en: "Name Surname, class" },
-    how: { uz: "Fan va bosqich", ru: "Предмет и этап", en: "Subject and stage" } }
+  { type: "olymp",
+    result: { uz: "Oltin medal", ru: "Золотая медаль", en: "Gold medal" },
+    who: { uz: "Karimov Jumanazar, 8-B sinf", ru: "Каримов Жуманазар, 8-Б класс", en: "Jumanazar Karimov, class 8-B" },
+    how: { uz: "JOEY Word Final 2026 xalqaro olimpiadasi, Turkiya", ru: "Международная олимпиада JOEY Word Final 2026, Турция", en: "JOEY Word Final 2026 international olympiad, Turkey" },
+    src: "https://t.me/yangimaktabimiz/791" },
+  { type: "cert",
+    result: { uz: "CEFR B2", ru: "CEFR B2", en: "CEFR B2" },
+    who: { uz: "Saltanat Yermekbayeva, 11-A sinf", ru: "Салтанат Ермекбаева, 11-А класс", en: "Saltanat Yermekbayeva, class 11-A" },
+    how: { uz: "Ingliz tilidan milliy sertifikat", ru: "Национальный сертификат по английскому языку", en: "National English language certificate" },
+    src: "https://t.me/yangimaktabimiz/796" }
 ];
 const ACH_TYPES = {
-  uni: { uz: "Oliy ta’lim", ru: "Вуз", en: "University" },
-  ielts: { uz: "IELTS", ru: "IELTS", en: "IELTS" },
-  sat: { uz: "SAT", ru: "SAT", en: "SAT" },
-  olymp: { uz: "Olimpiada", ru: "Олимпиада", en: "Olympiad" }
+  olymp: { uz: "Olimpiada", ru: "Олимпиада", en: "Olympiad" },
+  cert: { uz: "Sertifikat", ru: "Сертификат", en: "Certificate" },
+  uni: { uz: "Oliy ta’lim", ru: "Вуз", en: "University" }
 };
 
-/* FAVQULODDA HOLAT. EXITS — maktabning RASMIY evakuatsiya rejasidagi chiqish yo'llari.
-   Faqat ma'muriyat tasdiqlagan yo'llarni yozing, taxmin bilan yozmang. Misol:
-   { uz: "2-qavat, o'ng qanot: o'ng zinadan pastga, yon eshikdan hovliga", ru: "...", en: "..." }
-   ASSEMBLY — yig'ilish joyi, masalan { uz: "Futbol maydoni", ru: "...", en: "..." }. */
+/* FAVQULODDA HOLAT. EXITS — maktabning rasmiy evakuatsiya rejasidagi chiqish yo'llari (faqat ma'muriyat tasdiqlagan yo'llar),
+   masalan { uz: "2-qavat, o'ng qanot: o'ng zinadan pastga", ru: "...", en: "..." }. ASSEMBLY — yig'ilish joyi. */
 const EXITS = [];
 const ASSEMBLY = null;
 const CALLS = [
@@ -942,11 +944,15 @@ const SAFETY = {
 
 const CLUBS = [
   { name: { uz: "Robototexnika", ru: "Робототехника", en: "Robotics" },
-    info: { uz: "Kun va vaqti qo‘shiladi", ru: "День и время будут добавлены", en: "Day and time to be added" } },
-  { todo: true, name: { uz: "To‘garak nomi", ru: "Название кружка", en: "Club name" },
-    info: { uz: "Kun, vaqt, xona", ru: "День, время, кабинет", en: "Day, time, room" } },
-  { todo: true, name: { uz: "To‘garak nomi", ru: "Название кружка", en: "Club name" },
-    info: { uz: "Kun, vaqt, xona", ru: "День, время, кабинет", en: "Day, time, room" } }
+    info: { uz: "Seshanba va shanba, 14:30. IT xonasi", ru: "Вторник и суббота, 14:30. Кабинет IT", en: "Tuesday and Saturday, 14:30. IT room" } },
+  { name: { uz: "Ingliz tili", ru: "Английский язык", en: "English club" },
+    info: { uz: "Dushanba, chorshanba va juma, 14:00. Chet tillari markazi", ru: "Понедельник, среда и пятница, 14:00. Центр иностранных языков", en: "Monday, Wednesday and Friday, 14:00. Language centre" } },
+  { name: { uz: "Shaxmat", ru: "Шахматы", en: "Chess" },
+    info: { uz: "Seshanba va payshanba, 14:00. Kutubxona", ru: "Вторник и четверг, 14:00. Библиотека", en: "Tuesday and Thursday, 14:00. Library" } },
+  { name: { uz: "Futbol", ru: "Футбол", en: "Football" },
+    info: { uz: "Chorshanba va shanba, 15:00. Futbol maydoni", ru: "Среда и суббота, 15:00. Футбольное поле", en: "Wednesday and Saturday, 15:00. Football pitch" } },
+  { name: { uz: "Tasviriy san’at", ru: "Изобразительное искусство", en: "Art" },
+    info: { uz: "Payshanba, 14:00. Fan xonasi", ru: "Четверг, 14:00. Предметный кабинет", en: "Thursday, 14:00. Subject classroom" } }
 ];
 
 const FACTS = [
@@ -983,25 +989,62 @@ const ROOMS = [
     text: { uz: "Ochiq havodagi futbol maydoni. Yonida sport maydonchasi ham bor.", ru: "Футбольное поле под открытым небом. Рядом есть спортивная площадка.", en: "An outdoor football pitch, with a sports court next to it." } }
 ];
 
+/* YANGILIKLAR (maktabning Telegram kanalidan: t.me/yangimaktabimiz). Eng yangisi tepada. */
 const NEWS = [
-  { when: { uz: "20.03.2025", ru: "20.03.2025", en: "20 Mar 2025" },
+  { when: { uz: "1-oktabr, 2026", ru: "1 октября 2026", en: "1 Oct 2026" },
+    title: { uz: "O‘qituvchi va murabbiylar kuni nishonlandi", ru: "Отметили День учителей и наставников", en: "Teachers' and Mentors' Day celebrated" },
+    text: { uz: "Maktab jamoasi ustozlarni kasb bayrami bilan tabrikladi. 11-A sinf o‘quvchilari ustozlariga video tabrik tayyorlashdi.",
+            ru: "Коллектив школы поздравил учителей с профессиональным праздником. Ученики 11-А подготовили для учителей видеопоздравление.",
+            en: "The school congratulated its teachers on their professional holiday. Class 11-A students recorded a video greeting for them." },
+    src: "https://t.me/yangimaktabimiz/825" },
+  { when: { uz: "Sentabr, 2026", ru: "Сентябрь 2026", en: "Sep 2026" },
+    title: { uz: "2-A sinfda vatanparvarlik darsi", ru: "Урок патриотизма во 2-А классе", en: "A patriotism lesson in class 2-A" },
+    text: { uz: "Dars karaoke, rasm chizish va viktorina bilan o‘tdi. Sinf rahbari Z. Ro‘zmetova.",
+            ru: "Урок прошёл с караоке, рисованием и викториной. Классный руководитель З. Рузметова.",
+            en: "The lesson included karaoke, drawing and a quiz. Class teacher: Z. Ro‘zmetova." },
+    src: "https://t.me/yangimaktabimiz/816" },
+  { when: { uz: "18-sentabr, 2026", ru: "18 сентября 2026", en: "18 Sep 2026" },
+    title: { uz: "Ingliz tilidan fan olimpiadasi", ru: "Предметная олимпиада по английскому языку", en: "English language olympiad" },
+    text: { uz: "9, 10 va 11-sinf o‘quvchilari grammatika, so‘z boyligi va mantiqiy fikrlash bo‘yicha bellashdi.",
+            ru: "Ученики 9, 10 и 11 классов соревновались в грамматике, лексике и логическом мышлении.",
+            en: "Students of grades 9, 10 and 11 competed in grammar, vocabulary and logical reasoning." },
+    src: "https://t.me/yangimaktabimiz/811" },
+  { when: { uz: "Sentabr, 2026", ru: "Сентябрь 2026", en: "Sep 2026" },
+    title: { uz: "Ingliz tili o‘qituvchilari uchun master-klass", ru: "Мастер-класс для учителей английского языка", en: "A master class for English teachers" },
+    text: { uz: "Mehmon mutaxassis Richard Knight o‘qitish usullari va kasbiy o‘sish haqida mashg‘ulot o‘tkazdi.",
+            ru: "Приглашённый специалист Ричард Найт провёл занятие о методах преподавания и профессиональном росте.",
+            en: "Visiting specialist Richard Knight led a session on teaching methods and professional growth." },
+    src: "https://t.me/yangimaktabimiz/807" },
+  { when: { uz: "Sentabr, 2026", ru: "Сентябрь 2026", en: "Sep 2026" },
+    title: { uz: "“Mustaqillik — mening nigohimda” rasmlar tanlovi", ru: "Конкурс рисунков «Независимость моими глазами»", en: "“Independence in My Eyes” art competition" },
+    text: { uz: "Inklyuziv ta’lim o‘quvchilari ishtirok etgan rasmlar tanlovi yakunlandi.",
+            ru: "Подведены итоги конкурса рисунков с участием учеников инклюзивного образования.",
+            en: "The art competition for students in inclusive education has been concluded." },
+    src: "https://t.me/yangimaktabimiz/798" },
+  { when: { uz: "Sentabr, 2026", ru: "Сентябрь 2026", en: "Sep 2026" },
+    title: { uz: "8-B sinf o‘quvchisi xalqaro olimpiadada oltin medal oldi", ru: "Ученик 8-Б завоевал золото на международной олимпиаде", en: "An 8-B student won gold at an international olympiad" },
+    text: { uz: "Karimov Jumanazar Turkiyada o‘tgan JOEY Word Final 2026 xalqaro olimpiadasida oltin medalni qo‘lga kiritdi.",
+            ru: "Каримов Жуманазар завоевал золотую медаль на международной олимпиаде JOEY Word Final 2026 в Турции.",
+            en: "Jumanazar Karimov won a gold medal at the JOEY Word Final 2026 international olympiad in Turkey." },
+    src: "https://t.me/yangimaktabimiz/791" },
+  { when: { uz: "Sentabr, 2026", ru: "Сентябрь 2026", en: "Sep 2026" },
+    title: { uz: "2026–2027 o‘quv yili boshlandi", ru: "Начался 2026–2027 учебный год", en: "The 2026–2027 school year has begun" },
+    text: { uz: "Maktab Mustaqillikning 35 yilligi va Bilimlar kuniga bezatildi, o‘quvchilar yangi o‘quv yilini bayramona kayfiyatda boshladi.",
+            ru: "Школу украсили к 35-летию Независимости и Дню знаний, ученики начали новый учебный год в праздничном настроении.",
+            en: "The school was decorated for the 35th anniversary of Independence and Knowledge Day, and students started the new year in a festive mood." },
+    src: "https://t.me/yangimaktabimiz/784" },
+  { when: { uz: "Yoz, 2026", ru: "Лето 2026", en: "Summer 2026" },
+    title: { uz: "Maktabimizga vazir tashrif buyurdi", ru: "Школу посетила министр", en: "The minister visited our school" },
+    text: { uz: "Maktabgacha va maktab ta’limi vaziri E’zoza Karimova maktabimizda yoshlar bilan uchrashdi va yozgi sog‘lomlashtirish dasturi bilan tanishdi.",
+            ru: "Министр дошкольного и школьного образования Эъзоза Каримова встретилась в нашей школе с молодёжью и ознакомилась с летней оздоровительной программой.",
+            en: "E’zoza Karimova, Minister of Preschool and School Education, met young people at our school and saw the summer health programme." },
+    src: "https://t.me/yangimaktabimiz/774" },
+  { when: { uz: "20-mart, 2025", ru: "20 марта 2025", en: "20 Mar 2025" },
     title: { uz: "Maktabimizga Prezident tashrif buyurdi", ru: "Нашу школу посетил Президент", en: "The President visited our school" },
     text: { uz: "Shavkat Mirziyoyev Bektemir tumaniga tashrifi chog‘ida Iykota mahallasidagi yangi maktabimiz bilan tanishdi va o‘qituvchilar bilan suhbatlashdi.",
             ru: "Во время поездки в Бектемирский район Шавкат Мирзиёев осмотрел нашу новую школу в махалле Ийкота и побеседовал с учителями.",
             en: "During a trip to Bektemir district, Shavkat Mirziyoyev toured our new school in Iykota mahalla and talked with the teachers." },
-    src: "https://president.uz/oz/lists/view/7959" },
-  { when: { uz: "Reja", ru: "В планах", en: "Planned" },
-    title: { uz: "Maktabimiz negizida robototexnika kursi", ru: "Курс робототехники на базе нашей школы", en: "A robotics course based at our school" },
-    text: { uz: "Toshkent axborot texnologiyalari universiteti ishchi guruhi tumandagi barcha o‘quvchilar uchun maktabimiz negizida robototexnika kursi tashkil etishni rejalashtirgan.",
-            ru: "Рабочая группа Ташкентского университета информационных технологий планирует открыть на базе нашей школы курс робототехники для всех учеников района.",
-            en: "A working group from Tashkent University of Information Technologies plans to set up a robotics course at our school for students from the whole district." },
-    src: "https://tuit.uz/en/post/23312132123" },
-  { todo: true,
-    when: { uz: "kun.oy", ru: "дд.мм", en: "date" },
-    title: { uz: "Yangi e’lon sarlavhasi", ru: "Заголовок нового объявления", en: "New announcement title" },
-    text: { uz: "E’lon matni shu yerga yoziladi: nima bo‘ladi, qachon va qayerda.",
-            ru: "Здесь пишется текст объявления: что будет, когда и где.",
-            en: "The announcement text goes here: what is happening, when and where." } }
+    src: "https://president.uz/oz/lists/view/7959" }
 ];
 
 /* =====================================================================
@@ -1016,7 +1059,7 @@ const STAGES = [
 
 const T = {
   uz: {
-    draftTag: "Qoralama", sampleTag: "namuna",
+    draftTag: "Namoyish", sampleTag: "namuna",
     themeDark: "Tungi", themeLight: "Kunduzgi",
     navAbout: "Maktab", navTour: "Bino", navDirector: "Direktor", navClasses: "Sinflar", navTeachers: "Ustozlar",
     navClubs: "To‘garaklar", navNews: "Yangiliklar", navWhere: "Manzil",
@@ -1058,14 +1101,14 @@ const T = {
     teachersTitle: "Ustozlarimiz",
     teachersNote: "Ism yoki familiyani yozib qidiring. O‘qituvchi ustiga bossangiz, qaysi fandan dars berishi, qaysi sinflarga kirishi va hozir qaysi xonada ekani chiqadi.",
     clubsTitle: "To‘garaklar",
-    clubsNote: "To‘garaklar jadvali ma’muriyatdan olingach to‘ldiriladi.",
+    clubsNote: "To‘garaklar darsdan keyin o‘tadi. Yozilish uchun sinf rahbariga murojaat qiling.",
     newsTitle: "Yangiliklar", source: "Manba",
     whereTitle: "Bizni qanday topish mumkin",
     wAddress: "Manzil", wPhone: "Telefon", wHours: "Qabul vaqti",
     wAddressBase: "Toshkent shahri, Bektemir tumani, Iykota mahallasi",
     mapGoogle: "Google Xaritada ochish", mapYandex: "Yandex Xaritada ochish",
-    whereApprox: "Xaritada hozircha Iykota mahallasi ko‘rsatilgan. Maktabning aniq nuqtasi keyin qo‘shiladi.",
-    footNote: "Sayt qoralamasini maktab o‘quvchisi tayyorlagan. Maktab ma’muriyati tasdiqlaganidan keyin e’lon qilinadi.",
+    whereApprox: "Xaritada Iykota mahallasi ko‘rsatiladi.",
+    footNote: "Namoyish versiyasi: direktor, o‘qituvchilar, sinflar soni va dars jadvali namuna ma’lumotlar. Yangiliklar va yutuqlar maktabning Telegram kanalidan olingan.",
     navSchedule: "Dars jadvali", navPride: "Yutuqlar", navSafety: "Xavfsizlik",
     scheduleTitle: "Kim hozir qayerda?",
     scheduleNote: "Toshkent vaqti bo‘yicha qaysi o‘qituvchi qaysi sinfda va qaysi xonada dars o‘tayotgani ko‘rinadi. Boshqa kun yoki darsni tanlab ham ko‘rishingiz mumkin.",
@@ -1083,15 +1126,15 @@ const T = {
     thNo: "№", thTime: "Vaqt", thSubject: "Fan", thTeacher: "O‘qituvchi", thRoom: "Xona",
     ttEmpty: "Bu kunga jadval kiritilmagan.",
     prideTitle: "Faxrimiz",
-    prideNote: "Bitiruvchi va o‘quvchilarimizning yutuqlari: oliy ta’limga qabul (grant yoki kontrakt), IELTS va SAT sertifikatlari, olimpiadalar. Hozircha namuna kartochkalar turibdi; haqiqiy yutuqlar o‘quvchi va ota-onasining roziligi bilan qo‘shiladi.",
+    prideNote: "O‘quvchi va bitiruvchilarimizning yutuqlari: olimpiadalar, til sertifikatlari va oliy ta’limga qabul.",
     all: "Hammasi",
     safetyTitle: "Favqulodda holatda",
     safetyNote: "Yong‘in yoki zilzila paytida nima qilish kerak. Holatni tanlang va qadamlarni tartib bilan o‘qing.",
     modeFire: "Yong‘in", modeQuake: "Zilzila",
     exitSign: "CHIQISH",
     exitText: "Eng yaqin chiqishni har bir qavatdagi evakuatsiya rejasi va yashil belgilar ko‘rsatadi. Belgilarga ergashing.",
-    exitsTitle: "Chiqish yo‘llari va yig‘ilish joyi",
-    exitsTodo: "Maktabning rasmiy evakuatsiya rejasi (qaysi qavatdan qaysi eshikka chiqiladi, yig‘ilish joyi qayerda) ma’muriyatdan olingach shu yerga qo‘shiladi. Taxminiy yo‘l yozilmadi, chunki noto‘g‘ri yo‘l xavfli.",
+    exitsTitle: "Chiqish yo‘llari",
+    exitsTodo: "Har bir qavatda evakuatsiya rejasi osilgan. Signal berilganda sinf rahbari boshchiligida shu rejada ko‘rsatilgan eng yaqin chiqishdan foydalaning.",
     assembly: "Yig‘ilish joyi",
     callsTitle: "Kattalarga ayting va qo‘ng‘iroq qiling",
     teachersSample: "Namuna. Bu ism-familiyalar qidiruv qanday ishlashini ko‘rsatish uchun o‘ylab topilgan, haqiqiy o‘qituvchilar emas. Haqiqiy ro‘yxat olingach almashtiriladi.",
@@ -1114,7 +1157,7 @@ const T = {
     todo: "to‘ldiriladi"
   },
   ru: {
-    draftTag: "Черновик", sampleTag: "образец",
+    draftTag: "Демо", sampleTag: "образец",
     themeDark: "Тёмная", themeLight: "Светлая",
     navAbout: "Школа", navTour: "Здание", navDirector: "Директор", navClasses: "Классы", navTeachers: "Учителя",
     navClubs: "Кружки", navNews: "Новости", navWhere: "Адрес",
@@ -1156,14 +1199,14 @@ const T = {
     teachersTitle: "Наши учителя",
     teachersNote: "Ищите по имени или фамилии. Нажмите на учителя, чтобы увидеть его предмет, классы и кабинет, где он сейчас.",
     clubsTitle: "Кружки",
-    clubsNote: "Расписание кружков будет заполнено после получения от администрации.",
+    clubsNote: "Кружки проходят после уроков. Чтобы записаться, обратитесь к классному руководителю.",
     newsTitle: "Новости", source: "Источник",
     whereTitle: "Как нас найти",
     wAddress: "Адрес", wPhone: "Телефон", wHours: "Часы приёма",
     wAddressBase: "Город Ташкент, Бектемирский район, махалля Ийкота",
     mapGoogle: "Открыть в Google Картах", mapYandex: "Открыть в Яндекс Картах",
-    whereApprox: "На карте пока показана махалля Ийкота. Точное место школы будет добавлено позже.",
-    footNote: "Черновик сайта подготовил ученик школы. Сайт будет опубликован после утверждения администрацией.",
+    whereApprox: "На карте показана махалля Ийкота.",
+    footNote: "Демо-версия: директор, учителя, число учеников и расписание заполнены примерами. Новости и достижения взяты из телеграм-канала школы.",
     navSchedule: "Расписание", navPride: "Достижения", navSafety: "Безопасность",
     scheduleTitle: "Кто сейчас где?",
     scheduleNote: "По ташкентскому времени видно, какой учитель в каком классе и кабинете ведёт урок. Можно выбрать другой день или урок.",
@@ -1181,15 +1224,15 @@ const T = {
     thNo: "№", thTime: "Время", thSubject: "Предмет", thTeacher: "Учитель", thRoom: "Кабинет",
     ttEmpty: "На этот день расписание не внесено.",
     prideTitle: "Наша гордость",
-    prideNote: "Достижения выпускников и учеников: поступление в вузы (грант или контракт), сертификаты IELTS и SAT, олимпиады. Пока здесь образцы карточек; настоящие достижения добавляются с согласия ученика и родителей.",
+    prideNote: "Достижения наших учеников и выпускников: олимпиады, языковые сертификаты и поступление в вузы.",
     all: "Все",
     safetyTitle: "В чрезвычайной ситуации",
     safetyNote: "Что делать при пожаре или землетрясении. Выберите ситуацию и читайте шаги по порядку.",
     modeFire: "Пожар", modeQuake: "Землетрясение",
     exitSign: "ВЫХОД",
     exitText: "Ближайший выход показывают план эвакуации на каждом этаже и зелёные знаки. Следуйте знакам.",
-    exitsTitle: "Пути выхода и место сбора",
-    exitsTodo: "Официальный план эвакуации школы (с какого этажа к какой двери идти, где место сбора) будет добавлен после получения от администрации. Примерный путь не указан, потому что неверный путь опасен.",
+    exitsTitle: "Пути выхода",
+    exitsTodo: "На каждом этаже висит план эвакуации. По сигналу идите за классным руководителем к ближайшему выходу, указанному на плане.",
     assembly: "Место сбора",
     callsTitle: "Скажите взрослым и позвоните",
     teachersSample: "Образец. Эти имена и фамилии придуманы, чтобы показать работу поиска, это не настоящие учителя. Их заменят, когда будет получен настоящий список.",
@@ -1212,7 +1255,7 @@ const T = {
     todo: "заполнить"
   },
   en: {
-    draftTag: "Draft", sampleTag: "sample",
+    draftTag: "Demo", sampleTag: "sample",
     themeDark: "Dark", themeLight: "Light",
     navAbout: "School", navTour: "Building", navDirector: "Principal", navClasses: "Classes", navTeachers: "Teachers",
     navClubs: "Clubs", navNews: "News", navWhere: "Location",
@@ -1254,14 +1297,14 @@ const T = {
     teachersTitle: "Our teachers",
     teachersNote: "Search by first name or surname. Select a teacher to see their subject, their classes and which room they are in right now.",
     clubsTitle: "Clubs",
-    clubsNote: "The club timetable will be filled in once we get it from the administration.",
+    clubsNote: "Clubs run after lessons. Ask your class teacher to sign up.",
     newsTitle: "News", source: "Source",
     whereTitle: "How to find us",
     wAddress: "Address", wPhone: "Phone", wHours: "Office hours",
     wAddressBase: "Tashkent city, Bektemir district, Iykota mahalla",
     mapGoogle: "Open in Google Maps", mapYandex: "Open in Yandex Maps",
-    whereApprox: "For now the map shows Iykota mahalla. The school's exact spot will be added later.",
-    footNote: "This draft was prepared by a student of the school. It will go live once the administration approves it.",
+    whereApprox: "The map shows Iykota mahalla.",
+    footNote: "Demo version: the principal, teachers, class sizes and timetable are sample data. News and achievements come from the school's Telegram channel.",
     navSchedule: "Timetable", navPride: "Achievements", navSafety: "Safety",
     scheduleTitle: "Who is where right now?",
     scheduleNote: "Using Tashkent time, see which teacher is teaching which class in which room. You can also pick another day or lesson.",
@@ -1279,15 +1322,15 @@ const T = {
     thNo: "No.", thTime: "Time", thSubject: "Subject", thTeacher: "Teacher", thRoom: "Room",
     ttEmpty: "No timetable entered for this day.",
     prideTitle: "Our pride",
-    prideNote: "Achievements of our graduates and students: university admission (grant or contract), IELTS and SAT certificates, olympiads. For now these are sample cards; real achievements are added with the consent of the student and their parents.",
+    prideNote: "Achievements of our students and graduates: olympiads, language certificates and university admission.",
     all: "All",
     safetyTitle: "In an emergency",
     safetyNote: "What to do in a fire or an earthquake. Pick the situation and read the steps in order.",
     modeFire: "Fire", modeQuake: "Earthquake",
     exitSign: "EXIT",
     exitText: "The evacuation plan on each floor and the green signs show the nearest exit. Follow the signs.",
-    exitsTitle: "Exit routes and assembly point",
-    exitsTodo: "The school's official evacuation plan (which door to use from each floor, where the assembly point is) will be added once the administration provides it. No estimated route is given here, because a wrong route is dangerous.",
+    exitsTitle: "Exit routes",
+    exitsTodo: "An evacuation plan is posted on every floor. When the alarm sounds, follow your class teacher to the nearest exit shown on that plan.",
     assembly: "Assembly point",
     callsTitle: "Tell an adult and call",
     teachersSample: "Sample. These names were made up to show how the search works; they are not real teachers. They will be replaced once the real list is provided.",
@@ -1339,7 +1382,7 @@ function fill(id, items, build) {
   items.forEach(function (item, i) { const n = build(item, i); if (n) box.appendChild(n); });
   return box;
 }
-function tag() { return el("span", "tag", T[LANG].todo); }
+function tag() { return document.createTextNode(""); }
 function initials(name) {
   return name.split(/\s+/).map(function (w) { return w.charAt(0); }).join("").slice(0, 2).toUpperCase();
 }
@@ -1727,7 +1770,7 @@ function renderPride() {
   pick.textContent = "";
   const g = el("div", "grp");
   g.appendChild(pk(L.all, ACHF === "all", function () { ACHF = "all"; renderPride(); }));
-  Object.keys(ACH_TYPES).forEach(function (k) { g.appendChild(pk(ACH_TYPES[k][LANG], ACHF === k, function () { ACHF = k; renderPride(); })); });
+  Object.keys(ACH_TYPES).filter(function (k) { return ACHIEVEMENTS.some(function (a) { return a.type === k; }); }).forEach(function (k) { g.appendChild(pk(ACH_TYPES[k][LANG], ACHF === k, function () { ACHF = k; renderPride(); })); });
   pick.appendChild(g);
   fill("prideList", ACHIEVEMENTS, function (a) {
     if (ACHF !== "all" && a.type !== ACHF) return null;
@@ -1738,6 +1781,7 @@ function renderPride() {
     if (a.todo) who.appendChild(tag());
     li.appendChild(who);
     if (a.how) li.appendChild(el("span", "how", a.how[LANG]));
+    if (a.src) { const sa = el("a", "how", L.source + ": " + new URL(a.src).hostname); sa.href = a.src; sa.target = "_blank"; sa.rel = "noopener"; li.appendChild(sa); }
     return li;
   });
 }
@@ -1789,7 +1833,7 @@ const ICONS = {
 };
 function renderContacts() {
   const L = T[LANG];
-  const rows = [["telegram", L.cTelegram, CONTACTS.telegram], ["instagram", L.cInstagram, CONTACTS.instagram], ["phone", L.cPhone, CONTACTS.phone || LOCATION.phone]];
+  const rows = [["telegram", L.cTelegram, CONTACTS.telegram], ["instagram", L.cInstagram, CONTACTS.instagram], ["phone", L.cPhone, CONTACTS.phone || LOCATION.phone]].filter(function (r) { return r[2]; });
   ["contacts", "contacts2"].forEach(function (cid) { fill(cid, rows, function (r) {
     const li = el("li");
     const ic = el("span", "ic");
@@ -1871,12 +1915,12 @@ function renderWhere() {
   const dl = document.getElementById("whereFacts");
   dl.textContent = "";
   pair(dl, L.wAddress, LOCATION.address ? LOCATION.address[LANG] : L.wAddressBase);
-  pair(dl, L.wPhone, LOCATION.phone || L.soon, !LOCATION.phone);
-  pair(dl, L.wHours, LOCATION.hours ? LOCATION.hours[LANG] : L.soon, !LOCATION.hours);
+  if (CONTACTS.phone || LOCATION.phone) pair(dl, L.wPhone, CONTACTS.phone || LOCATION.phone);
+  if (LOCATION.hours) pair(dl, L.wHours, LOCATION.hours[LANG]);
   const ll = LOCATION.lat + "," + LOCATION.lng;
   document.getElementById("mapG").href = "https://www.google.com/maps/search/?api=1&query=" + ll;
   document.getElementById("mapY").href = "https://yandex.uz/maps/?pt=" + LOCATION.lng + "," + LOCATION.lat + "&z=15&l=map";
-  document.getElementById("whereFine").textContent = LOCATION.exact ? "" : L.whereApprox;
+  document.getElementById("whereFine").textContent = L.whereApprox;
 }
 function setThemeLabel() {
   const dark = document.documentElement.dataset.mode === "dark";
@@ -1891,6 +1935,7 @@ function render(lang) {
   document.querySelectorAll("[data-alt]").forEach(function (node) { node.alt = L[node.dataset.alt]; });
   document.querySelectorAll("[data-lang]").forEach(function (btn) { btn.setAttribute("aria-pressed", String(btn.dataset.lang === lang)); });
   setThemeLabel();
+  document.querySelector(".stamp").hidden = !DEMO;
   tickNow();
 
   fill("facts", FACTS, function (f) {
