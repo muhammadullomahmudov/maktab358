@@ -81,11 +81,21 @@
   .langs { display: flex; border: 1px solid var(--line); border-radius: 999px; overflow: hidden; background: var(--card); padding: 3px; gap: 2px; }
   .langs button { font-weight: 600; font-size: 13px; padding: 4px 10px; border: 0; border-radius: 999px; background: transparent; cursor: pointer; }
   .langs button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
-  .theme { display: inline-flex; align-items: center; gap: 7px; cursor: pointer; border: 1px solid var(--line); border-radius: 999px; background: var(--card); font-size: 13px; font-weight: 600; padding: 7px 13px 7px 10px; }
-  .theme svg { width: 16px; height: 16px; display: block; }
-  .theme .moon { display: none; }
-  :root[data-mode="dark"] .theme .sun { display: none; }
-  :root[data-mode="dark"] .theme .moon { display: block; }
+  /* Kunduzgi rejimda oy, tungi rejimda quyosh ko'rinadi (bosilganda biri ikkinchisiga aylanadi) */
+  .theme { flex: none; width: 40px; height: 40px; padding: 0; display: grid; place-items: center; cursor: pointer; border: 1px solid var(--line); border-radius: 50%; background: var(--card); color: var(--a); box-shadow: var(--shadow); overflow: hidden; }
+  .theme svg { width: 24px; height: 24px; display: block; }
+  .theme .orb, .theme .stars circle { fill: currentColor; }
+  .theme .rays path { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; }
+  .theme .orb, .theme .rays, .theme .cut, .theme .stars { transform-box: fill-box; transform-origin: center; }
+  .theme .rays { opacity: 0; transform: scale(.3) rotate(-90deg); }
+  :root[data-mode="dark"] .theme { color: var(--b); }
+  :root[data-mode="dark"] .theme .orb { transform: scale(.6); }
+  :root[data-mode="dark"] .theme .cut { transform: translate(11px, -11px); }
+  :root[data-mode="dark"] .theme .rays { opacity: 1; transform: none; }
+  :root[data-mode="dark"] .theme .stars { opacity: 0; transform: scale(0); }
+  .util .wrap { flex-wrap: nowrap; }
+  .util .stamp { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .langs { flex: none; }
 
   /* Bosh qism */
   .hero { position: relative; }
@@ -157,7 +167,7 @@
   .dots358 { display: block; width: 100%; height: 170px; background: var(--card); border: 1px solid var(--line); border-radius: var(--r); box-shadow: var(--shadow); margin-bottom: 8px; }
 
   /* Maktab yo'li */
-  .path { list-style: none; margin: 0; padding: 0 0 0 34px; position: relative; max-width: 760px; }
+  .path { list-style: none; margin: 0; padding: 0 0 0 34px; position: relative; max-width: 760px; overflow-x: clip; }
   .path::before { content: ""; position: absolute; left: 10px; top: 6px; bottom: 6px; width: 4px; border-radius: 2px; background: var(--line); }
   .path::after { content: ""; position: absolute; left: 10px; top: 6px; width: 4px; border-radius: 2px; background: var(--a); height: calc((100% - 12px) * var(--p, 0)); }
   .path li { position: relative; padding: 0 0 26px; }
@@ -486,6 +496,13 @@
     .chip3.c2 { animation: bob 6s ease-in-out -2s infinite; }
     .marquee div { animation: slide 28s linear infinite; }
     .cube.spin { animation: spin 16s linear infinite; }
+    .theme .orb, .theme .rays, .theme .cut, .theme .stars { transition: transform .6s cubic-bezier(.3, 1.5, .5, 1), opacity .4s; }
+    .theme svg { transition: transform .7s cubic-bezier(.3, 1.4, .5, 1); }
+    :root[data-mode="dark"] .theme svg { transform: rotate(180deg); }
+    .theme:hover svg { transform: rotate(20deg) scale(1.1); }
+    :root[data-mode="dark"] .theme:hover svg { transform: rotate(225deg) scale(1.1); }
+    .theme .stars circle { animation: twinkle 2.4s ease-in-out infinite; }
+    .theme .stars circle + circle { animation-delay: 1.2s; }
     .medal { animation: sway2 5s ease-in-out infinite; transition: transform .8s cubic-bezier(.2, .8, .2, 1); }
     .pr:hover .medal { animation: none; transform: rotateY(360deg); }
     .path li { transition: opacity .6s ease-out, transform .6s cubic-bezier(.2, .8, .2, 1); }
@@ -512,6 +529,7 @@
   @keyframes orbit { from { transform: rotateX(-24deg) rotateY(-32deg); } to { transform: rotateX(-24deg) rotateY(328deg); } }
   @keyframes sway2 { 0%, 100% { transform: rotateY(-28deg); } 50% { transform: rotateY(28deg); } }
   @keyframes beat { 50% { transform: scale(1.25); } }
+  @keyframes twinkle { 50% { opacity: .2; } }
   @keyframes spin { from { transform: rotateX(-22deg) rotateY(0deg); } to { transform: rotateX(-22deg) rotateY(360deg); } }
   @keyframes sway { 0%, 100% { transform: translateY(18px) rotateX(-26deg) rotateY(-44deg); } 50% { transform: translateY(18px) rotateX(-26deg) rotateY(-20deg); } }
   @keyframes pop { from { opacity: 0; transform: rotate(-30deg) scale(2); } }
@@ -532,9 +550,12 @@
       <button type="button" data-lang="en">Eng</button>
     </div>
     <button type="button" class="theme" id="themeBtn">
-      <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5 19 19M5 19l1.5-1.5M17.5 6.5 19 5"/></svg>
-      <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>
-      <span id="themeLabel"></span>
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <mask id="moonCut"><rect width="24" height="24" fill="#fff"/><circle class="cut" cx="17" cy="7.500" r="6.500" fill="#000"/></mask>
+        <circle class="orb" cx="12" cy="12" r="7.500" mask="url(#moonCut)"/>
+        <g class="rays"><path d="M12 1.500v2.500M12 20v2.500M1.500 12H4M20 12h2.500M4.600 4.600l1.800 1.800M17.600 17.600l1.800 1.800M4.600 19.400l1.800-1.800M17.600 6.400l1.800-1.800"/></g>
+        <g class="stars"><circle cx="20" cy="15.500" r="1"/><circle cx="16.500" cy="20.500" r=".7"/></g>
+      </svg>
     </button>
   </div>
 </div>
@@ -1190,7 +1211,7 @@ const STAGES = [
 const T = {
   uz: {
     draftTag: "Namoyish", sampleTag: "namuna",
-    themeDark: "Tungi", themeLight: "Kunduzgi",
+    themeDark: "Tungi rejimga o‘tish", themeLight: "Kunduzgi rejimga o‘tish",
     navAbout: "Maktab", navTour: "Bino", navDirector: "Direktor", navClasses: "Sinflar", navTeachers: "Ustozlar",
     navClubs: "To‘garaklar", navNews: "Yangiliklar", navWhere: "Manzil",
     h1: "358-sonli umumta’lim maktabi", h1rest: "-sonli umumta’lim maktabi",
@@ -1293,7 +1314,7 @@ const T = {
   },
   ru: {
     draftTag: "Демо", sampleTag: "образец",
-    themeDark: "Тёмная", themeLight: "Светлая",
+    themeDark: "Включить тёмную тему", themeLight: "Включить светлую тему",
     navAbout: "Школа", navTour: "Здание", navDirector: "Директор", navClasses: "Классы", navTeachers: "Учителя",
     navClubs: "Кружки", navNews: "Новости", navWhere: "Адрес",
     h1: "Общеобразовательная школа №358", h1rest: " — общеобразовательная школа",
@@ -1396,7 +1417,7 @@ const T = {
   },
   en: {
     draftTag: "Demo", sampleTag: "sample",
-    themeDark: "Dark", themeLight: "Light",
+    themeDark: "Switch to dark mode", themeLight: "Switch to light mode",
     navAbout: "School", navTour: "Building", navDirector: "Principal", navClasses: "Classes", navTeachers: "Teachers",
     navClubs: "Clubs", navNews: "News", navWhere: "Location",
     h1: "General Secondary School No. 358", h1rest: " General Secondary School",
@@ -2300,7 +2321,10 @@ function renderWhere() {
 }
 function setThemeLabel() {
   const dark = document.documentElement.dataset.mode === "dark";
-  document.getElementById("themeLabel").textContent = dark ? T[LANG].themeLight : T[LANG].themeDark;
+  const tb = document.getElementById("themeBtn");
+  const tl = dark ? T[LANG].themeLight : T[LANG].themeDark;
+  tb.setAttribute("aria-label", tl);
+  tb.title = tl;
 }
 
 function render(lang) {
