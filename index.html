@@ -130,6 +130,58 @@
   .now .left { margin: 0; font-size: 15px; font-variant-numeric: tabular-nums; color: var(--muted); }
   .now .left b { color: var(--a); }
 
+  /* Mening sinfim va qo'ng'iroq */
+  .mine { margin-top: 12px; max-width: 460px; padding: 12px 16px; display: grid; grid-template-columns: auto 1fr auto; gap: 8px 12px; align-items: center; }
+  .mine label { font-size: 13px; font-weight: 700; }
+  .mine select { font: inherit; font-weight: 600; color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 999px; padding: 6px 12px; min-width: 0; }
+  .bellbtn { display: inline-flex; align-items: center; gap: 6px; cursor: pointer; font-size: 13px; font-weight: 600; border: 1px solid var(--line); border-radius: 999px; background: var(--bg); padding: 6px 12px 6px 9px; }
+  .bellbtn svg { width: 16px; height: 16px; display: block; }
+  .bellbtn[aria-pressed="true"] { background: var(--b); color: var(--on-b); border-color: transparent; }
+  .myline { grid-column: 1 / -1; margin: 0; font-size: 15px; color: var(--muted); }
+  .myline b { color: var(--ink); }
+  .now .left.soonbell b { color: var(--b); }
+
+  /* Ta'tilgacha sanoq */
+  .count { margin-top: 26px; display: flex; flex-wrap: wrap; gap: 16px 32px; align-items: center; justify-content: space-between; background: var(--ink); color: var(--bg); border-color: transparent; }
+  .count > * { min-width: 0; }
+  .count .cdl { margin: 0; font-weight: 800; font-size: clamp(1.2rem, 3vw, 1.7rem); letter-spacing: -.03em; line-height: 1.15; }
+  .count .fine { color: inherit; opacity: .7; margin: 4px 0 0; }
+  .digits { display: flex; gap: 10px; margin: 0; }
+  .digits div { background: color-mix(in srgb, var(--bg) 12%, transparent); border-radius: 14px; padding: 8px 6px 9px; min-width: 66px; text-align: center; }
+  .digits dd { margin: 0; font-weight: 800; font-size: clamp(1.5rem, 5vw, 2.3rem); letter-spacing: -.04em; line-height: 1; font-variant-numeric: tabular-nums; color: var(--b); }
+  .digits dt { font-size: 12px; font-weight: 600; opacity: .75; }
+  @media (max-width: 560px) { .digits { gap: 6px; width: 100%; } .digits div { flex: 1; min-width: 0; } }
+
+  /* 805 nuqtadan yig'iladigan "358" */
+  .dots358 { display: block; width: 100%; height: 170px; background: var(--card); border: 1px solid var(--line); border-radius: var(--r); box-shadow: var(--shadow); margin-bottom: 8px; }
+
+  /* Maktab yo'li */
+  .path { list-style: none; margin: 0; padding: 0 0 0 34px; position: relative; max-width: 760px; }
+  .path::before { content: ""; position: absolute; left: 10px; top: 6px; bottom: 6px; width: 4px; border-radius: 2px; background: var(--line); }
+  .path::after { content: ""; position: absolute; left: 10px; top: 6px; width: 4px; border-radius: 2px; background: var(--a); height: calc((100% - 12px) * var(--p, 0)); }
+  .path li { position: relative; padding: 0 0 26px; }
+  .path li:last-child { padding-bottom: 0; }
+  .path li::before { content: ""; position: absolute; left: -31px; top: 4px; width: 18px; height: 18px; border-radius: 50%; background: var(--card); border: 4px solid var(--a); z-index: 1; }
+  .path .yr { font-weight: 800; font-size: 13px; color: var(--a); margin: 0 0 2px; }
+  .path h3 { font-weight: 800; font-size: 1.25rem; letter-spacing: -.02em; margin: 0 0 4px; }
+  .path p { margin: 0; color: var(--muted); max-width: 60ch; }
+  .path li.big::before { background: var(--b); border-color: var(--b); box-shadow: 0 0 0 5px color-mix(in srgb, var(--b) 30%, transparent); }
+
+  /* 3D medal */
+  .medalbox { perspective: 500px; float: right; margin: -4px -4px 6px 10px; }
+  .medal { display: block; width: 58px; height: 58px; position: relative; transform-style: preserve-3d; }
+  .medal i { position: absolute; inset: 0; border-radius: 50%; display: grid; place-items: center; font-style: normal; font-weight: 800; font-size: 15px; letter-spacing: -.02em; backface-visibility: hidden; background: radial-gradient(circle at 35% 30%, color-mix(in srgb, var(--b) 60%, #fff), var(--b) 60%, color-mix(in srgb, var(--b) 70%, #000)); color: var(--on-b); box-shadow: inset 0 0 0 4px color-mix(in srgb, var(--b) 70%, #000); }
+  .medal i + i { transform: rotateY(180deg); }
+
+  /* Kun vaqtiga qarab o'zgaradigan fon */
+  .bg3d::before { content: ""; position: absolute; inset: 0; z-index: 2; background: var(--skytint, transparent); transition: background-color 2s; }
+  :root[data-sky="morning"] { --skytint: rgba(255, 190, 110, .22); }
+  :root[data-sky="evening"] { --skytint: rgba(255, 130, 40, .30); }
+  :root[data-sky="night"] { --skytint: rgba(8, 16, 60, .55); --bgop: .42; }
+  :root[data-sky="evening"] .win i, :root[data-sky="night"] .win i { background: var(--b); box-shadow: 0 0 14px 3px var(--b); }
+  .confetti { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 50; }
+  #egg { cursor: pointer; -webkit-user-select: none; user-select: none; }
+
   /* Suzib yuruvchi shisha menyu */
   .tabs { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 10px); z-index: 6; }
   .tabs nav { display: flex; gap: 2px; overflow-x: auto; white-space: nowrap; scrollbar-width: none; background: var(--glass); -webkit-backdrop-filter: blur(18px) saturate(1.4); backdrop-filter: blur(18px) saturate(1.4); border: 1px solid var(--line); border-radius: 999px; padding: 5px; box-shadow: var(--shadow); }
@@ -428,6 +480,12 @@
     .chip3.c2 { animation: bob 6s ease-in-out -2s infinite; }
     .marquee div { animation: slide 28s linear infinite; }
     .cube.spin { animation: spin 16s linear infinite; }
+    .medal { animation: sway2 5s ease-in-out infinite; transition: transform .8s cubic-bezier(.2, .8, .2, 1); }
+    .pr:hover .medal { animation: none; transform: rotateY(360deg); }
+    .path li { transition: opacity .6s ease-out, transform .6s cubic-bezier(.2, .8, .2, 1); }
+    .path li.wait { opacity: .1; transform: translateX(26px); }
+    .path::after { transition: height .25s linear; }
+    .now .left.soonbell b { animation: beat .5s ease-in-out infinite; display: inline-block; }
     .bgworld { animation: orbit 120s linear infinite; }
     .r3scene { animation: fly .5s cubic-bezier(.2, .9, .2, 1) both; }
     .dio.sway { animation: sway 7s ease-in-out infinite; }
@@ -446,6 +504,8 @@
   @keyframes bob { 50% { margin-top: -10px; } }
   @keyframes slide { to { transform: translateX(-50%); } }
   @keyframes orbit { from { transform: rotateX(-24deg) rotateY(-32deg); } to { transform: rotateX(-24deg) rotateY(328deg); } }
+  @keyframes sway2 { 0%, 100% { transform: rotateY(-28deg); } 50% { transform: rotateY(28deg); } }
+  @keyframes beat { 50% { transform: scale(1.25); } }
   @keyframes spin { from { transform: rotateX(-22deg) rotateY(0deg); } to { transform: rotateX(-22deg) rotateY(360deg); } }
   @keyframes sway { 0%, 100% { transform: translateY(18px) rotateX(-26deg) rotateY(-44deg); } 50% { transform: translateY(18px) rotateX(-26deg) rotateY(-20deg); } }
   @keyframes pop { from { opacity: 0; transform: rotate(-30deg) scale(2); } }
@@ -477,7 +537,7 @@
   <div class="wrap">
     <div>
       <p class="place" data-t="place"></p>
-      <h1><em>358</em><span data-t="h1rest"></span></h1>
+      <h1><em id="egg">358</em><span data-t="h1rest"></span></h1>
       <p class="lead" data-t="lead"></p>
       <div class="btns">
         <a class="btn fill" href="#tour" data-t="cta"></a>
@@ -493,6 +553,15 @@
           <p class="what" id="nowWhat"></p>
           <p class="left" id="nowLeft"></p>
         </div>
+      </div>
+      <div class="mine paper">
+        <label for="myClass" data-t="myClass"></label>
+        <select id="myClass"></select>
+        <button type="button" class="bellbtn" id="bellBtn" aria-pressed="false">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9a6 6 0 0 1 12 0c0 6 2 7 2 7H4s2-1 2-7zm4 10a2 2 0 0 0 4 0"/></svg>
+          <span id="bellLbl"></span>
+        </button>
+        <p class="myline" id="myLine"></p>
       </div>
     </div>
     <div class="scene" id="scene">
@@ -519,6 +588,7 @@
       <a href="#teachers" data-t="navTeachers"></a>
       <a href="#schedule" data-t="navSchedule"></a>
       <a href="#clubs" data-t="navClubs"></a>
+      <a href="#path" data-t="navPath"></a>
       <a href="#pride" data-t="navPride"></a>
       <a href="#news" data-t="navNews"></a>
       <a href="#safety" data-t="navSafety"></a>
@@ -529,6 +599,16 @@
 </div>
 
 <div class="marquee" aria-hidden="true"><div id="marquee"></div></div>
+
+<div class="wrap">
+  <div class="count tile rv">
+    <div>
+      <p class="cdl" id="cdLabel"></p>
+      <p class="fine" id="cdDates"></p>
+    </div>
+    <dl class="digits" id="cdDigits"></dl>
+  </div>
+</div>
 
 <main>
   <section id="about">
@@ -586,6 +666,8 @@
   <section id="classes">
     <div class="wrap rv">
       <h2><span data-t="classesTitle"></span></h2>
+      <canvas class="dots358" id="dots" height="170" role="img"></canvas>
+      <p class="hint" data-t="dotsCap"></p>
       <dl class="totals" id="totals"></dl>
       <p class="hint" data-t="classHint"></p>
       <div id="grades"></div>
@@ -625,6 +707,13 @@
       <h2><span data-t="clubsTitle"></span></h2>
       <p class="note" data-t="clubsNote"></p>
       <ul class="cards" id="clubList"></ul>
+    </div>
+  </section>
+
+  <section id="path">
+    <div class="wrap">
+      <h2><span data-t="pathTitle"></span></h2>
+      <ol class="path" id="pathList"></ol>
     </div>
   </section>
 
@@ -988,6 +1077,36 @@ const ROOMS = [
     text: { uz: "Ochiq havodagi futbol maydoni. Yonida sport maydonchasi ham bor.", ru: "Футбольное поле под открытым небом. Рядом есть спортивная площадка.", en: "An outdoor football pitch, with a sports court next to it." } }
 ];
 
+/* TA'TILLAR (sanoq shundan hisoblanadi). Sanalar namuna: maktabning o'quv taqvimiga qarab to'g'rilang. */
+const HOLIDAYS = [
+  { name: { uz: "Kuzgi ta’til", ru: "Осенние каникулы", en: "Autumn break" }, start: "2026-11-04", end: "2026-11-10" },
+  { name: { uz: "Qishki ta’til", ru: "Зимние каникулы", en: "Winter break" }, start: "2026-12-28", end: "2027-01-10" },
+  { name: { uz: "Bahorgi ta’til", ru: "Весенние каникулы", en: "Spring break" }, start: "2027-03-21", end: "2027-03-28" },
+  { name: { uz: "Yozgi ta’til", ru: "Летние каникулы", en: "Summer holidays" }, start: "2027-05-26", end: "2027-09-01" }
+];
+
+/* MAKTAB YO'LI (tarix chizig'i). big: true — muhim voqea. */
+const PATH = [
+  { big: true, when: { uz: "2025", ru: "2025", en: "2025" },
+    title: { uz: "Maktab ochildi", ru: "Школа открылась", en: "The school opened" },
+    text: { uz: "Iykota mahallasida qariyb 1000 o‘quvchiga mo‘ljallangan yangi bino foydalanishga topshirildi.", ru: "В махалле Ийкота сдано в эксплуатацию новое здание почти на 1000 учеников.", en: "A new building for about 1,000 students opened in Iykota mahalla." } },
+  { big: true, when: { uz: "20-mart, 2025", ru: "20 марта 2025", en: "20 Mar 2025" },
+    title: { uz: "Prezident tashrifi", ru: "Визит Президента", en: "The President's visit" },
+    text: { uz: "Shavkat Mirziyoyev maktab bilan tanishdi va o‘qituvchilar bilan suhbatlashdi.", ru: "Шавкат Мирзиёев осмотрел школу и побеседовал с учителями.", en: "Shavkat Mirziyoyev toured the school and talked with the teachers." } },
+  { when: { uz: "Aprel, 2025", ru: "Апрель 2025", en: "Apr 2025" },
+    title: { uz: "Tajriba maktabi", ru: "Школа передового опыта", en: "A model school" },
+    text: { uz: "250 ga yaqin ta’lim xodimi maktabimiz tajribasini o‘rganish uchun seminarga keldi.", ru: "Около 250 работников образования приехали на семинар изучать опыт нашей школы.", en: "About 250 education staff came to a seminar to study our school's experience." } },
+  { when: { uz: "Yoz, 2026", ru: "Лето 2026", en: "Summer 2026" },
+    title: { uz: "Vazir tashrifi", ru: "Визит министра", en: "The minister's visit" },
+    text: { uz: "Maktabgacha va maktab ta’limi vaziri yozgi sog‘lomlashtirish dasturi bilan tanishdi.", ru: "Министр дошкольного и школьного образования ознакомилась с летней оздоровительной программой.", en: "The Minister of Preschool and School Education saw the summer health programme." } },
+  { big: true, when: { uz: "Sentabr, 2026", ru: "Сентябрь 2026", en: "Sep 2026" },
+    title: { uz: "Birinchi xalqaro oltin medal", ru: "Первая международная золотая медаль", en: "First international gold medal" },
+    text: { uz: "8-B sinf o‘quvchisi Karimov Jumanazar Turkiyadagi JOEY Word Final 2026 olimpiadasida g‘olib bo‘ldi.", ru: "Ученик 8-Б Каримов Жуманазар победил на олимпиаде JOEY Word Final 2026 в Турции.", en: "Jumanazar Karimov of class 8-B won the JOEY Word Final 2026 olympiad in Turkey." } },
+  { when: { uz: "Sentabr, 2026", ru: "Сентябрь 2026", en: "Sep 2026" },
+    title: { uz: "2026–2027 o‘quv yili", ru: "2026–2027 учебный год", en: "The 2026–2027 school year" },
+    text: { uz: "Yangi o‘quv yili boshlandi, ingliz tilidan fan olimpiadasi va master-klass o‘tdi.", ru: "Начался новый учебный год, прошли олимпиада по английскому языку и мастер-класс.", en: "The new school year began, with an English olympiad and a master class." } }
+];
+
 /* YANGILIKLAR (maktabning Telegram kanalidan: t.me/yangimaktabimiz). Eng yangisi tepada. */
 const NEWS = [
   { when: { uz: "1-oktabr, 2026", ru: "1 октября 2026", en: "1 Oct 2026" },
@@ -1154,6 +1273,16 @@ const T = {
     usMadeTitle: "Saytni kim qildi",
     usMade: "Saytni maktab o‘quvchisi tayyorlagan. Xato yoki taklif bo‘lsa, maktab ma’muriyatiga murojaat qiling.",
     newsMore: function (n) { return "Ko‘proq (yana " + n + " ta)"; }, newsLess: "Yopish",
+    navPath: "Tarix", pathTitle: "Maktab yo‘li",
+    myClass: "Mening sinfim", myChoose: "Tanlang", bellOn: "Qo‘ng‘iroq yoniq", bellOff: "Qo‘ng‘iroq ovozi",
+    myNow: function (c, subj, room) { return [c + " hozir: ", subj + ", " + room]; },
+    myNext: function (c, subj, room) { return [c + ", keyingi dars: ", subj + ", " + room]; },
+    myInfo: function (c, teacher, room) { return [c + ": ", "sinf rahbari " + teacher + ", " + room]; },
+    myNone: "Sinfingizni tanlang: sayt uni eslab qoladi va darslaringizni ko‘rsatadi.",
+    greet: { morning: "Xayrli tong!", day: "Xayrli kun!", evening: "Xayrli kech!", night: "Xayrli tun!" },
+    cdUntil: function (n) { return n + "gacha"; }, cdNow: function (n) { return n + " davom etyapti. Darslar boshlanishiga"; },
+    cdUnits: ["kun", "soat", "daqiqa", "soniya"],
+    dotsCap: "Har bir nuqta — bitta o‘quvchi. Ustiga sichqonchani olib boring.",
     todo: "to‘ldiriladi"
   },
   ru: {
@@ -1247,6 +1376,16 @@ const T = {
     usMadeTitle: "Кто сделал сайт",
     usMade: "Сайт подготовил ученик школы. Если нашли ошибку или есть предложение, обратитесь в администрацию школы.",
     newsMore: function (n) { return "Показать ещё (" + n + ")"; }, newsLess: "Свернуть",
+    navPath: "История", pathTitle: "Путь школы",
+    myClass: "Мой класс", myChoose: "Выберите", bellOn: "Звонок включён", bellOff: "Звук звонка",
+    myNow: function (c, subj, room) { return [c + " сейчас: ", subj + ", " + room]; },
+    myNext: function (c, subj, room) { return [c + ", следующий урок: ", subj + ", " + room]; },
+    myInfo: function (c, teacher, room) { return [c + ": ", "классный руководитель " + teacher + ", " + room]; },
+    myNone: "Выберите свой класс: сайт запомнит его и покажет ваши уроки.",
+    greet: { morning: "Доброе утро!", day: "Добрый день!", evening: "Добрый вечер!", night: "Доброй ночи!" },
+    cdUntil: function (n) { return "До начала: " + n; }, cdNow: function (n) { return n + " идут. До начала уроков"; },
+    cdUnits: ["дней", "часов", "минут", "секунд"],
+    dotsCap: "Каждая точка — один ученик. Наведите на них мышь.",
     todo: "заполнить"
   },
   en: {
@@ -1340,6 +1479,16 @@ const T = {
     usMadeTitle: "Who made the site",
     usMade: "The site was prepared by a student of the school. If you spot a mistake or have a suggestion, please contact the school administration.",
     newsMore: function (n) { return "Show more (" + n + ")"; }, newsLess: "Close",
+    navPath: "History", pathTitle: "The school's path",
+    myClass: "My class", myChoose: "Choose", bellOn: "Bell is on", bellOff: "Bell sound",
+    myNow: function (c, subj, room) { return [c + " now: ", subj + ", " + room]; },
+    myNext: function (c, subj, room) { return [c + ", next lesson: ", subj + ", " + room]; },
+    myInfo: function (c, teacher, room) { return [c + ": ", "class teacher " + teacher + ", " + room]; },
+    myNone: "Choose your class: the site remembers it and shows your lessons.",
+    greet: { morning: "Good morning!", day: "Good afternoon!", evening: "Good evening!", night: "Good night!" },
+    cdUntil: function (n) { return "Until the " + n.toLowerCase(); }, cdNow: function (n) { return n + " is on. Lessons resume in"; },
+    cdUnits: ["days", "hours", "min", "sec"],
+    dotsCap: "Each dot is one student. Move the mouse over them.",
     todo: "to fill in"
   }
 };
@@ -1354,6 +1503,10 @@ let OPEN = null;         /* ochiq turgan sinf, masalan "7-A" */
 let ROOM = null;         /* tanlangan xona raqami */
 let TQ = "";             /* qidiruv matni */
 let TOPEN = null;        /* ochiq turgan o'qituvchi raqami */
+let MYCLASS = null;       /* tanlangan "mening sinfim" */
+let BELL = false;         /* qo'ng'iroq ovozi yoniqmi */
+let LASTBELL = null;
+let AC = null;
 let NEWSALL = false;     /* hamma yangiliklar ochiqmi */
 let PICK = null;         /* null — jonli vaqt; aks holda { day, lesson } */
 let TTCLASS = Object.keys(SCHEDULE)[0] || null;
@@ -1431,6 +1584,204 @@ function tickNow() {
   if (left && left[1]) lf.appendChild(el("b", "", left[1]));
   document.getElementById("nowRing").setAttribute("stroke-dashoffset", String(C * (1 - frac)));
   document.getElementById("bellTag").hidden = !BELLS_SAMPLE;
+  /* qo'ng'iroq: dars va tanaffus almashganda chalinadi */
+  const key = now.day + ":" + num;
+  if (LASTBELL !== null && key !== LASTBELL && BELL && (/^[0-9]+$/.test(num) || num === "♪" || num === "✓")) ring();
+  LASTBELL = key;
+  lf.classList.toggle("soonbell", !!(left && left[1] && /^0:0\d$/.test(left[1])));
+  /* kun vaqti: fon va salom */
+  const hour = Math.floor(now.sec / 3600);
+  const sky = hour >= 6 && hour < 9 ? "morning" : hour >= 9 && hour < 17 ? "day" : hour >= 17 && hour < 20 ? "evening" : "night";
+  if (document.documentElement.dataset.sky !== sky) document.documentElement.dataset.sky = sky;
+  document.querySelector("#now .lbl span").textContent = L.greet[sky] + " " + L.nowLabel;
+  renderMine(now);
+  tickCountdown();
+}
+
+/* ---------- Qo'ng'iroq ovozi ---------- */
+function ring() {
+  try {
+    const C = window.AudioContext || window.webkitAudioContext;
+    if (!C) return;
+    AC = AC || new C();
+    const t = AC.currentTime;
+    for (let i = 0; i < 8; i++) {
+      const o = AC.createOscillator(), g = AC.createGain();
+      o.type = "triangle";
+      o.frequency.value = i % 2 ? 1320 : 990;
+      g.gain.setValueAtTime(0.0001, t + i * 0.11);
+      g.gain.exponentialRampToValueAtTime(0.22, t + i * 0.11 + 0.01);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + i * 0.11 + 0.1);
+      o.connect(g); g.connect(AC.destination);
+      o.start(t + i * 0.11); o.stop(t + i * 0.11 + 0.11);
+    }
+  } catch (e) {}
+}
+
+/* ---------- Mening sinfim ---------- */
+function renderMineSelect() {
+  const sel = document.getElementById("myClass");
+  sel.textContent = "";
+  const o0 = el("option", "", T[LANG].myChoose); o0.value = ""; sel.appendChild(o0);
+  CLASSES.forEach(function (c) { Object.keys(c.groups).forEach(function (k) { const id = c.grade + "-" + k; const o = el("option", "", id); o.value = id; sel.appendChild(o); }); });
+  sel.value = MYCLASS || "";
+  const b = document.getElementById("bellBtn");
+  b.setAttribute("aria-pressed", String(BELL));
+  document.getElementById("bellLbl").textContent = BELL ? T[LANG].bellOn : T[LANG].bellOff;
+}
+function renderMine(now) {
+  const L = T[LANG];
+  const line = document.getElementById("myLine");
+  line.textContent = "";
+  if (!MYCLASS) { line.textContent = L.myNone; return; }
+  const info = CLASS_INFO[MYCLASS] || {};
+  const day = SCHEDULE[MYCLASS] && SCHOOL_DAYS.indexOf(now.day) !== -1 ? SCHEDULE[MYCLASS][now.day] : null;
+  let parts = null;
+  if (day) {
+    for (let i = 0; i < day.length && !parts; i++) {
+      if (!BELLS[i]) break;
+      const a = mins(BELLS[i][0]) * 60, b = mins(BELLS[i][1]) * 60;
+      const t = teacherBySubject(day[i]);
+      const room = t ? roomText(t.room) : "";
+      if (now.sec >= a && now.sec < b) parts = L.myNow(MYCLASS, SUBJECTS[day[i]][LANG], room);
+      else if (now.sec < a) parts = L.myNext(MYCLASS, SUBJECTS[day[i]][LANG], room);
+    }
+  }
+  if (!parts) parts = L.myInfo(MYCLASS, info.teacher || "", info.room ? L.roomIs(info.room) : "");
+  line.appendChild(document.createTextNode(parts[0]));
+  line.appendChild(el("b", "", parts[1]));
+}
+
+/* ---------- Ta'tilgacha sanoq ---------- */
+function tickCountdown() {
+  const L = T[LANG];
+  const nowMs = Date.now();
+  const at = function (d) { return new Date(d + "T00:00:00+05:00").getTime(); };
+  let target = null, label = "", dates = "";
+  for (let i = 0; i < HOLIDAYS.length; i++) {
+    const h = HOLIDAYS[i], st = at(h.start), en = at(h.end) + 86400000;
+    if (nowMs < st) { target = st; label = L.cdUntil(h.name[LANG]); dates = h.start.split("-").reverse().join(".") + " – " + h.end.split("-").reverse().join("."); break; }
+    if (nowMs < en) { target = en; label = L.cdNow(h.name[LANG]); dates = h.start.split("-").reverse().join(".") + " – " + h.end.split("-").reverse().join("."); break; }
+  }
+  const box = document.querySelector(".count");
+  box.hidden = target === null;
+  if (target === null) return;
+  document.getElementById("cdLabel").textContent = label;
+  document.getElementById("cdDates").textContent = dates;
+  let sec = Math.max(0, Math.floor((target - nowMs) / 1000));
+  const vals = [Math.floor(sec / 86400), Math.floor(sec % 86400 / 3600), Math.floor(sec % 3600 / 60), sec % 60];
+  const dl = document.getElementById("cdDigits");
+  if (dl.children.length !== 4) { dl.textContent = ""; vals.forEach(function () { const d = el("div"); d.appendChild(el("dd")); d.appendChild(el("dt")); dl.appendChild(d); }); }
+  vals.forEach(function (v, i) { dl.children[i].firstChild.textContent = String(v).padStart(2, "0"); dl.children[i].lastChild.textContent = L.cdUnits[i]; });
+}
+
+/* ---------- Maktab yo'li ---------- */
+function renderPath() {
+  fill("pathList", PATH, function (p) {
+    const li = el("li", p.big ? "big" : "");
+    li.appendChild(el("p", "yr", p.when[LANG]));
+    li.appendChild(el("h3", "", p.title[LANG]));
+    li.appendChild(el("p", "", p.text[LANG]));
+    return li;
+  });
+  setupPath();
+}
+let PATHIO = null;
+function setupPath() {
+  const list = document.getElementById("pathList");
+  if (CALM || !("IntersectionObserver" in window)) { list.style.setProperty("--p", 1); return; }
+  if (PATHIO) PATHIO.disconnect();
+  PATHIO = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.remove("wait"); PATHIO.unobserve(e.target); } }); }, { rootMargin: "0px 0px -15% 0px" });
+  Array.prototype.forEach.call(list.children, function (li) { if (li.getBoundingClientRect().top > window.innerHeight * 0.85) { li.classList.add("wait"); PATHIO.observe(li); } });
+  pathProgress();
+}
+function pathProgress() {
+  const list = document.getElementById("pathList");
+  const r = list.getBoundingClientRect();
+  const p = Math.max(0, Math.min(1, (window.innerHeight * 0.7 - r.top) / Math.max(1, r.height)));
+  list.style.setProperty("--p", p.toFixed(3));
+}
+
+/* ---------- Nuqtalardan yig'iladigan "358" ---------- */
+const DOTS = { pts: [], raf: 0, until: 0 };
+function setupDots() {
+  const cv = document.getElementById("dots");
+  const n = totals().students;
+  cv.setAttribute("aria-label", "358");
+  const dpr = Math.min(2, window.devicePixelRatio || 1);
+  const W = cv.clientWidth, H = cv.clientHeight;
+  if (!W) return;
+  cv.width = W * dpr; cv.height = H * dpr;
+  const off = document.createElement("canvas");
+  off.width = W; off.height = H;
+  const o = off.getContext("2d");
+  o.fillStyle = "#000"; o.textAlign = "center"; o.textBaseline = "middle";
+  o.font = "800 " + Math.min(H * 1.05, W * 0.42) + "px Onest, system-ui, sans-serif";
+  o.fillText("358", W / 2, H / 2 + 4);
+  const data = o.getImageData(0, 0, W, H).data;
+  const all = [];
+  for (let y = 2; y < H; y += 3) for (let x = 2; x < W; x += 3) { if (data[(y * W + x) * 4 + 3] > 128) all.push([x, y]); }
+  const pts = [];
+  for (let i = 0; i < n; i++) {
+    const t = all.length ? all[Math.floor(i * all.length / n)] : [W / 2, H / 2];
+    const old = DOTS.pts[i];
+    pts.push({ x: old ? old.x : Math.random() * W, y: old ? old.y : Math.random() * H, tx: t[0] + (Math.random() - .5) * 2, ty: t[1] + (Math.random() - .5) * 2, vx: 0, vy: 0 });
+  }
+  DOTS.pts = pts; DOTS.dpr = dpr; DOTS.W = W; DOTS.H = H;
+  if (CALM) { pts.forEach(function (p) { p.x = p.tx; p.y = p.ty; }); drawDots(); return; }
+  runDots(3500);
+}
+function drawDots() {
+  const cv = document.getElementById("dots"), c = cv.getContext("2d");
+  const css = getComputedStyle(document.documentElement);
+  c.setTransform(DOTS.dpr, 0, 0, DOTS.dpr, 0, 0);
+  c.clearRect(0, 0, DOTS.W, DOTS.H);
+  c.fillStyle = css.getPropertyValue("--a").trim() || "#2447f9";
+  DOTS.pts.forEach(function (p) { c.beginPath(); c.arc(p.x, p.y, 1.700, 0, 6.283); c.fill(); });
+}
+function runDots(ms) {
+  DOTS.until = performance.now() + ms;
+  if (DOTS.raf) return;
+  (function step() {
+    DOTS.pts.forEach(function (p) {
+      p.vx = (p.vx + (p.tx - p.x) * 0.02) * 0.86; p.vy = (p.vy + (p.ty - p.y) * 0.02) * 0.86;
+      p.x += p.vx; p.y += p.vy;
+    });
+    drawDots();
+    DOTS.raf = performance.now() < DOTS.until ? requestAnimationFrame(step) : 0;
+  })();
+}
+function scatterDots(e) {
+  if (CALM || !DOTS.pts.length) return;
+  const r = document.getElementById("dots").getBoundingClientRect();
+  const mx = e.clientX - r.left, my = e.clientY - r.top;
+  DOTS.pts.forEach(function (p) {
+    const dx = p.x - mx, dy = p.y - my, d2 = dx * dx + dy * dy;
+    if (d2 < 3600) { const f = (3600 - d2) / 3600 * 9; const d = Math.sqrt(d2) || 1; p.vx += dx / d * f; p.vy += dy / d * f; }
+  });
+  runDots(2500);
+}
+
+/* ---------- Maxfiy konfetti ("358" ni uch marta bosing) ---------- */
+function confetti() {
+  if (CALM) return;
+  const cv = el("canvas", "confetti");
+  document.body.appendChild(cv);
+  const W = cv.width = window.innerWidth, H = cv.height = window.innerHeight;
+  const c = cv.getContext("2d");
+  const css = getComputedStyle(document.documentElement);
+  const cols = [css.getPropertyValue("--a").trim(), css.getPropertyValue("--b").trim(), css.getPropertyValue("--ink").trim()];
+  const ps = [];
+  for (let i = 0; i < 160; i++) ps.push({ x: W / 2, y: H * 0.35, vx: (Math.random() - .5) * 22, vy: Math.random() * -18 - 4, r: Math.random() * 6 + 4, a: Math.random() * 6.283, s: (Math.random() - .5) * .4, c: cols[i % 3] });
+  const t0 = performance.now();
+  (function step(now) {
+    c.clearRect(0, 0, W, H);
+    ps.forEach(function (p) {
+      p.vy += 0.45; p.vx *= 0.99; p.x += p.vx; p.y += p.vy; p.a += p.s;
+      c.save(); c.translate(p.x, p.y); c.rotate(p.a); c.fillStyle = p.c; c.fillRect(-p.r / 2, -p.r / 2, p.r, p.r * 0.6); c.restore();
+    });
+    if (now - t0 < 3200) requestAnimationFrame(step); else cv.remove();
+  })(t0);
 }
 
 /* ---------- Xonaning 3D ko'rinishi ---------- */
@@ -1762,6 +2113,9 @@ function renderPride() {
   fill("prideList", ACHIEVEMENTS, function (a) {
     if (ACHF !== "all" && a.type !== ACHF) return null;
     const li = el("li", "pr paper" + (a.todo ? " todo" : ""));
+    const mb = el("span", "medalbox"); const md = el("span", "medal");
+    md.appendChild(el("i", "", a.type === "olymp" ? "1" : a.type === "cert" ? "B2" : "★")); md.appendChild(el("i", "", "358"));
+    mb.setAttribute("aria-hidden", "true"); mb.appendChild(md); li.appendChild(mb);
     li.appendChild(el("span", "ty", ACH_TYPES[a.type][LANG]));
     li.appendChild(el("p", "res", a.result[LANG]));
     const who = el("strong", "", a.who[LANG]);
@@ -1862,7 +2216,9 @@ function buildBackground() {
   p.push(cb(0, 96, 0, 344, 12, 90, "roof"));           /* tom */
   for (let f = 0; f < 3; f++) for (let i = 0; i < 10; i++) {
     if (f === 0 && (i === 4 || i === 5)) continue;
-    p.push(cb(-144 + i * 32, 12 + f * 28, 39, 18, 16, 2, i % 3 === 1 ? "b" : "a"));
+    const wn = cb(-144 + i * 32, 12 + f * 28, 39, 18, 16, 2, i % 3 === 1 ? "b" : "a");
+    wn.classList.add("win");
+    p.push(wn);
   }
   p.push(cb(0, 0, 41, 60, 40, 8, "a"));                /* kirish */
   p.push(cb(0, 40, 44, 76, 6, 16, "roof"));
@@ -1958,6 +2314,8 @@ function render(lang) {
     row.appendChild(el("dd", "", f.value[lang]));
     return row;
   });
+  renderMineSelect();
+  renderPath();
   renderTour();
   renderContacts();
   renderCube();
@@ -2096,6 +2454,7 @@ function setupTabs() {
   Object.keys(links).forEach(function (k) { const s = document.getElementById(k); if (s) io.observe(s); });
 }
 
+try { MYCLASS = localStorage.getItem("myClass") || null; BELL = localStorage.getItem("bell") === "1"; } catch (e) {}
 let savedLang = null;
 try { savedLang = localStorage.getItem("lang"); } catch (e) {}
 render(T[savedLang] ? savedLang : "uz");
@@ -2104,7 +2463,27 @@ setupScrollPhotos();
 setupTabs();
 setup3D();
 buildBackground();
+setupDots();
 setInterval(function () { tickNow(); liveCheck(); }, 1000);
+
+document.getElementById("myClass").addEventListener("change", function (e) {
+  MYCLASS = e.target.value || null;
+  try { localStorage.setItem("myClass", MYCLASS || ""); } catch (err) {}
+  if (MYCLASS && SCHEDULE[MYCLASS]) { TTCLASS = MYCLASS; renderSchedule(); }
+  tickNow();
+});
+document.getElementById("bellBtn").addEventListener("click", function () {
+  BELL = !BELL;
+  try { localStorage.setItem("bell", BELL ? "1" : "0"); } catch (err) {}
+  renderMineSelect();
+  if (BELL) ring();
+});
+document.getElementById("egg").addEventListener("click", function (e) { if (e.detail === 3) confetti(); });
+document.getElementById("dots").addEventListener("pointermove", scatterDots);
+window.addEventListener("scroll", pathProgress, { passive: true });
+window.addEventListener("resize", function () { setupDots(); pathProgress(); });
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(setupDots);
+new MutationObserver(function () { if (DOTS.pts.length) drawDots(); }).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme", "data-mode"] });
 
 document.getElementById("newsMore").addEventListener("click", function () {
   NEWSALL = !NEWSALL;

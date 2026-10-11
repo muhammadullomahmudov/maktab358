@@ -28,6 +28,8 @@ Hamma narsa bitta `index.html` faylida, "1-QISM. SAYT MA'LUMOTLARI" bo'limida:
 | Yangiliklar | `NEWS` |
 | Bino xonalari | `ROOMS` |
 | Favqulodda holat | `SAFETY`, `EXITS`, `ASSEMBLY`, `CALLS` |
+| Ta'tilgacha sanoq | `HOLIDAYS` (sanalar namuna) |
+| Maktab yo'li (tarix) | `PATH` |
 
 Rasmlar `rasmlar` papkasida (ichidagi README ga qarang).
 
