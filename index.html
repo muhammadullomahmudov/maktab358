@@ -179,19 +179,40 @@
   .tour { display: grid; grid-template-columns: 1.2fr 1fr; gap: 36px; align-items: center; }
   .tour > * { min-width: 0; }
   .b3scene { perspective: 1300px; padding: 70px 70px 20px 10px; }
-  .b3 { position: relative; transform-style: preserve-3d; transform: rotateX(var(--rx, -12deg)) rotateY(var(--ry, -24deg)); transition: transform .25s ease-out; }
+  .b3 { position: relative; transform-style: preserve-3d; transform: rotateX(-12deg) rotateY(-24deg); }
   .floors { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; background: var(--card); border: 2px solid var(--ink); border-radius: 4px; padding: 10px; }
   .floors > * { min-width: 0; }
+  .b3side, .b3top { pointer-events: none; }
   .b3side { position: absolute; left: 100%; top: 0; width: 90px; height: 100%; transform-origin: left center; transform: rotateY(90deg); background: repeating-linear-gradient(0deg, transparent 0 16px, var(--a) 16px 40px, transparent 40px 56px), var(--a-soft); background-size: 100% 72px; border: 2px solid var(--ink); }
   .b3top { position: absolute; left: 0; bottom: 100%; width: 100%; height: 90px; transform-origin: center bottom; transform: rotateX(90deg); background: var(--ink); border: 2px solid var(--ink); }
   .room { cursor: pointer; text-align: center; font-weight: 600; font-size: 13.5px; line-height: 1.2; min-height: 60px; padding: 8px 5px; border: 1.5px solid var(--line); border-radius: 8px; background: var(--a-soft); width: 100%; overflow-wrap: anywhere; transition: background-color .25s, transform .15s, box-shadow .25s; }
-  .room:hover { transform: translateZ(14px); border-color: var(--a); }
-  .room[aria-pressed="true"] { background: var(--b); color: var(--on-b); border-color: transparent; box-shadow: 0 0 26px var(--b); transform: translateZ(22px); }
+  .room:hover { border-color: var(--a); background: var(--card); }
+  .room[aria-pressed="true"] { background: var(--b); color: var(--on-b); border-color: transparent; box-shadow: 0 0 26px var(--b); }
   .door { border-radius: 26px 26px 0 0; background: var(--ink); min-height: 60px; }
   .outside { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 8px; }
   .outside .room { min-height: 46px; border-radius: 999px; background: var(--card); }
   .outside .room[aria-pressed="true"] { background: var(--b); }
-  .roominfo { padding: 26px; min-height: 170px; }
+  .roominfo { padding: 22px 26px 26px; min-height: 170px; overflow: hidden; }
+  /* Xonaning 3D ko'rinishi */
+  .r3scene { height: 270px; perspective: 900px; display: grid; place-items: center; margin: 0 -26px 14px; cursor: ew-resize; touch-action: pan-y; }
+  .dio { width: 0; height: 0; position: relative; transform-style: preserve-3d; transform: translateY(18px) rotateX(-26deg) rotateY(var(--dy, -34deg)); }
+  .dio > .fl, .dio > .wl { position: absolute; display: block; }
+  .fl { width: 260px; height: 200px; left: -130px; top: -100px; transform: rotateX(90deg); background: var(--a-soft); border: 2px solid var(--line); }
+  .fl.gym { background: var(--a-soft); box-shadow: inset 0 0 0 14px var(--a-soft), inset 0 0 0 17px var(--a); }
+  .fl.pitch { background: linear-gradient(90deg, transparent calc(50% - 1.500px), #ffffff calc(50% - 1.500px), #ffffff calc(50% + 1.500px), transparent calc(50% + 1.500px)), repeating-linear-gradient(90deg, #1f9a55 0 26px, #23a85d 26px 52px); border: 3px solid #ffffff; }
+  .wl { background: var(--card); border: 2px solid var(--line); }
+  .wl.back { width: 260px; height: 110px; left: -130px; top: -110px; transform: translateZ(-100px); }
+  .wl.side { width: 200px; height: 110px; left: -100px; top: -110px; transform: rotateY(90deg) translateZ(-130px); background: var(--bg); }
+  .cb { position: absolute; left: 0; top: 0; width: 0; height: 0; transform-style: preserve-3d; transform: translate3d(var(--x), var(--y), var(--z)); }
+  .cb i { position: absolute; display: block; background: var(--c); }
+  .cb i.f, .cb i.k { width: var(--w); height: var(--h); left: calc(var(--w) / -2); top: calc(var(--h) * -1); }
+  .cb i.f { transform: translateZ(calc(var(--d) / 2)); }
+  .cb i.k { transform: translateZ(calc(var(--d) / -2)); }
+  .cb i.r, .cb i.l { width: var(--d); height: var(--h); left: calc(var(--d) / -2); top: calc(var(--h) * -1); background: color-mix(in srgb, var(--c) 72%, #000); }
+  .cb i.r { transform: rotateY(90deg) translateZ(calc(var(--w) / 2)); }
+  .cb i.l { transform: rotateY(90deg) translateZ(calc(var(--w) / -2)); }
+  .cb i.t { width: var(--w); height: var(--d); left: calc(var(--w) / -2); top: calc(var(--h) * -1 - var(--d) / 2); transform: rotateX(90deg); background: color-mix(in srgb, var(--c) 82%, #fff); }
+  .r3hint { font-size: 12px; color: var(--muted); margin: -6px 0 12px; }
   .roominfo h3 { font-weight: 800; font-size: 1.6rem; letter-spacing: -.03em; line-height: 1.1; margin: 0 0 8px; }
   .roominfo p { margin: 0; color: var(--muted); }
 
@@ -400,6 +421,8 @@
     .chip3.c2 { animation: bob 6s ease-in-out -2s infinite; }
     .marquee div { animation: slide 28s linear infinite; }
     .cube.spin { animation: spin 16s linear infinite; }
+    .r3scene { animation: fly .5s cubic-bezier(.2, .9, .2, 1) both; }
+    .dio.sway { animation: sway 7s ease-in-out infinite; }
     .rv { transition: opacity .7s ease-out, transform .7s cubic-bezier(.2, .8, .2, 1); }
     .rv.rv-wait { opacity: .08; transform: translateY(40px) scale(.98); }
     .detail, .tmore { animation: rise .3s ease-out both; }
@@ -416,6 +439,7 @@
   @keyframes bob { 50% { margin-top: -10px; } }
   @keyframes slide { to { transform: translateX(-50%); } }
   @keyframes spin { from { transform: rotateX(-22deg) rotateY(0deg); } to { transform: rotateX(-22deg) rotateY(360deg); } }
+  @keyframes sway { 0%, 100% { transform: translateY(18px) rotateX(-26deg) rotateY(-44deg); } 50% { transform: translateY(18px) rotateX(-26deg) rotateY(-20deg); } }
   @keyframes pop { from { opacity: 0; transform: rotate(-30deg) scale(2); } }
   @keyframes ping { from { transform: scale(1); opacity: .9; } to { transform: scale(3.2); opacity: 0; } }
   @keyframes nudge { 50% { transform: translateX(6px); } }
@@ -914,28 +938,28 @@ const FACTS = [
 
 /* BINO SXEMASI. where: f — qavatlardagi xona, w — yon bino, p — maydon. */
 const ROOMS = [
-  { where: "f", name: { uz: "Kutubxona", ru: "Библиотека", en: "Library" },
+  { where: "f", kind: "lib", name: { uz: "Kutubxona", ru: "Библиотека", en: "Library" },
     text: { uz: "Darsliklar va badiiy kitoblar saqlanadigan, o‘qish uchun joy.", ru: "Учебники и художественные книги, место для чтения.", en: "Textbooks and fiction, with a place to read." } },
-  { where: "f", name: { uz: "Chet tillari markazi", ru: "Центр иностранных языков", en: "Foreign language centre" },
+  { where: "f", kind: "lang", name: { uz: "Chet tillari markazi", ru: "Центр иностранных языков", en: "Foreign language centre" },
     text: { uz: "Chet tillarini o‘rganish uchun alohida markaz.", ru: "Отдельный центр для изучения иностранных языков.", en: "A separate centre for learning foreign languages." } },
-  { where: "f", name: { uz: "Kompyuter sinflari", ru: "Компьютерные классы", en: "Computer rooms" },
+  { where: "f", kind: "comp", name: { uz: "Kompyuter sinflari", ru: "Компьютерные классы", en: "Computer rooms" },
     text: { uz: "Informatika darslari va IT mashg‘ulotlari shu yerda o‘tadi.", ru: "Здесь проходят уроки информатики и занятия по IT.", en: "Computer science lessons and IT classes take place here." } },
-  { where: "f", name: { uz: "Fan xonalari", ru: "Предметные кабинеты", en: "Subject classrooms" },
+  { where: "f", kind: "class", name: { uz: "Fan xonalari", ru: "Предметные кабинеты", en: "Subject classrooms" },
     text: { uz: "Har xil fanlar uchun zamonaviy jihozlangan xonalar.", ru: "Современные кабинеты по разным предметам.", en: "Modern classrooms equipped for different subjects." } },
-  { where: "f", name: { uz: "Laboratoriyalar", ru: "Лаборатории", en: "Laboratories" },
+  { where: "f", kind: "lab", name: { uz: "Laboratoriyalar", ru: "Лаборатории", en: "Laboratories" },
     text: { uz: "Tajriba va amaliy mashg‘ulotlar o‘tkaziladigan xonalar.", ru: "Кабинеты для опытов и практических занятий.", en: "Rooms for experiments and practical work." } },
-  { where: "f", name: { uz: "Robototexnika", ru: "Робототехника", en: "Robotics" },
+  { where: "f", kind: "robo", name: { uz: "Robototexnika", ru: "Робототехника", en: "Robotics" },
     text: { uz: "Robototexnika to‘garagi. Toshkent axborot texnologiyalari universiteti shu yerda tuman o‘quvchilari uchun kurs ochishni rejalashtirgan.",
             ru: "Кружок робототехники. Ташкентский университет информационных технологий планирует открыть здесь курс для учеников района.",
             en: "The robotics club. Tashkent University of Information Technologies plans to run a course here for students of the district." } },
-  { where: "f", name: { uz: "Oshxona", ru: "Столовая", en: "Canteen" },
+  { where: "f", kind: "canteen", name: { uz: "Oshxona", ru: "Столовая", en: "Canteen" },
     text: { uz: "O‘quvchilar ovqatlanadigan keng oshxona.", ru: "Просторная столовая для учеников.", en: "A spacious canteen for students." } },
   { where: "f", door: true },
-  { where: "f", name: { uz: "Boshlang‘ich sinflar", ru: "Начальные классы", en: "Primary classes" },
+  { where: "f", kind: "primary", name: { uz: "Boshlang‘ich sinflar", ru: "Начальные классы", en: "Primary classes" },
     text: { uz: "1–4-sinf o‘quvchilari o‘qiydigan xonalar.", ru: "Кабинеты, где учатся ученики 1–4 классов.", en: "Rooms where grades 1–4 study." } },
-  { where: "w", name: { uz: "Sport zali", ru: "Спортзал", en: "Sports hall" },
+  { where: "w", kind: "gym", name: { uz: "Sport zali", ru: "Спортзал", en: "Sports hall" },
     text: { uz: "Jismoniy tarbiya darslari va sport mashg‘ulotlari uchun zal.", ru: "Зал для уроков физкультуры и спортивных занятий.", en: "A hall for PE lessons and sports." } },
-  { where: "p", name: { uz: "Futbol maydoni", ru: "Футбольное поле", en: "Football pitch" },
+  { where: "p", kind: "pitch", name: { uz: "Futbol maydoni", ru: "Футбольное поле", en: "Football pitch" },
     text: { uz: "Ochiq havodagi futbol maydoni. Yonida sport maydonchasi ham bor.", ru: "Футбольное поле под открытым небом. Рядом есть спортивная площадка.", en: "An outdoor football pitch, with a sports court next to it." } }
 ];
 
@@ -1008,9 +1032,10 @@ const T = {
     aboutTitle: "Maktab haqida",
     aboutText: "Maktabimiz davlat budjeti hisobidan qurilib, 2025-yilda Bektemir tumanining Iykota mahallasida foydalanishga topshirilgan. Bino qariyb 1000 o‘quvchiga mo‘ljallangan. O‘sha yili maktabga Prezident tashrif buyurgan.",
     tourTitle: "Binoni aylaning",
-    tourNote: "Xonani bosing — chirog‘i yonadi va u yerda nima borligi chiqadi.",
+    tourNote: "Xonani bosing: chirog‘i yonadi, yonida esa xonaning 3D ko‘rinishi va tavsifi ochiladi.",
     tourFine: "Sxema shartli: xonalarning haqiqiy joylashuvi boshqacha bo‘lishi mumkin.",
-    tourEmpty: "Biror xonani tanlang", tourEmptyText: "Chapdagi binodan istalgan xonani bosing.",
+    tourEmpty: "Biror xonani tanlang", tourEmptyText: "Binodan istalgan xonani bosing: uning 3D ko‘rinishi shu yerda ochiladi.",
+    r3Hint: "3D ko‘rinish shartli. Aylantirish uchun sichqonchani yoki barmoqni chapga-o‘ngga suring.",
     directorTitle: "Maktab direktori", directorRole: "Direktor",
     classesTitle: "Sinflar va o‘quvchilar",
     sampleNote: "Namuna. Quyidagi sonlar sahifa qanday ko‘rinishini ko‘rsatish uchun qo‘yilgan, haqiqiy emas. Maktabdan aniq ro‘yxat olingach almashtiriladi.",
@@ -1107,7 +1132,8 @@ const T = {
     tourTitle: "Пройдитесь по зданию",
     tourNote: "Нажмите на кабинет — в нём загорится свет и появится описание.",
     tourFine: "Схема условная: настоящее расположение кабинетов может быть другим.",
-    tourEmpty: "Выберите кабинет", tourEmptyText: "Нажмите на любой кабинет в здании слева.",
+    tourEmpty: "Выберите кабинет", tourEmptyText: "Нажмите на любой кабинет в здании: здесь откроется его 3D-вид.",
+    r3Hint: "3D-вид условный. Чтобы повернуть, ведите мышью или пальцем влево-вправо.",
     directorTitle: "Директор школы", directorRole: "Директор",
     classesTitle: "Классы и ученики",
     sampleNote: "Образец. Числа ниже показывают, как будет выглядеть страница, они не настоящие. Их заменят, когда школа даст точный список.",
@@ -1204,7 +1230,8 @@ const T = {
     tourTitle: "Tour the building",
     tourNote: "Select a room: its light comes on and you see what is inside.",
     tourFine: "The plan is illustrative: the real layout of the rooms may differ.",
-    tourEmpty: "Pick a room", tourEmptyText: "Select any room in the building on the left.",
+    tourEmpty: "Pick a room", tourEmptyText: "Select any room in the building and its 3D view opens here.",
+    r3Hint: "The 3D view is illustrative. Move the mouse or drag left and right to turn it.",
     directorTitle: "School principal", directorRole: "Principal",
     classesTitle: "Classes and students",
     sampleNote: "Sample. The numbers below show how the page will look and are not real. They will be replaced once the school provides the exact list.",
@@ -1367,6 +1394,67 @@ function tickNow() {
   document.getElementById("bellTag").hidden = !BELLS_SAMPLE;
 }
 
+/* ---------- Xonaning 3D ko'rinishi ---------- */
+function cb(x, y, z, w, h, d, c) {
+  const e = el("span", "cb");
+  e.style.cssText = "--x:" + x + "px;--y:" + (-y) + "px;--z:" + z + "px;--w:" + w + "px;--h:" + h + "px;--d:" + d + "px;--c:var(--" + c + ")";
+  ["f", "k", "r", "l", "t"].forEach(function (n) { e.appendChild(el("i", n)); });
+  return e;
+}
+function desks(list, cols, rows, w, c) {
+  rows.forEach(function (z) { cols.forEach(function (x) { list.push(cb(x, 0, z, w, 15, 22, c)); }); });
+}
+function diorama(kind) {
+  const scene = el("div", "r3scene");
+  scene.setAttribute("aria-hidden", "true");
+  const dio = el("div", "dio sway");
+  const fl = el("span", "fl" + (kind === "gym" || kind === "pitch" ? " " + kind : ""));
+  dio.appendChild(fl);
+  if (kind !== "pitch") { dio.appendChild(el("span", "wl back")); dio.appendChild(el("span", "wl side")); }
+  const p = [];
+  const board = function () { p.push(cb(0, 42, -97, 130, 44, 3, "ink")); };
+  if (kind === "class" || kind === "primary") {
+    board(); p.push(cb(-70, 0, -62, 56, 18, 24, "b"));
+    desks(p, [-75, 0, 75], kind === "primary" ? [-10, 50] : [-15, 30, 72], kind === "primary" ? 36 : 46, "a");
+  } else if (kind === "lang") {
+    board(); desks(p, [-80, 80], [-20, 30, 75], 40, "a"); p.push(cb(0, 0, 70, 90, 15, 24, "a")); p.push(cb(0, 0, -55, 50, 18, 24, "b"));
+  } else if (kind === "comp") {
+    board();
+    [-15, 40].forEach(function (z) { [-75, 0, 75].forEach(function (x) { p.push(cb(x, 0, z, 50, 15, 24, "a")); p.push(cb(x, 15, z - 5, 24, 17, 3, "ink")); }); });
+    p.push(cb(-70, 0, -62, 56, 18, 24, "b"));
+  } else if (kind === "lib") {
+    [-86, 0, 86].forEach(function (x) { p.push(cb(x, 0, -86, 72, 80, 20, "a")); p.push(cb(x, 22, -75, 64, 4, 2, "b")); p.push(cb(x, 48, -75, 64, 4, 2, "b")); });
+    p.push(cb(0, 0, 40, 120, 15, 44, "b"));
+  } else if (kind === "lab") {
+    [-62, 62].forEach(function (x) { p.push(cb(x, 0, 10, 62, 22, 130, "a")); [-30, 10, 50].forEach(function (z) { p.push(cb(x, 22, z, 9, 18, 9, "b")); }); });
+    p.push(cb(0, 0, -84, 150, 60, 20, "ink"));
+  } else if (kind === "robo") {
+    p.push(cb(0, 0, 20, 160, 18, 64, "a"));
+    p.push(cb(0, 18, 20, 28, 30, 20, "b")); p.push(cb(0, 48, 20, 20, 15, 16, "ink")); p.push(cb(-20, 30, 20, 8, 6, 8, "ink")); p.push(cb(20, 30, 20, 8, 6, 8, "ink"));
+    p.push(cb(-55, 18, 24, 18, 10, 18, "ink")); p.push(cb(55, 18, 14, 18, 12, 18, "b"));
+    p.push(cb(-90, 0, -84, 60, 70, 20, "a"));
+  } else if (kind === "canteen") {
+    [-55, 55].forEach(function (x) { p.push(cb(x, 0, 20, 44, 18, 130, "a")); p.push(cb(x - 34, 0, 20, 12, 10, 130, "ink")); p.push(cb(x + 34, 0, 20, 12, 10, 130, "ink")); });
+    p.push(cb(0, 0, -84, 210, 28, 22, "b"));
+  } else if (kind === "gym") {
+    p.push(cb(0, 0, -94, 5, 72, 5, "ink")); p.push(cb(0, 58, -90, 44, 28, 3, "b")); p.push(cb(0, 56, -82, 16, 3, 14, "a"));
+    p.push(cb(-116, 0, 10, 14, 11, 130, "a")); p.push(cb(60, 0, 40, 16, 16, 16, "b"));
+  } else if (kind === "pitch") {
+    [-122, 122].forEach(function (x) { p.push(cb(x, 0, -32, 4, 38, 4, "card")); p.push(cb(x, 0, 32, 4, 38, 4, "card")); p.push(cb(x, 36, 0, 4, 4, 68, "card")); });
+    p.push(cb(0, 0, 0, 10, 10, 10, "b"));
+  }
+  p.forEach(function (n) { dio.appendChild(n); });
+  scene.appendChild(dio);
+  function turn(e) {
+    const r = scene.getBoundingClientRect();
+    dio.classList.remove("sway");
+    dio.style.setProperty("--dy", (-34 + ((e.clientX - r.left) / r.width - 0.5) * 150).toFixed(1) + "deg");
+  }
+  scene.addEventListener("pointermove", turn);
+  scene.addEventListener("pointerdown", turn);
+  return scene;
+}
+
 /* ---------- Bino sxemasi ---------- */
 function renderTour() {
   const L = T[LANG];
@@ -1383,7 +1471,12 @@ function renderTour() {
   const info = document.getElementById("roomInfo");
   info.textContent = "";
   if (ROOM === null) { info.appendChild(el("h3", "", L.tourEmpty)); info.appendChild(el("p", "", L.tourEmptyText)); }
-  else { info.appendChild(el("h3", "", ROOMS[ROOM].name[LANG])); info.appendChild(el("p", "", ROOMS[ROOM].text[LANG])); }
+  else {
+    info.appendChild(diorama(ROOMS[ROOM].kind));
+    info.appendChild(el("p", "r3hint", L.r3Hint));
+    info.appendChild(el("h3", "", ROOMS[ROOM].name[LANG]));
+    info.appendChild(el("p", "", ROOMS[ROOM].text[LANG]));
+  }
 }
 
 /* ---------- Sinflar ---------- */
@@ -1777,7 +1870,7 @@ function renderCube() {
 }
 /* 3D: sichqonchaga qarab egilish va kubni aylantirish */
 function setup3D() {
-  [["scene", "tilt", 6, -14], ["b3scene", "b3", -12, -24]].forEach(function (cfg) {
+  [["scene", "tilt", 6, -14]].forEach(function (cfg) {
     const scene = document.getElementById(cfg[0]), obj = document.getElementById(cfg[1]);
     if (!scene || !obj || CALM) return;
     scene.addEventListener("pointermove", function (e) {
