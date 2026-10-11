@@ -396,8 +396,6 @@
   .where dt { font-size: 13px; color: var(--muted); font-weight: 600; }
   .where dd { margin: 0; font-weight: 700; }
   .where dd.soon { font-weight: 400; font-style: italic; color: var(--muted); }
-  .mapbox { margin-top: 22px; border: 1px solid var(--line); border-radius: var(--r); overflow: hidden; }
-  .mapbox iframe { display: block; width: 100%; height: 320px; border: 0; }
 
   footer { border-top: 1px solid var(--line); padding: 30px 0 38px; }
   footer p { margin: 0 0 6px; font-size: 15px; }
@@ -697,7 +695,6 @@
           <p class="fine" id="whereFine"></p>
         </div>
       </div>
-      <div class="mapbox" id="mapBox" hidden></div>
     </div>
   </section>
   <section id="us">
@@ -1956,21 +1953,6 @@ function renderWhere() {
   document.getElementById("mapY").href = "https://yandex.uz/maps/?pt=" + LOCATION.lng + "," + LOCATION.lat + "&z=15&l=map";
   document.getElementById("whereFine").textContent = LOCATION.exact ? "" : L.whereApprox;
 }
-/* Jonli xarita faqat sayt o'z manzilida ochilganda qo'shiladi */
-function setupMap() {
-  let top = false;
-  try { top = window.self === window.top; } catch (e) {}
-  if (!top || location.protocol === "file:") return;
-  const d = 0.012;
-  const f = document.createElement("iframe");
-  f.title = "Xarita";
-  f.loading = "lazy";
-  f.src = "https://www.openstreetmap.org/export/embed.html?bbox=" + (LOCATION.lng - d) + "," + (LOCATION.lat - d * 0.6) + "," + (LOCATION.lng + d) + "," + (LOCATION.lat + d * 0.6) + "&layer=mapnik&marker=" + LOCATION.lat + "," + LOCATION.lng;
-  const box = document.getElementById("mapBox");
-  box.appendChild(f);
-  box.hidden = false;
-}
-
 function setThemeLabel() {
   const dark = document.documentElement.dataset.mode === "dark";
   document.getElementById("themeLabel").textContent = dark ? T[LANG].themeLight : T[LANG].themeDark;
@@ -2154,7 +2136,6 @@ render(T[savedLang] ? savedLang : "uz");
 setupReveal();
 setupScrollPhotos();
 setupTabs();
-setupMap();
 setup3D();
 setInterval(function () { tickNow(); liveCheck(); }, 1000);
 
