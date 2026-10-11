@@ -373,6 +373,15 @@
   .search { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; margin: 0 0 14px; }
   .search label { font-weight: 700; }
   .search input { flex: 1 1 260px; max-width: 460px; min-width: 0; font: inherit; color: var(--ink); background: var(--card); border: 1px solid var(--line); border-radius: 999px; padding: 11px 18px; box-shadow: var(--shadow); }
+  .search input { flex: 1 1 200px; max-width: 320px; }
+  .fpill { display: inline-flex; align-items: center; gap: 2px; font-size: 13px; font-weight: 700; background: var(--card); border: 1px solid var(--line); border-radius: 999px; padding: 0 6px 0 14px; height: 44px; box-shadow: var(--shadow); cursor: pointer; transition: background-color .25s, color .25s, transform .15s; }
+  .fpill span { opacity: .7; }
+  .fpill select { font: inherit; font-weight: 700; color: inherit; background: transparent; border: 0; padding: 6px 4px; max-width: 150px; cursor: pointer; }
+  .fpill select:focus-visible { outline: 3px solid var(--b); outline-offset: 2px; border-radius: 8px; }
+  .fpill option { color: var(--ink); background: var(--card); }
+  .fpill.on { background: var(--a); color: var(--on-a); border-color: transparent; }
+  .fpill.on span { opacity: .85; }
+  .fx { width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--line); background: var(--card); font-size: 20px; line-height: 1; cursor: pointer; }
   .found { font-size: 14px; color: var(--muted); margin: 0 0 12px; min-height: 1.5em; }
 
   /* Dars jadvali */
@@ -516,6 +525,8 @@
     .rv { transition: opacity .7s ease-out, transform .7s cubic-bezier(.2, .8, .2, 1); }
     .rv.rv-wait { opacity: .08; transform: translateY(40px) scale(.98); }
     .detail, .tmore { animation: rise .3s ease-out both; }
+    .fpill:hover { transform: translateY(-2px); }
+    #teacherList .tcard { animation: rise .35s ease-out both; }
     .pin::after { animation: ping 1.8s ease-out infinite; }
     .steps li { animation: rise .4s ease-out both; animation-delay: calc(var(--s) * 70ms); }
     .exitsign svg { animation: nudge 1s ease-in-out infinite; }
@@ -707,6 +718,9 @@
       <div class="search">
         <label for="teacherSearch" data-t="searchLabel"></label>
         <input type="search" id="teacherSearch" autocomplete="off">
+        <label class="fpill" id="fClassPill"><span data-t="fClass"></span><select id="tClass"></select></label>
+        <label class="fpill" id="fSubjPill"><span data-t="fSubject"></span><select id="tSubj"></select></label>
+        <button type="button" class="fx" id="tReset" hidden>×</button>
       </div>
       <p class="found" id="teacherFound" aria-live="polite"></p>
       <ul class="cards" id="teacherList"></ul>
@@ -1303,6 +1317,7 @@ const T = {
     cdUntil: function (n) { return n + "gacha"; }, cdNow: function (n) { return n + " davom etyapti. Darslar boshlanishiga"; },
     cdUnits: ["kun", "soat", "daqiqa", "soniya"],
     dotsCap: "Har bir nuqta — bitta o‘quvchi. Ustiga sichqonchani olib boring.",
+    fClass: "Sinf:", fSubject: "Fan:", fAll: "Hammasi", fReset: "Saralashni tozalash",
     todo: "to‘ldiriladi"
   },
   ru: {
@@ -1406,6 +1421,7 @@ const T = {
     cdUntil: function (n) { return "До начала: " + n; }, cdNow: function (n) { return n + " идут. До начала уроков"; },
     cdUnits: ["дней", "часов", "минут", "секунд"],
     dotsCap: "Каждая точка — один ученик. Наведите на них мышь.",
+    fClass: "Класс:", fSubject: "Предмет:", fAll: "Все", fReset: "Сбросить фильтры",
     todo: "заполнить"
   },
   en: {
@@ -1509,6 +1525,7 @@ const T = {
     cdUntil: function (n) { return "Until the " + n.toLowerCase(); }, cdNow: function (n) { return n + " is on. Lessons resume in"; },
     cdUnits: ["days", "hours", "min", "sec"],
     dotsCap: "Each dot is one student. Move the mouse over them.",
+    fClass: "Class:", fSubject: "Subject:", fAll: "All", fReset: "Clear filters",
     todo: "to fill in"
   }
 };
@@ -1521,6 +1538,8 @@ const CALM = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 let LANG = "uz";
 let OPEN = null;         /* ochiq turgan sinf, masalan "7-A" */
 let ROOM = null;         /* tanlangan xona raqami */
+let TCLASS = "";         /* o'qituvchilar: tanlangan sinf */
+let TSUBJ = "";          /* o'qituvchilar: tanlangan fan */
 let TQ = "";             /* qidiruv matni */
 let TOPEN = null;        /* ochiq turgan o'qituvchi raqami */
 let MYCLASS = null;       /* tanlangan "mening sinfim" */
@@ -2046,14 +2065,33 @@ function teacherNowClass(t) {
   if (s.idx >= 0) Object.keys(SCHEDULE).forEach(function (c) { const day = SCHEDULE[c][s.day]; if (day && day[s.idx] === t.subject) cls = c; });
   return cls;
 }
+function renderTeacherFilters() {
+  const L = T[LANG];
+  const cs = document.getElementById("tClass"), ss = document.getElementById("tSubj");
+  cs.textContent = ""; ss.textContent = "";
+  const all1 = el("option", "", L.fAll); all1.value = ""; cs.appendChild(all1);
+  Object.keys(SCHEDULE).forEach(function (c) { const o = el("option", "", c); o.value = c; cs.appendChild(o); });
+  const all2 = el("option", "", L.fAll); all2.value = ""; ss.appendChild(all2);
+  Object.keys(SUBJECTS).forEach(function (k) {
+    if (!TEACHERS.some(function (t) { return t.subject === k; })) return;
+    const o = el("option", "", SUBJECTS[k][LANG]); o.value = k; ss.appendChild(o);
+  });
+  cs.value = TCLASS; ss.value = TSUBJ;
+  document.getElementById("tReset").setAttribute("aria-label", L.fReset);
+}
 function renderTeachers() {
   const L = T[LANG];
   const q = norm(TQ);
+  document.getElementById("fClassPill").classList.toggle("on", !!TCLASS);
+  document.getElementById("fSubjPill").classList.toggle("on", !!TSUBJ);
+  document.getElementById("tReset").hidden = !(TCLASS || TSUBJ || TQ);
   let shown = 0;
   fill("teacherList", TEACHERS, function (t, i) {
     const subj = SUBJECTS[t.subject];
     const hay = norm([teacherName(t), subj.uz, subj.ru, subj.en].join(" "));
     if (q && !q.split(" ").every(function (w) { return hay.indexOf(w) !== -1; })) return null;
+    if (TSUBJ && t.subject !== TSUBJ) return null;
+    if (TCLASS && teacherClasses(t).indexOf(TCLASS) === -1) return null;
     shown += 1;
     const open = TOPEN === i;
     const li = el("li", "tcard paper" + (open ? " open" : "") + (t.name ? "" : " todo"));
@@ -2096,7 +2134,7 @@ function renderTeachers() {
     return li;
   });
   const found = document.getElementById("teacherFound");
-  found.textContent = shown === 0 ? L.noFound : q ? L.foundN(shown) : "";
+  found.textContent = shown === 0 ? L.noFound : (q || TCLASS || TSUBJ) ? L.foundN(shown) : "";
 }
 
 /* ---------- Faxrimiz ---------- */
@@ -2350,6 +2388,7 @@ function render(lang) {
   renderGrades();
 
   document.getElementById("teacherSearch").placeholder = L.searchPh;
+  renderTeacherFilters();
   renderTeachers();
   renderSchedule();
   renderPride();
@@ -2503,6 +2542,13 @@ document.getElementById("newsMore").addEventListener("click", function () {
   NEWSALL = !NEWSALL;
   renderNews();
   if (!NEWSALL) document.getElementById("news").scrollIntoView({ block: "start" });
+});
+document.getElementById("tClass").addEventListener("change", function (e) { TCLASS = e.target.value; TOPEN = null; renderTeachers(); });
+document.getElementById("tSubj").addEventListener("change", function (e) { TSUBJ = e.target.value; TOPEN = null; renderTeachers(); });
+document.getElementById("tReset").addEventListener("click", function () {
+  TCLASS = ""; TSUBJ = ""; TQ = ""; TOPEN = null;
+  document.getElementById("teacherSearch").value = "";
+  renderTeacherFilters(); renderTeachers();
 });
 document.getElementById("teacherSearch").addEventListener("input", function (e) { TQ = e.target.value; TOPEN = null; renderTeachers(); });
 
